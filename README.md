@@ -53,6 +53,18 @@ npm start
 
 The server serves the static assets from `dist/public` and exposes the `/api/contact` endpoint.
 
+### GitHub Pages
+
+To deploy the client as a static site under `/portfolio/`, run:
+
+```bash
+npx vite build --config vite.config.static.ts
+```
+
+This outputs the production files to `public/` and generates a `404.html` file so
+that unknown routes load `index.html` on GitHub Pages. Upload the contents of
+`public/` to the `gh-pages` branch.
+
 ## License
 
 MIT
