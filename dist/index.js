@@ -177,6 +177,22 @@ app.use((req, res, next) => {
   next();
 });
 (async () => {
+  app.get("/favicon.ico", (req, res) => {
+    import("path").then((path3) => {
+      res.setHeader("Content-Type", "image/x-icon");
+      res.sendFile(path3.join(process.cwd(), "favicon.ico"));
+    }).catch((err) => {
+      res.status(404).send("Favicon not found");
+    });
+  });
+  app.get("/og-preview.png", (req, res) => {
+    import("path").then((path3) => {
+      res.setHeader("Content-Type", "image/png");
+      res.sendFile(path3.join(process.cwd(), "og-preview.png"));
+    }).catch((err) => {
+      res.status(404).send("Preview image not found");
+    });
+  });
   const server = await registerRoutes(app);
   app.use((err, _req, res, _next) => {
     const status = err.status || err.statusCode || 500;
@@ -192,8 +208,7 @@ app.use((req, res, next) => {
   const port = parseInt(process.env.PORT || "5000", 10);
   server.listen({
     port,
-    host: "0.0.0.0",
-    reusePort: true
+    host: "0.0.0.0"
   }, () => {
     log(`serving on port ${port}`);
   });
