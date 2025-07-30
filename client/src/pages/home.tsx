@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, ExternalLink, User, Briefcase, Heart, Code, Users, MessageCircle } from 'lucide-react';
-import victoriaPortrait from '@assets/ChatGPT Image Jul 28, 2025, 03_42_34 PM_1753708675793.png';
+import victoriaPortrait from '@assets/victoria_pic.png';
 import { ParticleSystem } from '@/components/particle-system';
 import { Navigation } from '@/components/navigation';
 import { ScrollReveal } from '@/components/scroll-reveal';
