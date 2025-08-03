@@ -15,7 +15,7 @@ function copy404() {
 
 export default defineConfig({
   base: '/portfolio/',
-  plugins: [react(), copy404()],
+  plugins: [react()]
   root: 'client',
   build: {
     outDir: '../public',
