@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { PARTICLES, TIMING_MS, PERCENTAGE } from '@/constants/layout';
+import { ARIA_LABELS } from '@/constants/strings';
 
 export function ParticleSystem() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -7,19 +9,18 @@ export function ParticleSystem() {
     const container = containerRef.current;
     if (!container) return;
 
-    const particleCount = 50;
     const particles: HTMLDivElement[] = [];
 
     function createParticle() {
       const particle = document.createElement('div');
       particle.className = 'particle';
       
-      const size = Math.random() * 4 + 1;
+      const size = Math.random() * PARTICLES.SIZE_RANGE + PARTICLES.MIN_SIZE;
       particle.style.width = size + 'px';
       particle.style.height = size + 'px';
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.animationDuration = Math.random() * 20 + 10 + 's';
-      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.left = Math.random() * PERCENTAGE.FULL + '%';
+      particle.style.animationDuration = Math.random() * PARTICLES.DURATION_RANGE + PARTICLES.MIN_DURATION + 's';
+      particle.style.animationDelay = Math.random() * PARTICLES.DELAY_RANGE + 's';
       
       if (container) {
         container.appendChild(particle);
@@ -35,16 +36,16 @@ export function ParticleSystem() {
             particles.splice(index, 1);
           }
         }
-      }, 30000);
+      }, TIMING_MS.PARTICLE_LIFESPAN);
     }
 
     // Create initial particles
-    for (let i = 0; i < particleCount; i++) {
-      setTimeout(createParticle, i * 200);
+    for (let i = 0; i < PARTICLES.COUNT; i++) {
+      setTimeout(createParticle, i * TIMING_MS.PARTICLE_STAGGER);
     }
 
     // Continue creating particles
-    const interval = setInterval(createParticle, 600);
+    const interval = setInterval(createParticle, TIMING_MS.PARTICLE_CREATE_INTERVAL);
 
     return () => {
       clearInterval(interval);
@@ -60,7 +61,7 @@ export function ParticleSystem() {
     <div
       ref={containerRef}
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
-      aria-hidden="true"
+      aria-hidden={ARIA_LABELS.PARTICLE_SYSTEM}
     />
   );
 }
