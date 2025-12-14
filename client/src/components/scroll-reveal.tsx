@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+import { ANIMATION_DURATION, ANIMATION_DELAY, EASING, OPACITY, INITIAL_OFFSET } from '@/constants/layout';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -8,18 +9,26 @@ interface ScrollRevealProps {
   className?: string;
 }
 
-export function ScrollReveal({ children, delay = 0, duration = 0.8, className = '' }: ScrollRevealProps) {
+export function ScrollReveal({ 
+  children, 
+  delay = ANIMATION_DELAY.NONE, 
+  duration = ANIMATION_DURATION.SLOW, 
+  className = '' 
+}: ScrollRevealProps) {
   const { ref, isVisible } = useScrollReveal();
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_LARGE }}
+      animate={isVisible 
+        ? { opacity: OPACITY.VISIBLE, y: 0 } 
+        : { opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_LARGE }
+      }
       transition={{
         duration,
         delay,
-        ease: [0.4, 0, 0.2, 1],
+        ease: EASING.DEFAULT,
       }}
       className={className}
     >

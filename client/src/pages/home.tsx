@@ -7,6 +7,33 @@ import { Navigation } from '@/components/navigation';
 import { ScrollReveal } from '@/components/scroll-reveal';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { 
+  ANIMATION_DURATION, 
+  ANIMATION_DELAY, 
+  EASING, 
+  TRANSFORM, 
+  OPACITY, 
+  INITIAL_OFFSET,
+  ROTATION,
+} from '@/constants/layout';
+import { CONSOLE_COLORS, CONSOLE_FONT_SIZE } from '@/constants/colors';
+import { 
+  PERSONAL_INFO, 
+  ROLES, 
+  TAGLINES, 
+  NAV_SECTIONS, 
+  SECTION_TITLES,
+  BUTTON_LABELS,
+  CONSOLE_MESSAGES,
+  ASCII_ART,
+  CORE_STRENGTHS,
+  LEADERSHIP_PRINCIPLES,
+  ABOUT_CONTENT,
+  CONTACT_CONTENT,
+  COPYRIGHT,
+  SCROLL_BEHAVIOR,
+} from '@/constants/strings';
+import styles from './home.module.css';
 
 
 export default function Home() {
@@ -14,169 +41,158 @@ export default function Home() {
   // Creative console logs for fellow developers
   useEffect(() => {
     // ASCII Art Header
-    console.log(`
-%c╭─────────────────────────────────────────────────────────────╮
-│                                                             │
-│   ██╗   ██╗██╗ ██████╗████████╗ ██████╗ ██████╗ ██╗ █████╗  │
-│   ██║   ██║██║██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗██║██╔══██╗ │
-│   ██║   ██║██║██║        ██║   ██║   ██║██████╔╝██║███████║ │
-│   ╚██╗ ██╔╝██║██║        ██║   ██║   ██║██╔══██╗██║██╔══██║ │
-│    ╚████╔╝ ██║╚██████╗   ██║   ╚██████╔╝██║  ██║██║██║  ██║ │
-│     ╚═══╝  ╚═╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝ │
-│                                                             │
-│               R&D Team Leader | AI Innovation               │
-╰─────────────────────────────────────────────────────────────╯`, 
-'color: #3b82f6; font-family: monospace; font-weight: bold;');
+    console.log(ASCII_ART, 
+      `color: ${CONSOLE_COLORS.PRIMARY}; font-family: monospace; font-weight: bold;`);
 
     // Welcome message
-    console.log('%c🚀 Welcome to Victoria Kirichenko\'s Portfolio!', 
-      'color: #06b6d4; font-size: 18px; font-weight: bold;');
+    console.log(`%c${CONSOLE_MESSAGES.WELCOME_TITLE}`, 
+      `color: ${CONSOLE_COLORS.CYAN}; font-size: ${CONSOLE_FONT_SIZE.XLARGE}; font-weight: bold;`);
     
-    console.log('%c👩‍💻 Hello fellow developer!', 
-      'color: #8b5cf6; font-size: 14px; font-weight: bold;');
+    console.log(`%c${CONSOLE_MESSAGES.HELLO_DEV}`, 
+      `color: ${CONSOLE_COLORS.PURPLE}; font-size: ${CONSOLE_FONT_SIZE.MEDIUM}; font-weight: bold;`);
     
-    console.log('%cLooks like you\'re curious about how this site works. I love that! 🔍', 
-      'color: #10b981; font-size: 12px;');
+    console.log(`%c${CONSOLE_MESSAGES.CURIOUS_MESSAGE}`, 
+      `color: ${CONSOLE_COLORS.GREEN}; font-size: ${CONSOLE_FONT_SIZE.SMALL};`);
 
     // Tech stack info
-    console.log('\n%c🛠️ Tech Stack:', 'color: #f59e0b; font-weight: bold; font-size: 14px;');
-    console.log('%c   Frontend: React 18 + TypeScript + Vite', 'color: #3b82f6;');
-    console.log('%c   Styling: Tailwind CSS + Framer Motion', 'color: #3b82f6;');
-    console.log('%c   UI: Radix UI + shadcn/ui components', 'color: #3b82f6;');
-    console.log('%c   Deployment: Static build (no backend needed)', 'color: #3b82f6;');
+    console.log(`\n%c${CONSOLE_MESSAGES.TECH_STACK_TITLE}`, `color: ${CONSOLE_COLORS.ORANGE}; font-weight: bold; font-size: ${CONSOLE_FONT_SIZE.MEDIUM};`);
+    console.log(`%c${CONSOLE_MESSAGES.TECH_FRONTEND}`, `color: ${CONSOLE_COLORS.PRIMARY};`);
+    console.log(`%c${CONSOLE_MESSAGES.TECH_STYLING}`, `color: ${CONSOLE_COLORS.PRIMARY};`);
+    console.log(`%c${CONSOLE_MESSAGES.TECH_UI}`, `color: ${CONSOLE_COLORS.PRIMARY};`);
+    console.log(`%c${CONSOLE_MESSAGES.TECH_DEPLOYMENT}`, `color: ${CONSOLE_COLORS.PRIMARY};`);
 
     // Fun facts
-    console.log('\n%c💡 Fun Development Facts:', 'color: #f59e0b; font-weight: bold; font-size: 14px;');
-    console.log('%c   • This site has animated particles (check the background!)', 'color: #6366f1;');
-    console.log('%c   • Glassmorphism effects everywhere', 'color: #6366f1;');
-    console.log('%c   • Contact form uses mailto (perfect for static deployment)', 'color: #6366f1;');
-    console.log('%c   • Intersection Observer for scroll animations', 'color: #6366f1;');
-    console.log('%c   • Dark mode with custom CSS variables', 'color: #6366f1;');
+    console.log(`\n%c${CONSOLE_MESSAGES.FUN_FACTS_TITLE}`, `color: ${CONSOLE_COLORS.ORANGE}; font-weight: bold; font-size: ${CONSOLE_FONT_SIZE.MEDIUM};`);
+    console.log(`%c${CONSOLE_MESSAGES.FUN_PARTICLES}`, `color: ${CONSOLE_COLORS.INDIGO};`);
+    console.log(`%c${CONSOLE_MESSAGES.FUN_GLASS}`, `color: ${CONSOLE_COLORS.INDIGO};`);
+    console.log(`%c${CONSOLE_MESSAGES.FUN_MAILTO}`, `color: ${CONSOLE_COLORS.INDIGO};`);
+    console.log(`%c${CONSOLE_MESSAGES.FUN_OBSERVER}`, `color: ${CONSOLE_COLORS.INDIGO};`);
+    console.log(`%c${CONSOLE_MESSAGES.FUN_DARK}`, `color: ${CONSOLE_COLORS.INDIGO};`);
 
     // Professional info
-    console.log('\n%c🎯 About Victoria:', 'color: #f59e0b; font-weight: bold; font-size: 14px;');
-    console.log('%c   • 10+ years in tech (Full Stack → Team Lead → R&D Leader)', 'color: #ec4899;');
-    console.log('%c   • Passionate about AI-driven innovation', 'color: #ec4899;');
-    console.log('%c   • Building high-performance teams with strong culture', 'color: #ec4899;');
+    console.log(`\n%c${CONSOLE_MESSAGES.ABOUT_TITLE}`, `color: ${CONSOLE_COLORS.ORANGE}; font-weight: bold; font-size: ${CONSOLE_FONT_SIZE.MEDIUM};`);
+    console.log(`%c${CONSOLE_MESSAGES.ABOUT_EXPERIENCE}`, `color: ${CONSOLE_COLORS.PINK};`);
+    console.log(`%c${CONSOLE_MESSAGES.ABOUT_PASSION}`, `color: ${CONSOLE_COLORS.PINK};`);
+    console.log(`%c${CONSOLE_MESSAGES.ABOUT_CULTURE}`, `color: ${CONSOLE_COLORS.PINK};`);
 
     // Easter egg
-    console.log('\n%c🎉 Easter Egg Unlocked!', 'color: #f59e0b; font-weight: bold; font-size: 14px;');
-    console.log('%cSince you\'re here, try typing: victoria.skills() in the console!', 'color: #10b981;');
+    console.log(`\n%c${CONSOLE_MESSAGES.EASTER_EGG_TITLE}`, `color: ${CONSOLE_COLORS.ORANGE}; font-weight: bold; font-size: ${CONSOLE_FONT_SIZE.MEDIUM};`);
+    console.log(`%c${CONSOLE_MESSAGES.EASTER_EGG_HINT}`, `color: ${CONSOLE_COLORS.GREEN};`);
 
     // Add interactive function
     (window as any).victoria = {
       skills: () => {
-        console.log('%c🚀 Victoria\'s Tech Arsenal:', 'color: #3b82f6; font-size: 16px; font-weight: bold;');
-        console.log('%c   Languages: TypeScript, Python, JavaScript, .NET', 'color: #8b5cf6;');
-        console.log('%c   Frontend: React, HTML5, CSS3', 'color: #8b5cf6;');
-        console.log('%c   Backend: Node.js, Express, .NET, PHP', 'color: #8b5cf6;');
-        console.log('%c   Cloud & DevOps: AWS, Azure, Docker, Kubernetes, GCP', 'color: #8b5cf6;');
-        console.log('%c   Leadership: Team Building, Agile, Strategic Planning', 'color: #8b5cf6;');
-        return 'Skills loaded! 💪';
+        console.log(`%c${CONSOLE_MESSAGES.SKILLS_TITLE}`, `color: ${CONSOLE_COLORS.PRIMARY}; font-size: ${CONSOLE_FONT_SIZE.LARGE}; font-weight: bold;`);
+        console.log(`%c${CONSOLE_MESSAGES.SKILLS_LANGUAGES}`, `color: ${CONSOLE_COLORS.PURPLE};`);
+        console.log(`%c${CONSOLE_MESSAGES.SKILLS_FRONTEND}`, `color: ${CONSOLE_COLORS.PURPLE};`);
+        console.log(`%c${CONSOLE_MESSAGES.SKILLS_BACKEND}`, `color: ${CONSOLE_COLORS.PURPLE};`);
+        console.log(`%c${CONSOLE_MESSAGES.SKILLS_CLOUD}`, `color: ${CONSOLE_COLORS.PURPLE};`);
+        console.log(`%c${CONSOLE_MESSAGES.SKILLS_LEADERSHIP}`, `color: ${CONSOLE_COLORS.PURPLE};`);
+        return CONSOLE_MESSAGES.SKILLS_RETURN;
       },
       contact: () => {
-        console.log('%c📧 Let\'s connect!', 'color: #f59e0b; font-size: 16px; font-weight: bold;');
-        console.log('%c   Email: victoria.arrete@gmail.com', 'color: #10b981;');
-        console.log('%c   LinkedIn: https://www.linkedin.com/in/victoria-kirichenko/', 'color: #10b981;');
-        return 'Ready to innovate together! 🤝';
+        console.log(`%c${CONSOLE_MESSAGES.CONTACT_TITLE}`, `color: ${CONSOLE_COLORS.ORANGE}; font-size: ${CONSOLE_FONT_SIZE.LARGE}; font-weight: bold;`);
+        console.log(`%c   Email: ${PERSONAL_INFO.EMAIL}`, `color: ${CONSOLE_COLORS.GREEN};`);
+        console.log(`%c   LinkedIn: ${PERSONAL_INFO.LINKEDIN_URL}`, `color: ${CONSOLE_COLORS.GREEN};`);
+        return CONSOLE_MESSAGES.CONTACT_RETURN;
       },
       theme: () => {
-        console.log('%c🌙 Dark Mode Variables:', 'color: #6366f1; font-size: 16px; font-weight: bold;');
-        console.log('%c   --background: 2 6% 10% (slate-950)', 'color: #8b5cf6;');
-        console.log('%c   --foreground: 0 0% 98% (white)', 'color: #8b5cf6;');
-        console.log('%c   --primary: 217 91% 60% (blue-500)', 'color: #8b5cf6;');
-        console.log('%c   --accent: 188 86% 53% (cyan-400)', 'color: #8b5cf6;');
-        return 'Theme secrets revealed! 🎨';
+        console.log(`%c${CONSOLE_MESSAGES.THEME_TITLE}`, `color: ${CONSOLE_COLORS.INDIGO}; font-size: ${CONSOLE_FONT_SIZE.LARGE}; font-weight: bold;`);
+        console.log(`%c${CONSOLE_MESSAGES.THEME_BG}`, `color: ${CONSOLE_COLORS.PURPLE};`);
+        console.log(`%c${CONSOLE_MESSAGES.THEME_FG}`, `color: ${CONSOLE_COLORS.PURPLE};`);
+        console.log(`%c${CONSOLE_MESSAGES.THEME_PRIMARY}`, `color: ${CONSOLE_COLORS.PURPLE};`);
+        console.log(`%c${CONSOLE_MESSAGES.THEME_ACCENT}`, `color: ${CONSOLE_COLORS.PURPLE};`);
+        return CONSOLE_MESSAGES.THEME_RETURN;
       }
     };
 
     // Performance info
-    console.log('\n%c⚡ Performance Notes:', 'color: #f59e0b; font-weight: bold; font-size: 14px;');
-    console.log('%c   • Optimized with Vite for fast loading', 'color: #f97316;');
-    console.log('%c   • Lazy loading for better performance', 'color: #f97316;');
-    console.log('%c   • Minified CSS and JS for production', 'color: #f97316;');
+    console.log(`\n%c${CONSOLE_MESSAGES.PERFORMANCE_TITLE}`, `color: ${CONSOLE_COLORS.ORANGE}; font-weight: bold; font-size: ${CONSOLE_FONT_SIZE.MEDIUM};`);
+    console.log(`%c${CONSOLE_MESSAGES.PERFORMANCE_VITE}`, `color: ${CONSOLE_COLORS.RED};`);
+    console.log(`%c${CONSOLE_MESSAGES.PERFORMANCE_LAZY}`, `color: ${CONSOLE_COLORS.RED};`);
+    console.log(`%c${CONSOLE_MESSAGES.PERFORMANCE_MINIFIED}`, `color: ${CONSOLE_COLORS.RED};`);
 
-    console.log('\n%c💼 Interested in collaboration?', 'color: #f59e0b; font-weight: bold; font-size: 14px;');
-    console.log('%cType: victoria.contact() for contact info!', 'color: #10b981;');
+    console.log(`\n%c${CONSOLE_MESSAGES.COLLABORATION_TITLE}`, `color: ${CONSOLE_COLORS.ORANGE}; font-weight: bold; font-size: ${CONSOLE_FONT_SIZE.MEDIUM};`);
+    console.log(`%c${CONSOLE_MESSAGES.COLLABORATION_HINT}`, `color: ${CONSOLE_COLORS.GREEN};`);
     
-    console.log('\n%c─────────────────────────────────────────────────────────────', 'color: #374151;');
-    console.log('%c Engineering clarity. Leading with precision. 🎯', 'color: #6366f1; font-style: italic;');
-    console.log('%c─────────────────────────────────────────────────────────────', 'color: #374151;');
+    console.log(`\n%c${CONSOLE_MESSAGES.DIVIDER}`, `color: ${CONSOLE_COLORS.GRAY};`);
+    console.log(`%c ${TAGLINES.PRIMARY} 🎯`, `color: ${CONSOLE_COLORS.INDIGO}; font-style: italic;`);
+    console.log(`%c${CONSOLE_MESSAGES.DIVIDER}`, `color: ${CONSOLE_COLORS.GRAY};`);
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-gray-100 overflow-x-hidden">
+    <div className={styles.page}>
       <ParticleSystem />
       <Navigation />
 
       {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center justify-center relative hero-gradient">
-        <div className="container mx-auto px-6 text-center z-10">
+      <section id={NAV_SECTIONS.HERO} className={styles.hero}>
+        <div className={styles.hero__container}>
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
+            initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_LARGE }}
+            animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
+            transition={{ duration: ANIMATION_DURATION.VERY_SLOW, ease: EASING.DEFAULT }}
           >
-            <div className="mb-8 relative">
+            <div className={styles.hero__portraitWrapper}>
               <motion.div
-                className="w-32 h-32 mx-auto mb-8 rounded-full overflow-hidden glassmorphism p-1"
-                animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className={styles.hero__portrait}
+                animate={{ y: [0, TRANSFORM.FLOAT_OFFSET, 0] }}
+                transition={{ duration: ANIMATION_DURATION.FLOAT, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
               >
                 <img
                   src={victoriaPortrait}
-                  alt="Victoria Kirichenko"
-                  className="w-full h-full object-cover rounded-full"
+                  alt={PERSONAL_INFO.NAME}
+                  className={styles.hero__portraitImage}
                 />
               </motion.div>
             </div>
 
             <motion.h1
-              className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
+              className={styles.hero__title}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
+              animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              transition={{ delay: ANIMATION_DELAY.MEDIUM, duration: ANIMATION_DURATION.SLOW }}
             >
-              <span className="block text-white">Victoria</span>
-              <span className="block text-gradient">Kirichenko</span>
+              <span className={styles.hero__titleMain}>{PERSONAL_INFO.FIRST_NAME}</span>
+              <span className={styles.hero__titleAccent}>{PERSONAL_INFO.LAST_NAME}</span>
             </motion.h1>
 
             <motion.h2
-              className="text-xl md:text-2xl text-gray-300 mb-4 font-medium"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
+              className={styles.hero__subtitle}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
+              animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              transition={{ delay: ANIMATION_DELAY.LONG, duration: ANIMATION_DURATION.SLOW }}
             >
-              R&D Team Leader | Strategic Engineering Leader | AI-Driven Innovator
+              {ROLES.FULL_SUBTITLE}
             </motion.h2>
 
             <motion.p
-              className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
+              className={styles.hero__tagline}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
+              animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              transition={{ delay: ANIMATION_DELAY.VERY_LONG, duration: ANIMATION_DURATION.SLOW }}
             >
-              "Engineering clarity. Leading with precision."
+              {TAGLINES.HERO}
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
+              className={styles.hero__actions}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
+              animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              transition={{ delay: ANIMATION_DELAY.EXTRA_LONG, duration: ANIMATION_DURATION.SLOW }}
             >
               <Button
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white rounded-full font-semibold shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105"
+                onClick={() => document.getElementById(NAV_SECTIONS.CONTACT)?.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH })}
+                className={`${styles.button} ${styles['button--primary']}`}
               >
-                Get In Touch
+                {BUTTON_LABELS.GET_IN_TOUCH}
               </Button>
               <Button
                 variant="outline"
-                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-4 glassmorphism border-blue-400/30 text-white rounded-full font-semibold hover:bg-white/10 transition-all duration-300"
+                onClick={() => document.getElementById(NAV_SECTIONS.ABOUT)?.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH })}
+                className={`${styles.button} ${styles['button--outline']}`}
               >
-                Learn More
+                {BUTTON_LABELS.LEARN_MORE}
               </Button>
             </motion.div>
           </motion.div>
@@ -184,89 +200,90 @@ export default function Home() {
 
         {/* Animated geometric elements */}
         <motion.div
-          className="absolute top-20 left-10 w-20 h-20 border border-blue-400/30 rotate-45"
-          animate={{ y: [0, -20, 0], rotate: [45, 225, 45] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className={`${styles.hero__decoration} ${styles['hero__decoration--square']}`}
+          animate={{ 
+            y: [0, TRANSFORM.FLOAT_OFFSET, 0], 
+            rotate: [TRANSFORM.ROTATE_INITIAL, TRANSFORM.ROTATE_END, TRANSFORM.ROTATE_INITIAL] 
+          }}
+          transition={{ duration: ANIMATION_DURATION.ROTATE_SLOW, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-16 h-16 border border-cyan-400/30 rounded-full"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className={`${styles.hero__decoration} ${styles['hero__decoration--circle']}`}
+          animate={{ 
+            scale: [TRANSFORM.SCALE_MIN, TRANSFORM.SCALE_PULSE_LARGE, TRANSFORM.SCALE_MIN], 
+            opacity: [OPACITY.SUBTLE, OPACITY.MEDIUM, OPACITY.SUBTLE] 
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
         />
         <motion.div
-          className="absolute top-1/2 left-5 w-8 h-8 bg-gradient-to-r from-blue-500/50 to-cyan-400/50 rounded-full"
-          animate={{ y: [0, -30, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className={`${styles.hero__decoration} ${styles['hero__decoration--dot']}`}
+          animate={{ y: [0, TRANSFORM.FLOAT_OFFSET_LARGE, 0] }}
+          transition={{ duration: ANIMATION_DURATION.FLOAT, repeat: Infinity, ease: EASING.EASE_IN_OUT, delay: ANIMATION_DELAY.ANIMATION_OFFSET }}
         />
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 relative">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
+      <section id={NAV_SECTIONS.ABOUT} className={styles.about}>
+        <div className={styles.section__container}>
+          <div className={styles.about__content}>
             <ScrollReveal>
-              <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-                About <span className="text-gradient">Me</span>
+              <h2 className={styles.section__title}>
+                {SECTION_TITLES.ABOUT} <span className={styles.section__titleAccent}>{SECTION_TITLES.ABOUT_ACCENT}</span>
               </h2>
             </ScrollReveal>
 
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <ScrollReveal delay={0.2}>
-                <div className="flex justify-center mb-8 md:mb-0">
+            <div className={styles.about__grid}>
+              <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
+                <div className={styles.about__portraitWrapper}>
                   <motion.div
-                    className="w-80 h-80 rounded-2xl overflow-hidden glassmorphism p-2"
-                    whileHover={{ scale: 1.02, rotateY: 5 }}
-                    transition={{ duration: 0.3 }}
+                    className={styles.about__portrait}
+                    whileHover={{ scale: TRANSFORM.HOVER_SCALE, rotateY: TRANSFORM.ROTATE_Y }}
+                    transition={{ duration: ANIMATION_DURATION.NORMAL }}
                   >
                     <img
                       src={victoriaPortrait}
-                      alt="Victoria Kirichenko"
-                      className="w-full h-full object-cover rounded-xl"
+                      alt={PERSONAL_INFO.NAME}
+                      className={styles.about__portraitImage}
                     />
                   </motion.div>
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal delay={0.4}>
-                <Card className="glassmorphism border-blue-400/20 card-hover">
-                  <CardContent className="p-8">
-                    <h3 className="text-2xl font-bold mb-6 text-gradient">Strong code needs strong culture. I build both.</h3>
-                    <p className="text-gray-300 leading-relaxed mb-6">
-                      I'm an R&D Leader, passionate about combining innovation with people-focused leadership. I believe teams thrive in a culture of trust, clarity, and support, and I work hard to balance technical results with emotional well-being.
-                    </p>
-                    <p className="text-gray-300 leading-relaxed mb-6">
-                      Having moved to a new country alone, I built my career on resilience and bold decision-making. At Swish.AI, I lead talented teams to create smarter, more efficient IT workflows with AI, always focusing on delivering real impact.
-                    </p>
-                    <p className="text-gray-300 leading-relaxed mb-6">
-                      Before this, I worked at Perion Network, where I led teams and developed projects for the content arbitrage market. I also hold a Master's degree in Computer Science, which has fueled my passion for solving problems and empowering teams to grow.
-                    </p>
-                    
-                    <div className="space-y-4 mt-8">
-                      <h4 className="text-xl font-bold text-blue-400">Core Strengths</h4>
-                      {[
-                        'Emotional Intelligence & System Thinking',
-                        'Team Optimization & Scaling Products',
-                        'Executive-Level Communication',
-                        'AI-Driven Innovation & Automation',
-                      ].map((strength, index) => (
+              <ScrollReveal delay={ANIMATION_DELAY.LONG}>
+                <div className={`${styles.card} ${styles['card--hover']}`}>
+                  <h3 className={styles.card__title}>{TAGLINES.ABOUT_TITLE}</h3>
+                  <p className={styles.card__text}>
+                    {ABOUT_CONTENT.INTRO}
+                  </p>
+                  <p className={styles.card__text}>
+                    {ABOUT_CONTENT.JOURNEY}
+                  </p>
+                  <p className={styles.card__text}>
+                    {ABOUT_CONTENT.BACKGROUND}
+                  </p>
+                  
+                  <div className={styles.strengths}>
+                    <h4 className={styles.strengths__title}>{ABOUT_CONTENT.STRENGTHS_TITLE}</h4>
+                    <div className={styles.strengths__list}>
+                      {CORE_STRENGTHS.map((strength, index) => (
                         <motion.div
                           key={index}
-                          className="flex items-center space-x-3"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1, duration: 0.5 }}
+                          className={styles.strengths__item}
+                          initial={{ opacity: OPACITY.HIDDEN, x: INITIAL_OFFSET.X_SMALL }}
+                          whileInView={{ opacity: OPACITY.VISIBLE, x: 0 }}
+                          transition={{ delay: index * ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM }}
                         >
                           <motion.div
-                            className="w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"
-                            animate={{ scale: [1, 1.5, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                            className={styles.strengths__dot}
+                            animate={{ scale: [TRANSFORM.SCALE_MIN, TRANSFORM.SCALE_PULSE_MAX, TRANSFORM.SCALE_MIN] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: index * ANIMATION_DELAY.MEDIUM }}
                           />
-                          <span className="text-gray-300">{strength}</span>
+                          <span className={styles.strengths__text}>{strength}</span>
                         </motion.div>
                       ))}
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </ScrollReveal>
             </div>
           </div>
@@ -274,207 +291,179 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 relative">
-        <div className="container mx-auto px-6">
+      <section id={NAV_SECTIONS.EXPERIENCE} className={styles.experience}>
+        <div className={styles.section__container}>
           <ScrollReveal>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-              Experience <span className="text-gradient">Timeline</span>
+            <h2 className={styles.section__title}>
+              {SECTION_TITLES.EXPERIENCE} <span className={styles.section__titleAccent}>{SECTION_TITLES.EXPERIENCE_ACCENT}</span>
             </h2>
           </ScrollReveal>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="relative">
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 to-cyan-400"></div>
+          <div className={styles.experience__content}>
+            <div className={styles.experience__timeline}>
+              <div className={styles.experience__timelineLine}></div>
 
               {/* Current Position - Swish.ai */}
-              <ScrollReveal delay={0.2}>
-                <div className="relative mb-12">
-                  <div className="flex items-start">
-                    <motion.div
-                      className="absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full z-10"
-                      animate={{ scale: [1, 1.3, 1], boxShadow: ['0 0 0 0 rgba(59, 130, 246, 0.7)', '0 0 0 10px rgba(59, 130, 246, 0)', '0 0 0 0 rgba(59, 130, 246, 0)'] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                    <Card className="ml-16 glassmorphism border-blue-400/20 card-hover">
-                      <CardContent className="p-8">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                          <h3 className="text-2xl font-bold text-white">R&D Team Leader</h3>
-                          <span className="text-blue-400 font-semibold">April 2024 - Present</span>
-                        </div>
-                        <h4 className="text-xl text-cyan-400 mb-4">Swish.ai • Tel Aviv, Israel</h4>
-                        <p className="text-gray-300 leading-relaxed mb-4">
-                          Leading IT workflow optimization with a people-first approach. Driving innovation through AI-driven solutions while fostering collaborative, growth-focused culture using Scrum methodology.
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {['AI Automation', 'Team Leadership', 'Scrum', 'Workflow Optimization'].map((skill) => (
-                            <span key={skill} className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
+              <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
+                <div className={styles.experience__item}>
+                  <motion.div
+                    className={`${styles.experience__dot} ${styles['experience__dot--active']}`}
+                    animate={{ scale: [TRANSFORM.SCALE_MIN, TRANSFORM.SCALE_MAX, TRANSFORM.SCALE_MIN], boxShadow: ['0 0 0 0 rgba(59, 130, 246, 0.7)', '0 0 0 10px rgba(59, 130, 246, 0)', '0 0 0 0 rgba(59, 130, 246, 0)'] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
+                    <div className={styles.experience__header}>
+                      <h3 className={styles.experience__title}>R&D Team Leader</h3>
+                      <span className={styles.experience__period}>April 2024 - Present</span>
+                    </div>
+                    <h4 className={styles.experience__company}>Swish.ai • Tel Aviv, Israel</h4>
+                    <p className={styles.experience__description}>
+                      Leading IT workflow optimization with a people-first approach. Driving innovation through AI-driven solutions while fostering collaborative, growth-focused culture using Scrum methodology.
+                    </p>
+                    <div className={styles.experience__tags}>
+                      {['AI Automation', 'Team Leadership', 'Scrum', 'Workflow Optimization'].map((skill) => (
+                        <span key={skill} className={styles.experience__tag}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
 
               {/* Perion Network - R&D Team Leader */}
-              <ScrollReveal delay={0.4}>
-                <div className="relative mb-12">
-                  <div className="flex items-start">
-                    <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-500/70 to-cyan-400/70 rounded-full z-10" />
-                    <Card className="ml-16 glassmorphism border-blue-400/20 card-hover">
-                      <CardContent className="p-8">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                          <h3 className="text-2xl font-bold text-white">R&D Team Leader</h3>
-                          <span className="text-blue-400 font-semibold">April 2021 - April 2024</span>
-                        </div>
-                        <h4 className="text-xl text-cyan-400 mb-4">Perion Network • Holon, Israel</h4>
-                        <p className="text-gray-300 leading-relaxed mb-4">
-                          Led a team of 5 developers and QA through scrum ceremonies, managing back-office projects focusing on configurations for layouts, posts, and advertising logic. Contributed to microservices architecture with MongoDB integration.
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {['Team Management', 'Microservices', 'MongoDB', 'Ad Tech'].map((skill) => (
-                            <span key={skill} className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
+              <ScrollReveal delay={ANIMATION_DELAY.LONG}>
+                <div className={styles.experience__item}>
+                  <div className={styles.experience__dot} />
+                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
+                    <div className={styles.experience__header}>
+                      <h3 className={styles.experience__title}>R&D Team Leader</h3>
+                      <span className={styles.experience__period}>April 2021 - April 2024</span>
+                    </div>
+                    <h4 className={styles.experience__company}>Perion Network • Holon, Israel</h4>
+                    <p className={styles.experience__description}>
+                      Led a team of 5 developers and QA through scrum ceremonies, managing back-office projects focusing on configurations for layouts, posts, and advertising logic. Contributed to microservices architecture with MongoDB integration.
+                    </p>
+                    <div className={styles.experience__tags}>
+                      {['Team Management', 'Microservices', 'MongoDB', 'Ad Tech'].map((skill) => (
+                        <span key={skill} className={styles.experience__tag}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
 
               {/* Perion Network - Full Stack Developer */}
-              <ScrollReveal delay={0.6}>
-                <div className="relative mb-12">
-                  <div className="flex items-start">
-                    <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-500/50 to-cyan-400/50 rounded-full z-10" />
-                    <Card className="ml-16 glassmorphism border-blue-400/20 card-hover">
-                      <CardContent className="p-8">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                          <h3 className="text-2xl font-bold text-white">Full Stack Developer</h3>
-                          <span className="text-blue-400 font-semibold">June 2018 - April 2021</span>
-                        </div>
-                        <h4 className="text-xl text-cyan-400 mb-4">Perion Network • Holon, Israel</h4>
-                        <p className="text-gray-300 leading-relaxed mb-4">
-                          Specialized in developing impactful web solutions using React and Next.js. Built scalable backend solutions with Node.js and MongoDB for microservices architecture.
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {['React', 'Next.js', 'Node.js', 'MongoDB'].map((skill) => (
-                            <span key={skill} className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
+              <ScrollReveal delay={ANIMATION_DELAY.VERY_LONG}>
+                <div className={styles.experience__item}>
+                  <div className={styles.experience__dot} />
+                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
+                    <div className={styles.experience__header}>
+                      <h3 className={styles.experience__title}>Full Stack Developer</h3>
+                      <span className={styles.experience__period}>June 2018 - April 2021</span>
+                    </div>
+                    <h4 className={styles.experience__company}>Perion Network • Holon, Israel</h4>
+                    <p className={styles.experience__description}>
+                      Specialized in developing impactful web solutions using React and Next.js. Built scalable backend solutions with Node.js and MongoDB for microservices architecture.
+                    </p>
+                    <div className={styles.experience__tags}>
+                      {['React', 'Next.js', 'Node.js', 'MongoDB'].map((skill) => (
+                        <span key={skill} className={styles.experience__tag}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
 
               {/* Mind Connect */}
-              <ScrollReveal delay={0.8}>
-                <div className="relative mb-12">
-                  <div className="flex items-start">
-                    <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-500/40 to-cyan-400/40 rounded-full z-10" />
-                    <Card className="ml-16 glassmorphism border-blue-400/20 card-hover">
-                      <CardContent className="p-8">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                          <h3 className="text-2xl font-bold text-white">Full Stack Developer</h3>
-                          <span className="text-blue-400 font-semibold">March 2016 - April 2018</span>
-                        </div>
-                        <h4 className="text-xl text-cyan-400 mb-4">Mind Connect • Rishon LeZion, Israel</h4>
-                        <p className="text-gray-300 leading-relaxed mb-4">
-                          Designed and developed a call center management platform (web application) with full-stack implementation using modern technologies and custom solutions.
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {['PHP', 'MySQL', 'JavaScript', 'jQuery', 'Bootstrap', 'Google Maps API'].map((skill) => (
-                            <span key={skill} className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
+              <ScrollReveal delay={ANIMATION_DELAY.EXTRA_LONG}>
+                <div className={styles.experience__item}>
+                  <div className={styles.experience__dot} />
+                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
+                    <div className={styles.experience__header}>
+                      <h3 className={styles.experience__title}>Full Stack Developer</h3>
+                      <span className={styles.experience__period}>March 2016 - April 2018</span>
+                    </div>
+                    <h4 className={styles.experience__company}>Mind Connect • Rishon LeZion, Israel</h4>
+                    <p className={styles.experience__description}>
+                      Designed and developed a call center management platform (web application) with full-stack implementation using modern technologies and custom solutions.
+                    </p>
+                    <div className={styles.experience__tags}>
+                      {['PHP', 'MySQL', 'JavaScript', 'jQuery', 'Bootstrap', 'Google Maps API'].map((skill) => (
+                        <span key={skill} className={styles.experience__tag}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
 
               {/* PowerTech */}
-              <ScrollReveal delay={1.0}>
-                <div className="relative mb-12">
-                  <div className="flex items-start">
-                    <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-500/35 to-cyan-400/35 rounded-full z-10" />
-                    <Card className="ml-16 glassmorphism border-blue-400/20 card-hover">
-                      <CardContent className="p-8">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                          <h3 className="text-2xl font-bold text-white">Full Stack Developer</h3>
-                          <span className="text-blue-400 font-semibold">February 2015 - March 2016</span>
-                        </div>
-                        <h4 className="text-xl text-cyan-400 mb-4">PowerTech • Rishon LeZion, Israel</h4>
-                        <p className="text-gray-300 leading-relaxed mb-4">
-                          Designed and implemented a project management web application using .NET framework and Microsoft SQL Server with modern frontend technologies.
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {['ASP.NET', 'Microsoft SQL Server', 'JavaScript', 'HTML', 'CSS'].map((skill) => (
-                            <span key={skill} className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
+              <ScrollReveal delay={ANIMATION_DELAY.STAGGER_1}>
+                <div className={styles.experience__item}>
+                  <div className={styles.experience__dot} />
+                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
+                    <div className={styles.experience__header}>
+                      <h3 className={styles.experience__title}>Full Stack Developer</h3>
+                      <span className={styles.experience__period}>February 2015 - March 2016</span>
+                    </div>
+                    <h4 className={styles.experience__company}>PowerTech • Rishon LeZion, Israel</h4>
+                    <p className={styles.experience__description}>
+                      Designed and implemented a project management web application using .NET framework and Microsoft SQL Server with modern frontend technologies.
+                    </p>
+                    <div className={styles.experience__tags}>
+                      {['ASP.NET', 'Microsoft SQL Server', 'JavaScript', 'HTML', 'CSS'].map((skill) => (
+                        <span key={skill} className={styles.experience__tag}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
 
               {/* Early Career */}
-              <ScrollReveal delay={1.2}>
-                <div className="relative mb-12">
-                  <div className="flex items-start">
-                    <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-500/30 to-cyan-400/30 rounded-full z-10" />
-                    <Card className="ml-16 glassmorphism border-blue-400/20 card-hover">
-                      <CardContent className="p-8">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                          <h3 className="text-2xl font-bold text-white">Full Stack Developer</h3>
-                          <span className="text-blue-400 font-semibold">December 2012 - January 2015</span>
-                        </div>
-                        <h4 className="text-xl text-cyan-400 mb-4">Early Career Development • Penza, Russia</h4>
-                        <p className="text-gray-300 leading-relaxed mb-4">
-                          Foundation years building comprehensive full-stack development skills and gaining experience in various technologies and project management methodologies.
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {['Full Stack Development', 'Project Management', 'Software Architecture'].map((skill) => (
-                            <span key={skill} className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
+              <ScrollReveal delay={ANIMATION_DELAY.STAGGER_2}>
+                <div className={styles.experience__item}>
+                  <div className={styles.experience__dot} />
+                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
+                    <div className={styles.experience__header}>
+                      <h3 className={styles.experience__title}>Full Stack Developer</h3>
+                      <span className={styles.experience__period}>December 2012 - January 2015</span>
+                    </div>
+                    <h4 className={styles.experience__company}>Early Career Development • Penza, Russia</h4>
+                    <p className={styles.experience__description}>
+                      Foundation years building comprehensive full-stack development skills and gaining experience in various technologies and project management methodologies.
+                    </p>
+                    <div className={styles.experience__tags}>
+                      {['Full Stack Development', 'Project Management', 'Software Architecture'].map((skill) => (
+                        <span key={skill} className={styles.experience__tag}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
 
               {/* Education */}
-              <ScrollReveal delay={1.4}>
-                <div className="relative">
-                  <div className="flex items-start">
-                    <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-500/30 to-cyan-400/30 rounded-full z-10" />
-                    <Card className="ml-16 glassmorphism border-blue-400/20 card-hover">
-                      <CardContent className="p-8">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                          <h3 className="text-2xl font-bold text-white">Master of Science</h3>
-                          <span className="text-blue-400 font-semibold">2007 - 2012</span>
-                        </div>
-                        <h4 className="text-xl text-cyan-400 mb-4">Penza State University • Computer Science</h4>
-                        <p className="text-gray-300 leading-relaxed">
-                          Advanced studies in Computer Science, building the foundation for solving complex problems and empowering teams to grow through collaboration, accountability, and purpose.
-                        </p>
-                      </CardContent>
-                    </Card>
+              <ScrollReveal delay={ANIMATION_DELAY.STAGGER_3}>
+                <div className={styles.experience__item}>
+                  <div className={styles.experience__dot} />
+                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
+                    <div className={styles.experience__header}>
+                      <h3 className={styles.experience__title}>Master of Science</h3>
+                      <span className={styles.experience__period}>2007 - 2012</span>
+                    </div>
+                    <h4 className={styles.experience__company}>Penza State University • Computer Science</h4>
+                    <p className={styles.experience__description}>
+                      Advanced studies in Computer Science, building the foundation for solving complex problems and empowering teams to grow through collaboration, accountability, and purpose.
+                    </p>
                   </div>
                 </div>
               </ScrollReveal>
@@ -484,78 +473,63 @@ export default function Home() {
       </section>
 
       {/* Philosophy Section */}
-      <section id="philosophy" className="py-20 relative">
-        <div className="container mx-auto px-6">
+      <section id={NAV_SECTIONS.PHILOSOPHY} className={styles.philosophy}>
+        <div className={styles.section__container}>
           <ScrollReveal>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-              Leadership <span className="text-gradient">Philosophy</span>
+            <h2 className={styles.section__title}>
+              {SECTION_TITLES.PHILOSOPHY} <span className={styles.section__titleAccent}>{SECTION_TITLES.PHILOSOPHY_ACCENT}</span>
             </h2>
           </ScrollReveal>
 
-          <div className="max-w-4xl mx-auto">
-            <ScrollReveal delay={0.2}>
-              <Card className="glassmorphism border-blue-400/20 p-12 rounded-3xl text-center card-hover">
-                <CardContent className="p-0">
-                  <div className="mb-8">
-                    <motion.div
-                      className="w-16 h-16 mx-auto text-blue-400"
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    >
-                      <MessageCircle className="w-full h-full" />
-                    </motion.div>
-                  </div>
+          <div className={styles.philosophy__content}>
+            <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
+              <div className={`${styles.philosophy__card} ${styles['card--hover']}`}>
+                <div className={styles.philosophy__iconWrapper}>
+                  <motion.div
+                    className={styles.philosophy__icon}
+                    animate={{ rotate: [ROTATION.ZERO, ROTATION.FULL] }}
+                    transition={{ duration: ANIMATION_DURATION.ROTATE_VERY_SLOW, repeat: Infinity, ease: EASING.LINEAR }}
+                  >
+                    <MessageCircle className="w-full h-full" />
+                  </motion.div>
+                </div>
 
-                  <blockquote className="text-2xl md:text-3xl font-light text-gray-100 leading-relaxed mb-8">
-                    "I believe in clarity, feedback culture, and psychological safety with accountability. Teams thrive when they feel trusted, supported, and empowered to take bold decisions."
-                  </blockquote>
+                <blockquote className={styles.philosophy__quote}>
+                  {TAGLINES.PHILOSOPHY_QUOTE}
+                </blockquote>
 
-                  <div className="grid md:grid-cols-3 gap-8 mt-12">
-                    {[
-                      {
-                        icon: Heart,
-                        title: 'Clarity',
-                        description: 'Clear vision, transparent communication, and defined expectations',
-                      },
-                      {
-                        icon: Users,
-                        title: 'Psychological Safety',
-                        description: 'Creating environments where teams feel safe to innovate and fail',
-                      },
-                      {
-                        icon: Briefcase,
-                        title: 'Accountability',
-                        description: 'Empowering teams with ownership while maintaining high standards',
-                      },
-                    ].map((item, index) => (
-                      <ScrollReveal key={index} delay={0.4 + index * 0.2}>
-                        <div className="text-center">
-                          <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center">
-                            <item.icon className="w-6 h-6 text-white" />
+                <div className={styles.philosophy__principles}>
+                  {LEADERSHIP_PRINCIPLES.map((item, index) => {
+                    const IconComponent = index === 0 ? Heart : index === 1 ? Users : Briefcase;
+                    return (
+                      <ScrollReveal key={index} delay={ANIMATION_DELAY.LONG + index * ANIMATION_DELAY.MEDIUM}>
+                        <div className={styles.philosophy__principle}>
+                          <div className={styles.philosophy__principleIconWrapper}>
+                            <IconComponent className={styles.philosophy__principleIcon} />
                           </div>
-                          <h4 className="text-lg font-semibold text-white mb-2">{item.title}</h4>
-                          <p className="text-gray-400 text-sm">{item.description}</p>
+                          <h4 className={styles.philosophy__principleTitle}>{item.title}</h4>
+                          <p className={styles.philosophy__principleDescription}>{item.description}</p>
                         </div>
                       </ScrollReveal>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                    );
+                  })}
+                </div>
+              </div>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 relative">
-        <div className="container mx-auto px-6">
+      <section id={NAV_SECTIONS.PROJECTS} className={styles.projects}>
+        <div className={styles.section__container}>
           <ScrollReveal>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-              Key <span className="text-gradient">Projects</span>
+            <h2 className={styles.section__title}>
+              {SECTION_TITLES.PROJECTS} <span className={styles.section__titleAccent}>{SECTION_TITLES.PROJECTS_ACCENT}</span>
             </h2>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className={styles.projects__grid}>
             {[
               {
                 icon: Code,
@@ -579,30 +553,28 @@ export default function Home() {
                 tags: ['Tools', 'Productivity', 'Collaboration'],
               },
             ].map((project, index) => (
-              <ScrollReveal key={index} delay={index * 0.2}>
-                <Card className="glassmorphism border-blue-400/20 card-hover group">
-                  <CardContent className="p-8">
-                    <div className="mb-6">
-                      <motion.div
-                        className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300"
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <project.icon className="w-8 h-8 text-white" />
-                      </motion.div>
-                      <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-                      <p className="text-gray-400 text-sm mb-4">{project.company}</p>
-                    </div>
-                    <p className="text-gray-300 leading-relaxed mb-6">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+              <ScrollReveal key={index} delay={index * ANIMATION_DELAY.MEDIUM}>
+                <div className={styles.projects__card}>
+                  <div className={styles.projects__iconWrapper}>
+                    <motion.div
+                      className={styles.projects__iconBg}
+                      whileHover={{ rotate: ROTATION.FULL }}
+                      transition={{ duration: ANIMATION_DURATION.MEDIUM }}
+                    >
+                      <project.icon className={styles.projects__icon} />
+                    </motion.div>
+                    <h3 className={styles.projects__title}>{project.title}</h3>
+                    <p className={styles.projects__company}>{project.company}</p>
+                  </div>
+                  <p className={styles.projects__description}>{project.description}</p>
+                  <div className={styles.projects__tags}>
+                    {project.tags.map((tag) => (
+                      <span key={tag} className={styles.projects__tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </ScrollReveal>
             ))}
           </div>
@@ -610,16 +582,16 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 relative">
-        <div className="container mx-auto px-6">
+      <section id={NAV_SECTIONS.TESTIMONIALS} className={styles.testimonials}>
+        <div className={styles.section__container}>
           <ScrollReveal>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-              What Colleagues <span className="text-gradient">Say</span>
+            <h2 className={styles.section__title}>
+              {SECTION_TITLES.TESTIMONIALS} <span className={styles.section__titleAccent}>{SECTION_TITLES.TESTIMONIALS_ACCENT}</span>
             </h2>
           </ScrollReveal>
 
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8">
+          <div className={styles.testimonials__content}>
+            <div className={styles.testimonials__grid}>
               {[
                 {
                   quote: "Victoria has a unique ability to challenge conventional thinking and drive meaningful improvements. Her insights and creative approach led to more efficient processes and higher-quality outcomes. Working with her was both inspiring and rewarding.",
@@ -646,30 +618,28 @@ export default function Home() {
                   initials: "CL",
                 },
               ].map((testimonial, index) => (
-                <ScrollReveal key={index} delay={index * 0.2}>
-                  <Card className="glassmorphism border-blue-400/20 card-hover">
-                    <CardContent className="p-8">
-                      <div className="mb-6">
-                        <motion.div
-                          className="w-8 h-8 text-blue-400 mb-4"
-                          animate={{ rotate: [0, 10, -10, 0] }}
-                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                          <MessageCircle className="w-full h-full" />
-                        </motion.div>
-                        <p className="text-gray-300 leading-relaxed mb-6">"{testimonial.quote}"</p>
+                <ScrollReveal key={index} delay={index * ANIMATION_DELAY.MEDIUM}>
+                  <div className={styles.testimonials__card}>
+                    <div>
+                      <motion.div
+                        className={styles.testimonials__icon}
+                        animate={{ rotate: [ROTATION.ZERO, TRANSFORM.ROTATE_RANGE, -TRANSFORM.ROTATE_RANGE, ROTATION.ZERO] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
+                      >
+                        <MessageCircle className="w-full h-full" />
+                      </motion.div>
+                      <p className={styles.testimonials__quote}>"{testimonial.quote}"</p>
+                    </div>
+                    <div className={styles.testimonials__author}>
+                      <div className={styles.testimonials__avatar}>
+                        <span className={styles.testimonials__initials}>{testimonial.initials}</span>
                       </div>
-                      <div className="flex items-center">
-                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center mr-4">
-                          <span className="text-white font-semibold text-sm">{testimonial.initials}</span>
-                        </div>
-                        <div>
-                          <h4 className="text-white font-semibold">{testimonial.name}</h4>
-                          <p className="text-gray-400 text-sm">{testimonial.title}</p>
-                        </div>
+                      <div className={styles.testimonials__authorInfo}>
+                        <h4 className={styles.testimonials__name}>{testimonial.name}</h4>
+                        <p className={styles.testimonials__title}>{testimonial.title}</p>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </ScrollReveal>
               ))}
             </div>
@@ -678,110 +648,108 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 relative">
-        <div className="container mx-auto px-6">
+      <section id={NAV_SECTIONS.CONTACT} className={styles.contact}>
+        <div className={styles.section__container}>
           <ScrollReveal>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-              Let's <span className="text-gradient">Connect</span>
+            <h2 className={styles.section__title}>
+              {SECTION_TITLES.CONTACT} <span className={styles.section__titleAccent}>{SECTION_TITLES.CONTACT_ACCENT}</span>
             </h2>
           </ScrollReveal>
 
-          <div className="max-w-2xl mx-auto">
-            <ScrollReveal delay={0.2}>
-              <Card className="glassmorphism border-blue-400/20 card-hover">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-6 text-white">Get In Touch</h3>
-                  <p className="text-gray-300 leading-relaxed mb-8">
-                    Ready to discuss AI-driven innovation, team leadership, or potential collaboration opportunities? I'd love to connect and explore how we can work together.
-                  </p>
+          <div className={styles.contact__content}>
+            <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
+              <div className={styles.contact__card}>
+                <h3 className={styles.contact__title}>{CONTACT_CONTENT.TITLE}</h3>
+                <p className={styles.contact__intro}>
+                  {CONTACT_CONTENT.INTRO}
+                </p>
 
-                  <div className="space-y-6">
-                    <motion.div
-                      className="flex items-center space-x-4"
-                      whileHover={{ x: 10 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center">
-                        <Mail className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="text-white font-semibold">Email</h4>
-                        <a
-                          href="mailto:victoria.arrete@gmail.com"
-                          className="text-blue-400 hover:text-cyan-400 transition-colors duration-300"
-                        >
-                          victoria.arrete@gmail.com
-                        </a>
-                      </div>
-                    </motion.div>
+                <div className={styles.contact__methods}>
+                  <motion.div
+                    className={styles.contact__method}
+                    whileHover={{ x: TRANSFORM.ROTATE_RANGE }}
+                    transition={{ duration: ANIMATION_DURATION.FAST }}
+                  >
+                    <div className={styles.contact__iconWrapper}>
+                      <Mail className={styles.contact__icon} />
+                    </div>
+                    <div className={styles.contact__methodInfo}>
+                      <h4 className={styles.contact__methodTitle}>{CONTACT_CONTENT.EMAIL_LABEL}</h4>
+                      <a
+                        href={`mailto:${PERSONAL_INFO.EMAIL}`}
+                        className={styles.contact__link}
+                      >
+                        {PERSONAL_INFO.EMAIL}
+                      </a>
+                    </div>
+                  </motion.div>
 
-                    <motion.div
-                      className="flex items-center space-x-4"
-                      whileHover={{ x: 10 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center">
-                        <ExternalLink className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="text-white font-semibold">LinkedIn</h4>
-                        <a
-                          href="https://www.linkedin.com/in/victoria-kirichenko/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-400 hover:text-cyan-400 transition-colors duration-300"
-                        >
-                          linkedin.com/in/victoria-kirichenko
-                        </a>
-                      </div>
-                    </motion.div>
+                  <motion.div
+                    className={styles.contact__method}
+                    whileHover={{ x: TRANSFORM.ROTATE_RANGE }}
+                    transition={{ duration: ANIMATION_DURATION.FAST }}
+                  >
+                    <div className={styles.contact__iconWrapper}>
+                      <ExternalLink className={styles.contact__icon} />
+                    </div>
+                    <div className={styles.contact__methodInfo}>
+                      <h4 className={styles.contact__methodTitle}>{CONTACT_CONTENT.LINKEDIN_LABEL}</h4>
+                      <a
+                        href={PERSONAL_INFO.LINKEDIN_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.contact__link}
+                      >
+                        {PERSONAL_INFO.LINKEDIN_DISPLAY}
+                      </a>
+                    </div>
+                  </motion.div>
 
-                    <motion.div
-                      className="flex items-center space-x-4"
-                      whileHover={{ x: 10 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center">
-                        <MapPin className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="text-white font-semibold">Location</h4>
-                        <p className="text-gray-300">Tel Aviv District, Israel</p>
-                      </div>
-                    </motion.div>
-                  </div>
-                </CardContent>
-              </Card>
+                  <motion.div
+                    className={styles.contact__method}
+                    whileHover={{ x: TRANSFORM.ROTATE_RANGE }}
+                    transition={{ duration: ANIMATION_DURATION.FAST }}
+                  >
+                    <div className={styles.contact__iconWrapper}>
+                      <MapPin className={styles.contact__icon} />
+                    </div>
+                    <div className={styles.contact__methodInfo}>
+                      <h4 className={styles.contact__methodTitle}>{CONTACT_CONTENT.LOCATION_LABEL}</h4>
+                      <p className={styles.contact__text}>{PERSONAL_INFO.LOCATION}</p>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-gray-800">
-        <div className="container mx-auto px-6">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-gradient mb-4">Victoria Kirichenko</div>
-            <p className="text-gray-400 mb-6">Engineering clarity. Leading with precision.</p>
-            <div className="flex justify-center space-x-6">
+      <footer className={styles.footer}>
+        <div className={styles.footer__container}>
+          <div className={styles.footer__content}>
+            <div className={styles.footer__name}>{PERSONAL_INFO.NAME}</div>
+            <p className={styles.footer__tagline}>{TAGLINES.PRIMARY}</p>
+            <div className={styles.footer__social}>
               <motion.a
-                href="mailto:victoria.arrete@gmail.com"
-                className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
-                whileHover={{ scale: 1.2 }}
+                href={`mailto:${PERSONAL_INFO.EMAIL}`}
+                className={styles.footer__socialLink}
+                whileHover={{ scale: TRANSFORM.HOVER_SCALE_LARGE }}
               >
-                <Mail className="w-6 h-6" />
+                <Mail className={styles.footer__socialIcon} />
               </motion.a>
               <motion.a
-                href="https://www.linkedin.com/in/victoria-kirichenko/"
+                href={PERSONAL_INFO.LINKEDIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
-                whileHover={{ scale: 1.2 }}
+                className={styles.footer__socialLink}
+                whileHover={{ scale: TRANSFORM.HOVER_SCALE_LARGE }}
               >
-                <ExternalLink className="w-6 h-6" />
+                <ExternalLink className={styles.footer__socialIcon} />
               </motion.a>
             </div>
-            <p className="text-gray-600 text-sm mt-8">© 2025 Victoria Kirichenko. All rights reserved.</p>
+            <p className={styles.footer__copyright}>{COPYRIGHT.TEXT}</p>
           </div>
         </div>
       </footer>

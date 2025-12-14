@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { SCROLL, TRANSFORM, ANIMATION_DELAY, OPACITY, INITIAL_OFFSET, ANIMATION_DURATION, MOBILE_MENU } from '@/constants/layout';
+import { NAV_ITEMS, NAV_SECTIONS, PERSONAL_INFO, SCROLL_BEHAVIOR, ARIA_LABELS } from '@/constants/strings';
+import styles from './navigation.module.css';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -8,7 +11,7 @@ export function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > SCROLL.TRIGGER_OFFSET);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -18,93 +21,93 @@ export function Navigation() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH, block: SCROLL_BEHAVIOR.BLOCK_START });
       setIsMobileMenuOpen(false);
     }
   };
 
-  const navItems = [
-    { id: 'about', label: 'About' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'philosophy', label: 'Philosophy' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'testimonials', label: 'Testimonials' },
-    { id: 'contact', label: 'Contact' },
-  ];
+  const navigationClass = isScrolled 
+    ? `${styles.navigation} ${styles['navigation--scrolled']}`
+    : `${styles.navigation} ${styles['navigation--transparent']}`;
+
+  const mobileMenuClass = isMobileMenuOpen
+    ? `${styles['navigation__mobile-menu']} ${styles['navigation__mobile-menu--open']}`
+    : `${styles['navigation__mobile-menu']} ${styles['navigation__mobile-menu--closed']}`;
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'glassmorphism' : 'bg-transparent'
-      }`}
+      className={navigationClass}
     >
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex justify-between items-center">
-          <motion.div
-            className="text-2xl font-bold text-gradient cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            onClick={() => scrollToSection('hero')}
-          >
-            VK
-          </motion.div>
+      <div className={styles.navigation__container}>
+        <motion.div
+          className={styles.navigation__logo}
+          whileHover={{ scale: TRANSFORM.HOVER_SCALE_SMALL }}
+          onClick={() => scrollToSection(NAV_SECTIONS.HERO)}
+        >
+          {PERSONAL_INFO.INITIALS}
+        </motion.div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            {navItems.map((item, index) => (
-              <motion.button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-gray-300 hover:text-blue-400 transition-colors duration-300 font-medium"
-                whileHover={{ scale: 1.05 }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                {item.label}
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-white focus:outline-none z-50 relative"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+        {/* Desktop Navigation */}
+        <div className={styles.navigation__menu}>
+          {NAV_ITEMS.map((item, index) => (
+            <motion.button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`${styles.navigation__item} ${styles['navigation__item--animate']}`}
+              whileHover={{ scale: TRANSFORM.HOVER_SCALE_SMALL }}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_NEGATIVE_SMALL }}
+              animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              transition={{ delay: index * ANIMATION_DELAY.SHORT }}
+            >
+              {item.label}
+            </motion.button>
+          ))}
         </div>
 
-        {/* Mobile Navigation */}
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{
-            opacity: isMobileMenuOpen ? 1 : 0,
-            height: isMobileMenuOpen ? 'auto' : 0,
-          }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden"
+        {/* Mobile Menu Button */}
+        <button
+          className={styles.navigation__mobileToggle}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={ARIA_LABELS.TOGGLE_MOBILE_MENU}
         >
-          <div className="py-4 space-y-4">
-            {navItems.map((item, index) => (
-              <motion.button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="block w-full text-left text-gray-300 hover:text-blue-400 transition-colors duration-300 font-medium py-2"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{
-                  opacity: isMobileMenuOpen ? 1 : 0,
-                  x: isMobileMenuOpen ? 0 : -20,
-                }}
-                transition={{ delay: index * 0.1 }}
-              >
-                {item.label}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
+          {isMobileMenuOpen ? (
+            <X className={styles.navigation__mobileIcon} />
+          ) : (
+            <Menu className={styles.navigation__mobileIcon} />
+          )}
+        </button>
       </div>
+
+      {/* Mobile Navigation */}
+      <motion.div
+        initial={{ opacity: OPACITY.HIDDEN, maxHeight: 0 }}
+        animate={{
+          opacity: isMobileMenuOpen ? OPACITY.VISIBLE : OPACITY.HIDDEN,
+          maxHeight: isMobileMenuOpen ? MOBILE_MENU.MAX_HEIGHT_OPEN : MOBILE_MENU.MAX_HEIGHT_CLOSED,
+        }}
+        transition={{ duration: ANIMATION_DURATION.NORMAL }}
+        className={mobileMenuClass}
+      >
+        <div className={styles.navigation__mobileItems}>
+          {NAV_ITEMS.map((item, index) => (
+            <motion.button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`${styles.navigation__mobileItem} ${styles['navigation__mobile-item--animate']}`}
+              initial={{ opacity: OPACITY.HIDDEN, x: INITIAL_OFFSET.X_SMALL }}
+              animate={{
+                opacity: isMobileMenuOpen ? OPACITY.VISIBLE : OPACITY.HIDDEN,
+                x: isMobileMenuOpen ? 0 : INITIAL_OFFSET.X_SMALL,
+              }}
+              transition={{ delay: index * ANIMATION_DELAY.SHORT }}
+            >
+              {item.label}
+            </motion.button>
+          ))}
+        </div>
+      </motion.div>
     </motion.nav>
   );
 }
