@@ -46,8 +46,9 @@ export const EASING = {
 // Scroll & Intersection Observer
 export const SCROLL = {
   THRESHOLD: 0.1,
-  TRIGGER_OFFSET: 50, // pixels
+  TRIGGER_OFFSET: 20, // pixels
   ROOT_MARGIN: '0px 0px -100px 0px',
+  ACTIVE_SECTION_RATIO: 0.4, // fraction of viewport height for the scrollspy activation line
 } as const;
 
 // Particle System

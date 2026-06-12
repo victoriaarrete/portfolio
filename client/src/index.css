@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import './styles/tokens.css';
 
 @tailwind base;
@@ -16,7 +16,7 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(240, 3.7%, 15.9%);
   --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(207, 90%, 54%);
+  --primary: hsl(42, 36%, 89%);
   --primary-foreground: hsl(211, 100%, 99%);
   --secondary: hsl(240, 3.7%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);
@@ -30,8 +30,8 @@
   /* Custom colors for the website */
   --slate-950: hsl(240, 10%, 3.9%);
   --slate-925: hsl(240, 12%, 6%);
-  --electric-blue: hsl(207, 90%, 54%);
-  --cyan-bright: hsl(188, 94%, 43%);
+  --electric-blue: hsl(42, 36%, 89%);
+  --cyan-bright: hsl(46, 30%, 85%);
   --glass-bg: hsla(240, 10%, 3.9%, 0.7);
 }
 
@@ -46,7 +46,7 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(240, 3.7%, 15.9%);
   --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(207, 90%, 54%);
+  --primary: hsl(42, 36%, 89%);
   --primary-foreground: hsl(211, 100%, 99%);
   --secondary: hsl(240, 3.7%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);
@@ -64,12 +64,35 @@
   }
 
   body {
-    @apply font-inter antialiased bg-slate-950 text-foreground overflow-x-hidden;
-    font-family: 'Inter', sans-serif;
+    @apply antialiased text-foreground overflow-x-hidden;
+    /* Transparent so the fixed code-stream background (z-index -1) shows through */
+    background-color: transparent;
+    font-family: var(--font-family-mono);
+    /* Enable smooth rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   html {
     scroll-behavior: smooth !important;
+    /* Base page color lives on the canvas so it always paints behind everything */
+    background-color: var(--color-neutral-950);
+  }
+
+  /* Optimize animations performance */
+  * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Improve hardware acceleration for transforms */
+  [class*="__portrait"],
+  [class*="__icon"],
+  [class*="card"],
+  button,
+  a {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
 }
 
@@ -89,7 +112,7 @@
     background: var(--glass-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid hsla(207, 90%, 54%, 0.2);
+    border: 1px solid hsla(42, 30%, 88%, 0.16);
   }
 
   .hero-gradient {
@@ -102,7 +125,7 @@
 
   .card-hover:hover {
     transform: translateY(-10px) scale(1.01);
-    box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.25);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
   }
 
   .animate-float {
@@ -134,7 +157,7 @@
 
   .particle {
     position: absolute;
-    background: radial-gradient(circle, hsla(207, 90%, 54%, 0.8) 0%, transparent 70%);
+    background: radial-gradient(circle, hsla(42, 30%, 88%, 0.55) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     animation: particle linear infinite;
@@ -151,11 +174,11 @@
 }
 
 @keyframes pulse-glow {
-  0% { 
-    box-shadow: 0 0 20px hsla(207, 90%, 54%, 0.5);
+  0% {
+    box-shadow: 0 0 20px hsla(42, 30%, 88%, 0.2);
   }
-  100% { 
-    box-shadow: 0 0 40px hsla(207, 90%, 54%, 0.8);
+  100% {
+    box-shadow: 0 0 40px hsla(42, 30%, 88%, 0.32);
   }
 }
 

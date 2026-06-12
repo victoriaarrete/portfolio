@@ -1,0 +1,15 @@
+.cursorGlow {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-index-base);
+  pointer-events: none;
+  opacity: var(--cursor-opacity, 0);
+  /* Same warm cream light as the hero portrait glow */
+  background: radial-gradient(
+    circle 18rem at var(--cursor-x, 50%) var(--cursor-y, 50%),
+    hsla(42, 55%, 92%, 0.06),
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+  transition: opacity 0.5s ease;
+}
