@@ -814,24 +814,6 @@ export default function Home() {
         <div className={styles.footer__container}>
           <div className={styles.footer__content}>
             <div className={styles.footer__name}>{PERSONAL_INFO.INITIALS}</div>
-            <div className={styles.footer__social}>
-              <motion.a
-                href={`mailto:${PERSONAL_INFO.EMAIL}`}
-                className={styles.footer__socialLink}
-                whileHover={{ scale: TRANSFORM.HOVER_SCALE_LARGE }}
-              >
-                <Mail className={styles.footer__socialIcon} />
-              </motion.a>
-              <motion.a
-                href={PERSONAL_INFO.LINKEDIN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.footer__socialLink}
-                whileHover={{ scale: TRANSFORM.HOVER_SCALE_LARGE }}
-              >
-                <ExternalLink className={styles.footer__socialIcon} />
-              </motion.a>
-            </div>
             <blockquote className={styles.footer__quote}>{TAGLINES.FOOTER_QUOTE}</blockquote>
             <p className={styles.footer__copyright}>{COPYRIGHT.TEXT}</p>
           </div>
