@@ -17,9 +17,8 @@ export const PERSONAL_INFO = {
 // Job Titles & Roles
 export const ROLES = {
   PRIMARY: 'R&D Team Leader',
-  SUBTITLE: 'Strategic Engineering Leader',
-  FULL_SUBTITLE: 'R&D Team Leader | Strategic Engineering Leader',
-  LIST: ['R&D Team Leader', 'Strategic Engineering Leader'],
+  FULL_SUBTITLE: 'R&D Team Leader',
+  LIST: ['R&D Team Leader'],
 } as const;
 
 // Taglines & Quotes
