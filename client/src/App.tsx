@@ -19,8 +19,8 @@ function AppRoutes() {
 }
 
 function App() {
-  // Use /portfolio base for production (GitHub Pages), empty for development
-  const base = import.meta.env.MODE === 'production' ? '/portfolio' : '';
+  // Served from the root of the custom domain (victoriakirichenko.com)
+  const base = '';
   
   return (
     <QueryClientProvider client={queryClient}>
