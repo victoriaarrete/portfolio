@@ -17,8 +17,8 @@ export const PERSONAL_INFO = {
 // Job Titles & Roles
 export const ROLES = {
   PRIMARY: 'R&D Team Leader',
-  FULL_SUBTITLE: 'R&D Team Leader',
-  LIST: ['R&D Team Leader'],
+  FULL_SUBTITLE: 'R&D Leader',
+  LIST: ['R&D Leader'],
 } as const;
 
 // Taglines & Quotes
@@ -209,7 +209,8 @@ export const CONSOLE_SDK = {
 
   EXPERIENCE_TITLE: '🗓  Experience — the timeline',
   EXPERIENCE: [
-    { role: 'R&D Team Leader', company: 'Swish.ai', period: '2024 → now', focus: 'AI-driven IT workflow optimization' },
+    { role: 'R&D Team Leader', company: 'Zencity', period: '2026 → now', focus: 'Just getting started — magic in progress' },
+    { role: 'R&D Team Leader', company: 'Swish.ai', period: '2024 → 2025', focus: 'AI-driven IT workflow optimization' },
     { role: 'R&D Team Leader', company: 'Perion Network', period: '2021 → 2024', focus: 'Led 5; microservices + MongoDB' },
     { role: 'Full-Stack Developer', company: 'Perion Network', period: '2018 → 2021', focus: 'React · Next.js · Node' },
     { role: 'Full-Stack Developer', company: 'Mind Connect', period: '2016 → 2018', focus: 'Call-center platform' },
