@@ -418,7 +418,7 @@ export default function Home() {
                     </div>
                     <h4 className={styles.experience__company}>Swish.ai • Tel Aviv, Israel</h4>
                     <p className={styles.experience__description}>
-                      Leading IT workflow optimization with a people-first approach. Driving innovation through AI-driven solutions while fostering collaborative, growth-focused culture using Scrum methodology.
+                      Led IT workflow optimization with a people-first approach. Drove innovation through AI-driven solutions while fostering a collaborative, growth-focused culture using Scrum methodology.
                     </p>
                     <div className={styles.experience__tags}>
                       {['AI Automation', 'Team Leadership', 'Scrum', 'Workflow Optimization'].map((skill) => (
