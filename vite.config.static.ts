@@ -14,7 +14,7 @@ function copy404() {
 }
 
 export default defineConfig({
-  base: '/portfolio/',
+  base: '/',
   plugins: [react(), copy404()],
   root: 'client',
   build: {
