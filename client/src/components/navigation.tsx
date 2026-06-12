@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { SCROLL, TRANSFORM, ANIMATION_DELAY, OPACITY, INITIAL_OFFSET, ANIMATION_DURATION, MOBILE_MENU } from '@/constants/layout';
 import { NAV_ITEMS, NAV_SECTIONS, PERSONAL_INFO, SCROLL_BEHAVIOR, ARIA_LABELS } from '@/constants/strings';
@@ -8,13 +8,26 @@ import styles from './navigation.module.css';
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > SCROLL.TRIGGER_OFFSET);
+
+      // Active section = the last one whose top has scrolled past the activation line
+      const activationLine = window.innerHeight * SCROLL.ACTIVE_SECTION_RATIO;
+      let current = '';
+      NAV_ITEMS.forEach((item) => {
+        const element = document.getElementById(item.id);
+        if (element && element.getBoundingClientRect().top <= activationLine) {
+          current = item.id;
+        }
+      });
+      setActiveSection(current);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -40,9 +53,9 @@ export function Navigation() {
       animate={{ y: 0 }}
       className={navigationClass}
     >
-      <div className={styles.navigation__container}>
+      <div className={styles['navigation__container']}>
         <motion.div
-          className={styles.navigation__logo}
+          className={styles['navigation__logo']}
           whileHover={{ scale: TRANSFORM.HOVER_SCALE_SMALL }}
           onClick={() => scrollToSection(NAV_SECTIONS.HERO)}
         >
@@ -50,12 +63,12 @@ export function Navigation() {
         </motion.div>
 
         {/* Desktop Navigation */}
-        <div className={styles.navigation__menu}>
+        <div className={styles['navigation__menu']}>
           {NAV_ITEMS.map((item, index) => (
             <motion.button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`${styles.navigation__item} ${styles['navigation__item--animate']}`}
+              className={`${styles['navigation__item']} ${styles['navigation__item--animate']} ${activeSection === item.id ? styles['navigation__item--active'] : ''}`}
               whileHover={{ scale: TRANSFORM.HOVER_SCALE_SMALL }}
               initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_NEGATIVE_SMALL }}
               animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
@@ -68,14 +81,14 @@ export function Navigation() {
 
         {/* Mobile Menu Button */}
         <button
-          className={styles.navigation__mobileToggle}
+          className={styles['navigation__mobile-toggle']}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={ARIA_LABELS.TOGGLE_MOBILE_MENU}
         >
           {isMobileMenuOpen ? (
-            <X className={styles.navigation__mobileIcon} />
+            <X className={styles['navigation__mobile-icon']} />
           ) : (
-            <Menu className={styles.navigation__mobileIcon} />
+            <Menu className={styles['navigation__mobile-icon']} />
           )}
         </button>
       </div>
@@ -90,12 +103,12 @@ export function Navigation() {
         transition={{ duration: ANIMATION_DURATION.NORMAL }}
         className={mobileMenuClass}
       >
-        <div className={styles.navigation__mobileItems}>
+        <div className={styles['navigation__mobile-items']}>
           {NAV_ITEMS.map((item, index) => (
             <motion.button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`${styles.navigation__mobileItem} ${styles['navigation__mobile-item--animate']}`}
+              className={`${styles['navigation__mobile-item']} ${styles['navigation__mobile-item--animate']} ${activeSection === item.id ? styles['navigation__mobile-item--active'] : ''}`}
               initial={{ opacity: OPACITY.HIDDEN, x: INITIAL_OFFSET.X_SMALL }}
               animate={{
                 opacity: isMobileMenuOpen ? OPACITY.VISIBLE : OPACITY.HIDDEN,

@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
+import { CursorGlow } from "@/components/cursor-glow";
 
 function AppRoutes() {
   return (
@@ -18,11 +19,15 @@ function AppRoutes() {
 }
 
 function App() {
+  // Use /portfolio base for production (GitHub Pages), empty for development
+  const base = import.meta.env.MODE === 'production' ? '/portfolio' : '';
+  
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router base="/portfolio">
+        <CursorGlow />
+        <Router base={base}>
           <AppRoutes />
         </Router>
       </TooltipProvider>

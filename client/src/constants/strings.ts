@@ -17,16 +17,18 @@ export const PERSONAL_INFO = {
 // Job Titles & Roles
 export const ROLES = {
   PRIMARY: 'R&D Team Leader',
-  SUBTITLE: 'Strategic Engineering Leader | AI-Driven Innovator',
-  FULL_SUBTITLE: 'R&D Team Leader | Strategic Engineering Leader | AI-Driven Innovator',
+  SUBTITLE: 'Strategic Engineering Leader',
+  FULL_SUBTITLE: 'R&D Team Leader | Strategic Engineering Leader',
+  LIST: ['R&D Team Leader', 'Strategic Engineering Leader'],
 } as const;
 
 // Taglines & Quotes
 export const TAGLINES = {
-  PRIMARY: 'Engineering clarity. Leading with precision.',
-  HERO: '"Engineering clarity. Leading with precision."',
+  PRIMARY: 'I build systems that scale — and teams that want to.',
+  HERO: 'I build systems that scale — and teams that want to.',
   ABOUT_TITLE: 'Strong code needs strong culture. I build both.',
-  PHILOSOPHY_QUOTE: 'I believe in clarity, feedback culture, and psychological safety with accountability. Teams thrive when they feel trusted, supported, and empowered to take bold decisions.',
+  PHILOSOPHY_QUOTE: "I don't lead by adding process — I lead by removing noise. Give people a clear goal, real ownership, and a high bar, and they'll surprise you.",
+  FOOTER_QUOTE: 'Not despite the struggle, but because of it. The hard problems are the ones that taught me everything.',
 } as const;
 
 // Section Navigation
@@ -128,6 +130,118 @@ export const CONSOLE_MESSAGES = {
   THEME_RETURN: 'Theme secrets revealed! 🎨',
 } as const;
 
+// Console SDK — the interactive `window.victoria` developer experience.
+// Content lives here (the repo centralizes strings); rendering lives in lib/console-signature.ts.
+export const CONSOLE_SDK = {
+  GREETING_TITLE: '👋 You found the console — good instinct.',
+  GREETING_BODY:
+    "This is `victoria`: a tiny SDK about how I build and lead. Same thing I do in real systems — make the parts that matter easy to find.",
+  GREETING_HINT_PREFIX: 'Run ',
+  GREETING_HINT_CMD: 'victoria.help()',
+  GREETING_HINT_SUFFIX: ' to explore — or just expand the object below.',
+
+  // Returned when the object is coerced to a string (e.g. `${victoria}`).
+  SIGNATURE: 'Victoria Kirichenko — R&D Team Leader. I build systems that scale, and teams that want to.',
+
+  HELP_TITLE: '🗂  victoria.* — call any of these:',
+  COMMANDS: [
+    { command: 'victoria.readme()', what: 'how I work, what I value, how to get my best' },
+    { command: 'victoria.experience', what: 'the timeline, as data you can expand' },
+    { command: 'victoria.impact()', what: 'outcomes, not adjectives' },
+    { command: 'victoria.decisions()', what: 'how I make the hard calls' },
+    { command: 'victoria.principles()', what: 'what I lead by' },
+    { command: 'victoria.story()', what: 'how I actually got here' },
+    { command: 'victoria.skills()', what: 'the tech arsenal' },
+    { command: 'victoria.hire()', what: 'why we should talk' },
+    { command: 'victoria.contact()', what: 'reach me directly' },
+  ],
+  HELP_RETURN: '↑ call any command, e.g. victoria.readme()',
+
+  README_TITLE: '📄 README — working with Victoria',
+  README_SECTIONS: [
+    {
+      h: 'What I optimize for',
+      body: 'Clarity over cleverness. Momentum over the perfect plan. The decision that moves the product over the one that demos well in a design doc.',
+    },
+    {
+      h: 'How I lead',
+      body: "I don't add process — I remove noise. Give people a clear goal, real ownership, and a high bar, and they'll surprise you.",
+    },
+    {
+      h: 'What you can expect from me',
+      body: "Directness, context, and air cover. I unblock fast and I tell you the truth early — even when it's the awkward version.",
+    },
+    {
+      h: 'What I expect from you',
+      body: "Own your piece. Surface problems while they're small. Disagree with me to my face, not in the retro.",
+    },
+    {
+      h: 'How to get my best',
+      body: "Bring me the real problem, not a pre-softened one. I'd rather hear it raw and help you carry it.",
+    },
+    {
+      h: 'Worth knowing',
+      body: 'I built my career from scratch in a new country, alone and in a second language. It made me direct, hard to rattle, and allergic to wasted motion.',
+    },
+    {
+      h: 'Your turn',
+      body: 'Now tell me how you work best. The strongest teams write their READMEs both ways.',
+    },
+  ],
+  README_RETURN: "That's the contract. Reciprocity is the point — send me yours.",
+
+  DECISIONS_TITLE: '🧭 How I make the hard calls',
+  DECISIONS: [
+    'One-way doors vs. reversible: I move fast on what we can undo, and slow down only for what we genuinely can’t.',
+    'Clarity beats cleverness: the solution the whole team understands usually beats the elegant one only I do.',
+    'Team before architecture: when the system and the people disagree, I fix trust first. Clean code can’t outrun a team that doesn’t trust each other.',
+    'Remove, then add: most "process problems" are clarity problems in a costume. I cut noise before adding a step.',
+  ],
+  DECISIONS_RETURN: 'Judgment over job titles.',
+
+  IMPACT_TITLE: '📈 Outcomes, not adjectives',
+  IMPACT: [
+    { area: 'AI workflow automation', where: 'Swish.ai', outcome: '−60% manual tasks' },
+    { area: 'Team leadership', where: 'Swish.ai · Perion', outcome: 'Led 5 eng + QA via Scrum' },
+    { area: 'Ad-tech platform', where: 'Perion Network', outcome: 'Millions of requests / day' },
+    { area: 'Trajectory', where: '10+ years', outcome: 'Full-Stack → Team Lead → R&D Leader' },
+  ],
+  IMPACT_RETURN: "Numbers I'm happy to walk you through.",
+
+  EXPERIENCE_TITLE: '🗓  Experience — the timeline',
+  EXPERIENCE: [
+    { role: 'R&D Team Leader', company: 'Swish.ai', period: '2024 → now', focus: 'AI-driven IT workflow optimization' },
+    { role: 'R&D Team Leader', company: 'Perion Network', period: '2021 → 2024', focus: 'Led 5; microservices + MongoDB' },
+    { role: 'Full-Stack Developer', company: 'Perion Network', period: '2018 → 2021', focus: 'React · Next.js · Node' },
+    { role: 'Full-Stack Developer', company: 'Mind Connect', period: '2016 → 2018', focus: 'Call-center platform' },
+    { role: 'Full-Stack Developer', company: 'PowerTech', period: '2015 → 2016', focus: '.NET · MSSQL' },
+    { role: 'MSc, Computer Science', company: 'Penza State University', period: '2007 → 2012', focus: 'Foundations' },
+  ],
+
+  STORY_TITLE: '🌍 How I actually got here',
+  STORY: [
+    'I started in Penza, Russia, and moved to a new country alone — no network, no shortcuts.',
+    'I built my career from scratch, in a second language, one hard problem at a time.',
+    'That’s why I lead the way I do: direct, resilient, and focused on what actually matters.',
+    'I’m happiest where systems, data, and people intersect — that’s where the real problems live.',
+  ],
+  STORY_RETURN: 'Not despite the struggle — because of it.',
+
+  PRINCIPLES_TITLE: '⚖️  What I lead by',
+  PRINCIPLES_RETURN: 'Clarity. Safety. Accountability — in that order.',
+
+  HIRE_TITLE: '🤝 Why we should talk',
+  HIRE: [
+    'Most companies hide a recruiting pitch in their console. Plot twist: here, I’m the one worth recruiting.',
+    'I turn ambiguous R&D into shipped product, and I raise the bar of everyone around me.',
+    'If you’re building something hard and want someone who treats the system and the team as one problem — let’s talk.',
+  ],
+  HIRE_HINT: '→ victoria.contact() to start the conversation',
+
+  CONTACT_TITLE: '📬 Reach me directly',
+  CONTACT_RETURN: 'I read every message. The interesting ones I answer fast.',
+} as const;
+
 // ASCII Art
 export const ASCII_ART = `
 %c╭─────────────────────────────────────────────────────────────╮
@@ -168,25 +282,51 @@ export const LEADERSHIP_PRINCIPLES = [
 
 // About Section Content
 export const ABOUT_CONTENT = {
-  INTRO: "I'm an R&D Leader, passionate about combining innovation with people-focused leadership. I believe teams thrive in a culture of trust, clarity, and support, and I work hard to balance technical results with emotional well-being.",
-  JOURNEY: 'Having moved to a new country alone, I built my career on resilience and bold decision-making. At Swish.AI, I lead talented teams to create smarter, more efficient IT workflows with AI, always focusing on delivering real impact.',
-  BACKGROUND: "Before this, I worked at Perion Network, where I led teams and developed projects for the content arbitrage market. I also hold a Master's degree in Computer Science, which has fueled my passion for solving problems and empowering teams to grow.",
+  INTRO: "I lead R&D teams, and I treat the system and the people as one problem — because they are. The cleanest architecture won't save a team that doesn't trust each other, and a great team can't outrun tech debt forever.",
+  PHILOSOPHY: "I optimize for clarity over cleverness. I'd rather ship the decision that moves the product than the one that looks impressive in a design doc — and I want everyone on the team to know what they own and why it matters.",
+  APPROACH_TITLE: 'My approach is simple:',
+  SIGNATURE_KICKER: 'What shaped me',
+  BACKGROUND: 'I moved to a new country alone and built my career from scratch — that experience shaped how I lead: direct, resilient, and focused on what actually matters.',
+  FOCUS: "I'm interested in complex problems where systems, data, and people intersect.",
+  FOCUS_LABEL: 'Now focused on',
   STRENGTHS_TITLE: 'Core Strengths',
+  IMPACT_TITLE: 'Proof, not adjectives',
 } as const;
+
+// About Section - Impact tile
+// Outcomes over adjectives: each row leads with the result, then a short label.
+// Company-agnostic on purpose — the proof stands on its own.
+export const ABOUT_IMPACT = [
+  { metric: '−60%', label: 'manual tasks automated' },
+  { metric: '11+ yrs', label: 'engineering & leadership' },
+  { metric: '5+ QA', label: 'engineers led — offshore & onsite' },
+  { metric: 'Millions', label: 'ad requests & users reached / day' },
+] as const;
+
+// About Section - Approach List
+// Rendered as a shell script: `cmd` is the highlighted command/verb, `args`
+// the rest of the line. Read together ("cmd args") they form the original
+// sentence, so the ordered-list reading stays natural for screen readers.
+export const ABOUT_APPROACH = [
+  { cmd: 'understand', args: 'the system deeply (technical + human)' },
+  { cmd: 'remove', args: 'noise and unnecessary complexity' },
+  { cmd: 'build', args: 'environments where people can perform at their best' },
+] as const;
 
 // Contact Section Content
 export const CONTACT_CONTENT = {
   TITLE: 'Get In Touch',
-  INTRO: "Ready to discuss AI-driven innovation, team leadership, or potential collaboration opportunities? I'd love to connect and explore how we can work together.",
+  INTRO: "I like hard problems and the people who solve them well. Let's talk.",
   EMAIL_LABEL: 'Email',
   LINKEDIN_LABEL: 'LinkedIn',
   LOCATION_LABEL: 'Location',
 } as const;
 
 // Copyright
+const CURRENT_YEAR = new Date().getFullYear();
 export const COPYRIGHT = {
-  YEAR: '2025',
-  TEXT: '© 2025 Victoria Kirichenko. All rights reserved.',
+  YEAR: String(CURRENT_YEAR),
+  TEXT: `© ${CURRENT_YEAR} ${PERSONAL_INFO.NAME}. All rights reserved.`,
 } as const;
 
 // Scroll Behavior

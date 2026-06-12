@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 import { ANIMATION_DURATION, ANIMATION_DELAY, EASING, OPACITY, INITIAL_OFFSET } from '@/constants/layout';
 
