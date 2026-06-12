@@ -262,16 +262,29 @@
   font-weight: var(--font-weight-regular);
 }
 
+/* Editorial kicker (matches the About section's kicker + gradient rails) —
+   a short cream rule + uppercase, tracked label. No pill: the rounded chip
+   clashed with the brutalist, sharp-edged system. */
 .hero__roleChip {
-  padding: var(--spacing-1) var(--spacing-3);
-  background: hsla(42, 30%, 88%, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: 0;
+  background: none;
   border: none;
-  color: var(--color-neutral-300);
-  border-radius: var(--radius-full);
+  color: var(--color-primary-400);
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: 0.08em;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
   white-space: nowrap;
+}
+
+.hero__roleChip::before {
+  content: '';
+  width: var(--spacing-6);
+  height: 2px;
+  background: var(--gradient-primary);
 }
 
 .hero__tagline {
@@ -1504,44 +1517,9 @@
   text-align: center;
 }
 
-.footer__name {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: var(--spacing-4);
-}
-
 .footer__tagline {
   color: var(--color-neutral-400);
   margin-bottom: var(--spacing-6);
-}
-
-.footer__social {
-  display: flex;
-  justify-content: center;
-  gap: var(--spacing-6);
-  margin-bottom: var(--spacing-8);
-}
-
-.footer__socialLink {
-  color: var(--color-neutral-400);
-  transition: color 0.2s ease-in-out,
-              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  will-change: transform;
-  display: inline-block;
-}
-
-.footer__socialLink:hover {
-  color: var(--color-primary-400);
-  transform: scale(1.2);
-}
-
-.footer__socialIcon {
-  width: 1.5rem;
-  height: 1.5rem;
 }
 
 .footer__quote {
@@ -1551,8 +1529,6 @@
   font-style: italic;
   font-size: var(--font-size-lg);
   line-height: 1.7;
-  border-top: 1px solid var(--color-neutral-800);
-  padding-top: var(--spacing-8);
 }
 
 .footer__copyright {

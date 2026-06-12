@@ -386,7 +386,7 @@ export default function Home() {
             <div className={styles.experience__timeline}>
               <div className={styles.experience__timelineLine}></div>
 
-              {/* Current Position - Swish.ai */}
+              {/* Current Position - Zencity */}
               <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
                 <div className={styles.experience__item}>
                   <motion.div
@@ -397,11 +397,28 @@ export default function Home() {
                   <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
                     <div className={styles.experience__header}>
                       <h3 className={styles.experience__title}>R&D Team Leader</h3>
-                      <span className={styles.experience__period}>April 2024 - Present</span>
+                      <span className={styles.experience__period}>March 2026 - Present</span>
+                    </div>
+                    <h4 className={styles.experience__company}>Zencity • Tel Aviv, Israel</h4>
+                    <p className={styles.experience__description}>
+                      Just getting started — magic in progress. This chapter will be updated soon.
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              {/* Swish.ai */}
+              <ScrollReveal delay={ANIMATION_DELAY.LONG}>
+                <div className={styles.experience__item}>
+                  <div className={styles.experience__dot} />
+                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
+                    <div className={styles.experience__header}>
+                      <h3 className={styles.experience__title}>R&D Team Leader</h3>
+                      <span className={styles.experience__period}>April 2024 - October 2025</span>
                     </div>
                     <h4 className={styles.experience__company}>Swish.ai • Tel Aviv, Israel</h4>
                     <p className={styles.experience__description}>
-                      Leading IT workflow optimization with a people-first approach. Driving innovation through AI-driven solutions while fostering collaborative, growth-focused culture using Scrum methodology.
+                      Led IT workflow optimization with a people-first approach. Drove innovation through AI-driven solutions while fostering a collaborative, growth-focused culture using Scrum methodology.
                     </p>
                     <div className={styles.experience__tags}>
                       {['AI Automation', 'Team Leadership', 'Scrum', 'Workflow Optimization'].map((skill) => (
@@ -813,25 +830,6 @@ export default function Home() {
       <footer className={styles.footer}>
         <div className={styles.footer__container}>
           <div className={styles.footer__content}>
-            <div className={styles.footer__name}>{PERSONAL_INFO.INITIALS}</div>
-            <div className={styles.footer__social}>
-              <motion.a
-                href={`mailto:${PERSONAL_INFO.EMAIL}`}
-                className={styles.footer__socialLink}
-                whileHover={{ scale: TRANSFORM.HOVER_SCALE_LARGE }}
-              >
-                <Mail className={styles.footer__socialIcon} />
-              </motion.a>
-              <motion.a
-                href={PERSONAL_INFO.LINKEDIN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.footer__socialLink}
-                whileHover={{ scale: TRANSFORM.HOVER_SCALE_LARGE }}
-              >
-                <ExternalLink className={styles.footer__socialIcon} />
-              </motion.a>
-            </div>
             <blockquote className={styles.footer__quote}>{TAGLINES.FOOTER_QUOTE}</blockquote>
             <p className={styles.footer__copyright}>{COPYRIGHT.TEXT}</p>
           </div>

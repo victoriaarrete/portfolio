@@ -17,9 +17,8 @@ export const PERSONAL_INFO = {
 // Job Titles & Roles
 export const ROLES = {
   PRIMARY: 'R&D Team Leader',
-  SUBTITLE: 'Strategic Engineering Leader',
-  FULL_SUBTITLE: 'R&D Team Leader | Strategic Engineering Leader',
-  LIST: ['R&D Team Leader', 'Strategic Engineering Leader'],
+  FULL_SUBTITLE: 'R&D Leader',
+  LIST: ['R&D Leader'],
 } as const;
 
 // Taglines & Quotes
@@ -93,7 +92,7 @@ export const CONSOLE_MESSAGES = {
   FUN_DARK: '   • Dark mode with custom CSS variables',
   
   ABOUT_TITLE: '🎯 About Victoria:',
-  ABOUT_EXPERIENCE: "   • 10+ years in tech (Full Stack → Team Lead → R&D Leader)",
+  ABOUT_EXPERIENCE: "   • 11+ years in tech (Full Stack → Team Lead → R&D Leader)",
   ABOUT_PASSION: '   • Passionate about AI-driven innovation',
   ABOUT_CULTURE: '   • Building high-performance teams with strong culture',
   
@@ -141,7 +140,7 @@ export const CONSOLE_SDK = {
   GREETING_HINT_SUFFIX: ' to explore — or just expand the object below.',
 
   // Returned when the object is coerced to a string (e.g. `${victoria}`).
-  SIGNATURE: 'Victoria Kirichenko — R&D Team Leader. I build systems that scale, and teams that want to.',
+  SIGNATURE: 'Victoria Kirichenko — R&D Leader. I build systems that scale, and teams that want to.',
 
   HELP_TITLE: '🗂  victoria.* — call any of these:',
   COMMANDS: [
@@ -201,20 +200,22 @@ export const CONSOLE_SDK = {
 
   IMPACT_TITLE: '📈 Outcomes, not adjectives',
   IMPACT: [
-    { area: 'AI workflow automation', where: 'Swish.ai', outcome: '−60% manual tasks' },
-    { area: 'Team leadership', where: 'Swish.ai · Perion', outcome: 'Led 5 eng + QA via Scrum' },
-    { area: 'Ad-tech platform', where: 'Perion Network', outcome: 'Millions of requests / day' },
-    { area: 'Trajectory', where: '10+ years', outcome: 'Full-Stack → Team Lead → R&D Leader' },
+    { area: 'AI workflow automation', where: 'Swish.ai', outcome: '−60% manual tasks automated' },
+    { area: 'Team leadership', where: 'Swish.ai · Perion', outcome: '5+ QA engineers led — offshore & onsite' },
+    { area: 'Ad-tech platform', where: 'Perion Network', outcome: 'Millions of ad requests & users / day' },
+    { area: 'Trajectory', where: '11+ years', outcome: 'Full-Stack → Team Lead → R&D Leader' },
   ],
   IMPACT_RETURN: "Numbers I'm happy to walk you through.",
 
   EXPERIENCE_TITLE: '🗓  Experience — the timeline',
   EXPERIENCE: [
-    { role: 'R&D Team Leader', company: 'Swish.ai', period: '2024 → now', focus: 'AI-driven IT workflow optimization' },
-    { role: 'R&D Team Leader', company: 'Perion Network', period: '2021 → 2024', focus: 'Led 5; microservices + MongoDB' },
-    { role: 'Full-Stack Developer', company: 'Perion Network', period: '2018 → 2021', focus: 'React · Next.js · Node' },
-    { role: 'Full-Stack Developer', company: 'Mind Connect', period: '2016 → 2018', focus: 'Call-center platform' },
-    { role: 'Full-Stack Developer', company: 'PowerTech', period: '2015 → 2016', focus: '.NET · MSSQL' },
+    { role: 'R&D Team Leader', company: 'Zencity', period: 'Mar 2026 → now', focus: 'Just getting started — magic in progress' },
+    { role: 'R&D Team Leader', company: 'Swish.ai', period: 'Apr 2024 → Oct 2025', focus: 'AI-driven IT workflow optimization' },
+    { role: 'R&D Team Leader', company: 'Perion Network', period: 'Apr 2021 → Apr 2024', focus: 'Led 5; microservices + MongoDB' },
+    { role: 'Full-Stack Developer', company: 'Perion Network', period: 'Jun 2018 → Apr 2021', focus: 'React · Next.js · Node' },
+    { role: 'Full-Stack Developer', company: 'Mind Connect', period: 'Mar 2016 → Apr 2018', focus: 'Call-center platform' },
+    { role: 'Full-Stack Developer', company: 'PowerTech', period: 'Feb 2015 → Mar 2016', focus: '.NET · MSSQL' },
+    { role: 'Full-Stack Developer', company: 'Early Career', period: 'Dec 2012 → Jan 2015', focus: 'Foundations across the stack' },
     { role: 'MSc, Computer Science', company: 'Penza State University', period: '2007 → 2012', focus: 'Foundations' },
   ],
 
