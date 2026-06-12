@@ -386,7 +386,7 @@ export default function Home() {
             <div className={styles.experience__timeline}>
               <div className={styles.experience__timelineLine}></div>
 
-              {/* Current Position - Swish.ai */}
+              {/* Current Position - Zencity */}
               <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
                 <div className={styles.experience__item}>
                   <motion.div
@@ -397,7 +397,24 @@ export default function Home() {
                   <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
                     <div className={styles.experience__header}>
                       <h3 className={styles.experience__title}>R&D Team Leader</h3>
-                      <span className={styles.experience__period}>April 2024 - Present</span>
+                      <span className={styles.experience__period}>March 2026 - Present</span>
+                    </div>
+                    <h4 className={styles.experience__company}>Zencity • Tel Aviv, Israel</h4>
+                    <p className={styles.experience__description}>
+                      Just getting started — magic in progress. This chapter will be updated soon.
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              {/* Swish.ai */}
+              <ScrollReveal delay={ANIMATION_DELAY.LONG}>
+                <div className={styles.experience__item}>
+                  <div className={styles.experience__dot} />
+                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
+                    <div className={styles.experience__header}>
+                      <h3 className={styles.experience__title}>R&D Team Leader</h3>
+                      <span className={styles.experience__period}>April 2024 - October 2025</span>
                     </div>
                     <h4 className={styles.experience__company}>Swish.ai • Tel Aviv, Israel</h4>
                     <p className={styles.experience__description}>
