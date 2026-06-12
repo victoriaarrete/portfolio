@@ -262,16 +262,29 @@
   font-weight: var(--font-weight-regular);
 }
 
+/* Editorial kicker (matches the About section's kicker + gradient rails) —
+   a short cream rule + uppercase, tracked label. No pill: the rounded chip
+   clashed with the brutalist, sharp-edged system. */
 .hero__roleChip {
-  padding: var(--spacing-1) var(--spacing-3);
-  background: hsla(42, 30%, 88%, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: 0;
+  background: none;
   border: none;
-  color: var(--color-neutral-300);
-  border-radius: var(--radius-full);
+  color: var(--color-primary-400);
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  letter-spacing: 0.08em;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
   white-space: nowrap;
+}
+
+.hero__roleChip::before {
+  content: '';
+  width: var(--spacing-6);
+  height: 2px;
+  background: var(--gradient-primary);
 }
 
 .hero__tagline {
