@@ -813,7 +813,6 @@ export default function Home() {
       <footer className={styles.footer}>
         <div className={styles.footer__container}>
           <div className={styles.footer__content}>
-            <div className={styles.footer__name}>{PERSONAL_INFO.INITIALS}</div>
             <blockquote className={styles.footer__quote}>{TAGLINES.FOOTER_QUOTE}</blockquote>
             <p className={styles.footer__copyright}>{COPYRIGHT.TEXT}</p>
           </div>
