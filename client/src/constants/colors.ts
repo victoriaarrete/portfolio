@@ -3,16 +3,16 @@
  * These complement the CSS custom properties in tokens.css
  */
 
-// Console Palette — warm monochrome that mirrors the site's UI (cream/champagne
+// Console Palette - warm monochrome that mirrors the site's UI (cream/champagne
 // foreground + warm grays). Hierarchy comes from weight/size, not from many hues.
 // Tuned mid-light so it reads on the common dark DevTools theme (matching the brand).
 export const CONSOLE_PALETTE = {
-  TITLE: 'hsl(40, 33%, 90%)', // warm cream — greeting headline
-  HEADING: 'hsl(42, 40%, 76%)', // champagne — section headers
-  SUBHEADING: 'hsl(40, 22%, 84%)', // soft cream — sub-headers
-  BODY: 'hsl(38, 11%, 66%)', // warm gray — body copy
-  ACCENT: 'hsl(44, 46%, 71%)', // champagne — the single functional pop (commands, links)
-  DIM: 'hsl(34, 8%, 50%)', // muted warm gray — secondary detail
+  TITLE: 'hsl(40, 33%, 90%)', // warm cream - greeting headline
+  HEADING: 'hsl(42, 40%, 76%)', // champagne - section headers
+  SUBHEADING: 'hsl(40, 22%, 84%)', // soft cream - sub-headers
+  BODY: 'hsl(38, 11%, 66%)', // warm gray - body copy
+  ACCENT: 'hsl(44, 46%, 71%)', // champagne - the single functional pop (commands, links)
+  DIM: 'hsl(34, 8%, 50%)', // muted warm gray - secondary detail
 } as const;
 
 // HSL Color Values (for inline styles, animations, etc.)

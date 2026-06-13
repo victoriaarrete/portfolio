@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef, useMemo, type MouseEvent } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { Mail, MapPin, ExternalLink, User, Briefcase, Heart, Code, Users, MessageCircle, Brain, Zap, ChevronDown } from 'lucide-react';
+import { Mail, MapPin, Linkedin, User, ChevronDown } from 'lucide-react';
 import victoriaPortrait from '@assets/victoria_pic.png';
 import { ParticleSystem } from '@/components/particle-system';
 import { Navigation } from '@/components/navigation';
 import { ScrollReveal } from '@/components/scroll-reveal';
 import { CodeBackground, buildField } from '@/components/code-background';
+import { GeometricWireframe } from '@/components/geometric-wireframe';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   ANIMATION_DURATION, 
@@ -14,7 +15,6 @@ import {
   TRANSFORM, 
   OPACITY, 
   INITIAL_OFFSET,
-  ROTATION,
 } from '@/constants/layout';
 import {
   PERSONAL_INFO,
@@ -23,7 +23,6 @@ import {
   NAV_SECTIONS,
   SECTION_TITLES,
   BUTTON_LABELS,
-  CORE_STRENGTHS,
   LEADERSHIP_PRINCIPLES,
   ABOUT_CONTENT,
   ABOUT_APPROACH,
@@ -35,8 +34,6 @@ import {
 import { mountConsoleSignature } from '@/lib/console-signature';
 import styles from './home.module.css';
 
-const STRENGTH_ICONS = [Brain, Users, MessageCircle, Zap] as const;
-
 export default function Home() {
   const reduce = useReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
@@ -46,7 +43,7 @@ export default function Home() {
 
   // Anchor the code field's fade-out to the hero's content line (role chips /
   // tagline). The hero content is vertically centred in a 100vh section, so the
-  // line sits at a different % of the hero on every viewport height — a fixed
+  // line sits at a different % of the hero on every viewport height - a fixed
   // mask stop can't track it. We measure the line and expose it as CSS variables
   // (--code-stop for the background, --portrait-code-stop for the portrait
   // overlay) so the code always reaches at least that line on every device.
@@ -131,6 +128,19 @@ export default function Home() {
             animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
             transition={{ duration: ANIMATION_DURATION.VERY_SLOW, ease: EASING.DEFAULT }}
           >
+            {/* Role kicker, top-left above the portrait (editorial placement) */}
+            <motion.h2
+              className={styles.hero__roles}
+              aria-label={ROLES.FULL_SUBTITLE}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
+              animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              transition={{ delay: ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
+            >
+              {ROLES.LIST.map((role) => (
+                <span key={role} className={styles.hero__roleChip}>{role}</span>
+              ))}
+            </motion.h2>
+
             {/* Portrait at the top center */}
             <div className={styles['hero__portrait-wrapper']}>
               <motion.div
@@ -168,19 +178,6 @@ export default function Home() {
               <span className={styles.hero__titleMain}>{PERSONAL_INFO.FIRST_NAME}</span>
               <span className={styles.hero__titleAccent}>{PERSONAL_INFO.LAST_NAME}</span>
             </motion.h1>
-
-            {/* Roles */}
-            <motion.h2
-              className={styles.hero__roles}
-              aria-label={ROLES.FULL_SUBTITLE}
-              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
-              animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
-              transition={{ delay: ANIMATION_DELAY.MEDIUM, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
-            >
-              {ROLES.LIST.map((role) => (
-                <span key={role} className={styles.hero__roleChip}>{role}</span>
-              ))}
-            </motion.h2>
 
             {/* Tagline */}
             <motion.p
@@ -235,140 +232,104 @@ export default function Home() {
       <section id={NAV_SECTIONS.ABOUT} className={styles.about}>
         <div className={styles.section__container}>
           <div className={styles.about__content}>
-            <ScrollReveal>
-              <h2 className={styles.section__title}>
-                {SECTION_TITLES.ABOUT} <span className={styles.section__titleAccent}>{SECTION_TITLES.ABOUT_ACCENT}</span>
-              </h2>
-            </ScrollReveal>
-
-            <div className={styles.about__bento}>
-              {/* Manifesto */}
-              <motion.div
-                className={`${styles.card} ${styles['card--hover']} ${styles.about__manifesto}`}
-                initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
-                whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ delay: ANIMATION_DELAY.MEDIUM, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
-              >
-                <span className={styles.about__rail} aria-hidden="true" />
-                <h3 className={styles.about__manifestoTitle}>{TAGLINES.ABOUT_TITLE}</h3>
+            {/* Manifesto - editorial band: ABOUT kicker, display headline, prose */}
+            <motion.div
+              className={styles.about__manifesto}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
+              whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: ANIMATION_DELAY.MEDIUM, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
+            >
+              <h2 className={styles.about__sectionLabel}>{SECTION_TITLES.ABOUT}</h2>
+              <h3 className={styles.about__manifestoTitle}>
+                Strong code needs strong culture.{' '}
+                <span className={styles.about__manifestoNoWrap}>I build both.</span>
+              </h3>
+              <div className={styles.about__manifestoProse}>
                 <p className={styles.about__lead}>{ABOUT_CONTENT.INTRO}</p>
                 <p className={styles.about__body}>{ABOUT_CONTENT.PHILOSOPHY}</p>
-              </motion.div>
+              </div>
+            </motion.div>
 
-              {/* Impact — outcomes, not adjectives (replaces the duplicate portrait) */}
-              <motion.div
-                className={`${styles.card} ${styles['card--hover']} ${styles.about__impactTile}`}
-                initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
-                whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ delay: ANIMATION_DELAY.LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
-              >
-                <span className={styles.about__kicker}>{ABOUT_CONTENT.IMPACT_TITLE}</span>
-                <ul className={styles.about__impactList}>
-                  {ABOUT_IMPACT.map((item, index) => (
+            {/* Proof - inline metric grid (no card); the section's evidence */}
+            <motion.div
+              className={styles.about__proof}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
+              whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: ANIMATION_DELAY.LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
+            >
+              <span className={styles.about__kicker}>{ABOUT_CONTENT.IMPACT_TITLE}</span>
+              <ul className={styles.about__impactList}>
+                {ABOUT_IMPACT.map((item, index) => (
+                  <motion.li
+                    key={item.label}
+                    className={styles.about__impactRow}
+                    initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
+                    whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ delay: index * ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
+                  >
+                    <span className={styles.about__impactMetric}>{item.metric}</span>
+                    <span className={styles.about__impactLabel}>{item.label}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Method - approach.sh terminal, full width of the column */}
+            <motion.div
+              className={`${styles.card} ${styles.about__method}`}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
+              whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: ANIMATION_DELAY.LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
+            >
+              <div className={styles.about__termBar} aria-hidden="true">
+                <span className={styles.about__termFile}>approach.sh</span>
+                <span className={styles.about__termTag}>bash</span>
+              </div>
+              <div className={styles.about__termBody}>
+                <p className={styles.about__termComment} aria-hidden="true">#!/bin/bash</p>
+                <ol className={styles.about__script}>
+                  {ABOUT_APPROACH.map((item, index) => (
                     <motion.li
-                      key={item.label}
-                      className={styles.about__impactRow}
-                      initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
-                      whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
+                      key={index}
+                      className={styles.about__scriptLine}
+                      initial={{ opacity: OPACITY.HIDDEN, x: INITIAL_OFFSET.X_SMALL }}
+                      whileInView={{ opacity: OPACITY.VISIBLE, x: 0 }}
                       viewport={{ once: true, margin: '-60px' }}
                       transition={{ delay: index * ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
                     >
-                      <span className={styles.about__impactMetric}>{item.metric}</span>
-                      <span className={styles.about__impactLabel}>{item.label}</span>
+                      <span className={styles.about__lineNum} aria-hidden="true">{`0${index + 1}`}</span>
+                      <span className={styles.about__cmd}>{item.cmd}</span>
+                      <span className={styles.about__args}> {item.args}</span>
                     </motion.li>
                   ))}
-                </ul>
-              </motion.div>
+                </ol>
+              </div>
+            </motion.div>
 
-              {/* Method */}
-              <motion.div
-                className={`${styles.card} ${styles['card--hover']} ${styles.about__method}`}
-                initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
-                whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ delay: ANIMATION_DELAY.LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
-              >
-                <div className={styles.about__termBar} aria-hidden="true">
-                  <span className={styles.about__termFile}>approach.sh</span>
-                  <span className={styles.about__termTag}>bash</span>
-                </div>
-                <div className={styles.about__termBody}>
-                  <p className={styles.about__termComment} aria-hidden="true">#!/bin/bash</p>
-                  <p className={styles.about__termComment}># {ABOUT_CONTENT.APPROACH_TITLE}</p>
-                  <ol className={styles.about__script}>
-                    {ABOUT_APPROACH.map((item, index) => (
-                      <motion.li
-                        key={index}
-                        className={styles.about__scriptLine}
-                        initial={{ opacity: OPACITY.HIDDEN, x: INITIAL_OFFSET.X_SMALL }}
-                        whileInView={{ opacity: OPACITY.VISIBLE, x: 0 }}
-                        viewport={{ once: true, margin: '-60px' }}
-                        transition={{ delay: index * ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
-                      >
-                        <span className={styles.about__lineNum} aria-hidden="true">{`0${index + 1}`}</span>
-                        <span className={styles.about__cmd}>{item.cmd}</span>
-                        <span className={styles.about__args}> {item.args}</span>
-                      </motion.li>
-                    ))}
-                  </ol>
-                </div>
-              </motion.div>
-
-              {/* Strengths */}
-              <motion.div
-                className={`${styles.card} ${styles['card--hover']} ${styles.about__strengthsTile}`}
-                initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
-                whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ delay: ANIMATION_DELAY.VERY_LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
-              >
-                <span className={styles.about__kicker}>{ABOUT_CONTENT.STRENGTHS_TITLE}</span>
-                <div className={styles.about__strengthGrid}>
-                  {CORE_STRENGTHS.map((strength, index) => {
-                    const Icon = STRENGTH_ICONS[index];
-                    return (
-                      <motion.div
-                        key={index}
-                        className={styles.about__strengthTile}
-                        initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
-                        whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
-                        viewport={{ once: true, margin: '-60px' }}
-                        transition={{ delay: index * ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
-                      >
-                        <span className={styles.about__strengthIcon}>
-                          <Icon className={styles.about__strengthGlyph} />
-                        </span>
-                        <span className={styles.about__strengthLabel}>{strength}</span>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </motion.div>
-
-              {/* Signature */}
-              <motion.div
-                className={`${styles.card} ${styles['card--hover']} ${styles.about__signature}`}
-                initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
-                whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ delay: ANIMATION_DELAY.VERY_LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
-              >
-                <span className={styles.about__quoteMark} aria-hidden="true">&ldquo;</span>
-                <div className={styles.about__signatureBody}>
-                  <span className={styles.about__kicker}>{ABOUT_CONTENT.SIGNATURE_KICKER}</span>
-                  <blockquote className={styles.about__journey}>{ABOUT_CONTENT.BACKGROUND}</blockquote>
-                </div>
-                <div className={styles.about__signatureFooter}>
-                  <p className={styles.about__focus}>
-                    <span className={styles.about__focusLabel}>{ABOUT_CONTENT.FOCUS_LABEL}</span>
-                    {ABOUT_CONTENT.FOCUS}
-                  </p>
-                  <span className={styles.about__sign}>{PERSONAL_INFO.FIRST_NAME}</span>
-                </div>
-              </motion.div>
-            </div>
+            {/* What shaped me - editorial pull-quote sign-off */}
+            <motion.div
+              className={styles.about__signature}
+              initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
+              whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: ANIMATION_DELAY.VERY_LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
+            >
+              <GeometricWireframe className={styles.about__figure} />
+              <div className={styles.about__signatureBody}>
+                <span className={styles.about__kicker}>{ABOUT_CONTENT.SIGNATURE_KICKER}</span>
+                <blockquote className={styles.about__journey}>{ABOUT_CONTENT.BACKGROUND}</blockquote>
+              </div>
+              <div className={styles.about__signatureFooter}>
+                <p className={styles.about__focus}>
+                  <span className={styles.about__focusLabel}>{ABOUT_CONTENT.FOCUS_LABEL}</span>
+                  {ABOUT_CONTENT.FOCUS}
+                </p>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -401,15 +362,22 @@ export default function Home() {
                     </div>
                     <h4 className={styles.experience__company}>Zencity • Tel Aviv, Israel</h4>
                     <p className={styles.experience__description}>
-                      Just getting started — magic in progress. This chapter will be updated soon.
+                      Leading R&D as the team scales its civic-data platform — early days, more to come.
                     </p>
+                    <div className={styles.experience__tags}>
+                      {['GovTech', 'Team Leadership', 'R&D'].map((skill) => (
+                        <span key={skill} className={styles.experience__tag}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
 
               {/* Swish.ai */}
               <ScrollReveal delay={ANIMATION_DELAY.LONG}>
-                <div className={styles.experience__item}>
+                <div className={`${styles.experience__item} ${styles['experience__item--recent']}`}>
                   <div className={styles.experience__dot} />
                   <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
                     <div className={styles.experience__header}>
@@ -433,7 +401,7 @@ export default function Home() {
 
               {/* Perion Network - R&D Team Leader */}
               <ScrollReveal delay={ANIMATION_DELAY.LONG}>
-                <div className={styles.experience__item}>
+                <div className={`${styles.experience__item} ${styles['experience__item--recent']}`}>
                   <div className={styles.experience__dot} />
                   <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
                     <div className={styles.experience__header}>
@@ -457,7 +425,7 @@ export default function Home() {
 
               {/* Perion Network - Full Stack Developer */}
               <ScrollReveal delay={ANIMATION_DELAY.VERY_LONG}>
-                <div className={styles.experience__item}>
+                <div className={`${styles.experience__item} ${styles['experience__item--past']}`}>
                   <div className={styles.experience__dot} />
                   <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
                     <div className={styles.experience__header}>
@@ -481,7 +449,7 @@ export default function Home() {
 
               {/* Mind Connect */}
               <ScrollReveal delay={ANIMATION_DELAY.EXTRA_LONG}>
-                <div className={styles.experience__item}>
+                <div className={`${styles.experience__item} ${styles['experience__item--past']}`}>
                   <div className={styles.experience__dot} />
                   <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
                     <div className={styles.experience__header}>
@@ -505,7 +473,7 @@ export default function Home() {
 
               {/* PowerTech */}
               <ScrollReveal delay={ANIMATION_DELAY.STAGGER_1}>
-                <div className={styles.experience__item}>
+                <div className={`${styles.experience__item} ${styles['experience__item--past']}`}>
                   <div className={styles.experience__dot} />
                   <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
                     <div className={styles.experience__header}>
@@ -529,7 +497,7 @@ export default function Home() {
 
               {/* Early Career */}
               <ScrollReveal delay={ANIMATION_DELAY.STAGGER_2}>
-                <div className={styles.experience__item}>
+                <div className={`${styles.experience__item} ${styles['experience__item--past']}`}>
                   <div className={styles.experience__dot} />
                   <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
                     <div className={styles.experience__header}>
@@ -583,36 +551,27 @@ export default function Home() {
 
           <div className={styles.philosophy__content}>
             <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
-              <div className={`${styles.philosophy__card} ${styles['card--hover']}`}>
-                <div className={styles.philosophy__iconWrapper}>
-                  <motion.div
-                    className={styles.philosophy__icon}
-                    animate={{ rotate: [ROTATION.ZERO, ROTATION.FULL] }}
-                    transition={{ duration: ANIMATION_DURATION.ROTATE_VERY_SLOW, repeat: Infinity, ease: EASING.LINEAR }}
-                  >
-                    <MessageCircle className="w-full h-full" />
-                  </motion.div>
-                </div>
+              <div className={styles.philosophy__statement}>
+                <span className={styles.philosophy__kicker}>{TAGLINES.PHILOSOPHY_KICKER}</span>
 
                 <blockquote className={styles.philosophy__quote}>
-                  {TAGLINES.PHILOSOPHY_QUOTE}
+                  {TAGLINES.PHILOSOPHY_QUOTE_LEAD}
+                  <span className={styles.philosophy__quoteEmphasis}>{TAGLINES.PHILOSOPHY_QUOTE_EMPHASIS}</span>
+                  {TAGLINES.PHILOSOPHY_QUOTE_REST}
                 </blockquote>
 
                 <div className={styles.philosophy__principles}>
-                  {LEADERSHIP_PRINCIPLES.map((item, index) => {
-                    const IconComponent = index === 0 ? Heart : index === 1 ? Users : Briefcase;
-                    return (
-                      <ScrollReveal key={index} delay={ANIMATION_DELAY.LONG + index * ANIMATION_DELAY.MEDIUM}>
-                        <div className={styles.philosophy__principle}>
-                          <div className={styles.philosophy__principleIconWrapper}>
-                            <IconComponent className={styles.philosophy__principleIcon} />
-                          </div>
-                          <h4 className={styles.philosophy__principleTitle}>{item.title}</h4>
-                          <p className={styles.philosophy__principleDescription}>{item.description}</p>
-                        </div>
-                      </ScrollReveal>
-                    );
-                  })}
+                  {LEADERSHIP_PRINCIPLES.map((item, index) => (
+                    <ScrollReveal key={item.title} delay={ANIMATION_DELAY.LONG + index * ANIMATION_DELAY.MEDIUM}>
+                      <div className={styles.philosophy__principle}>
+                        <span className={styles.philosophy__principleNumber}>
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                        <h4 className={styles.philosophy__principleTitle}>{item.title}</h4>
+                        <p className={styles.philosophy__principleDescription}>{item.description}</p>
+                      </div>
+                    </ScrollReveal>
+                  ))}
                 </div>
               </div>
             </ScrollReveal>
@@ -630,53 +589,63 @@ export default function Home() {
           </ScrollReveal>
 
           <div className={styles.projects__grid}>
-            {[
-              {
-                icon: Code,
-                title: 'AI Workflow Optimizer',
-                company: 'Swish.ai',
-                description: 'Led development of AI-driven automation platform that optimizes IT workflows, reducing manual tasks by 60% and improving team efficiency across multiple departments.',
-                tags: ['AI/ML', 'Automation', 'Workflow'],
-              },
-              {
-                icon: Briefcase,
-                title: 'Content Arbitrage Platform',
-                company: 'Perion Network',
-                description: 'Built scalable microservices architecture for content arbitrage market, handling millions of requests daily with optimized ad delivery and configuration management systems.',
-                tags: ['Microservices', 'AdTech', 'Scale'],
-              },
-              {
-                icon: Users,
-                title: 'Internal Productivity Tools',
-                company: 'Multiple Organizations',
-                description: 'Designed and implemented custom productivity tools that streamlined development workflows, improved team collaboration, and enhanced project management across R&D teams.',
-                tags: ['Tools', 'Productivity', 'Collaboration'],
-              },
-            ].map((project, index) => (
-              <ScrollReveal key={index} delay={index * ANIMATION_DELAY.MEDIUM}>
-                <div className={styles.projects__card}>
-                  <div className={styles.projects__iconWrapper}>
-                    <motion.div
-                      className={styles.projects__iconBg}
-                      whileHover={{ rotate: ROTATION.FULL }}
-                      transition={{ duration: ANIMATION_DURATION.MEDIUM }}
-                    >
-                      <project.icon className={styles.projects__icon} />
-                    </motion.div>
-                    <h3 className={styles.projects__title}>{project.title}</h3>
-                    <p className={styles.projects__company}>{project.company}</p>
+            <ScrollReveal>
+              <div className={`${styles.projects__card} ${styles.projects__cardFeatured}`}>
+                <span className={styles.projects__featuredBadge}>Featured</span>
+                <div className={styles.projects__featuredBody}>
+                  <div className={styles.projects__featuredMain}>
+                    <h3 className={styles.projects__title}>Content Arbitrage Platform</h3>
+                    <p className={styles.projects__company}>Perion Network</p>
+                    <p className={styles.projects__description}>
+                      Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily &mdash; work that led to the startup&rsquo;s acquisition by Perion.
+                    </p>
+                    <div className={styles.projects__tags}>
+                      {['Microservices', 'AdTech', 'Scale'].map((tag) => (
+                        <span key={tag} className={styles.projects__tag}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <p className={styles.projects__description}>{project.description}</p>
-                  <div className={styles.projects__tags}>
-                    {project.tags.map((tag) => (
-                      <span key={tag} className={styles.projects__tag}>
-                        {tag}
-                      </span>
-                    ))}
+                  <div className={styles.projects__featuredOutcome}>
+                    <span className={styles.projects__outcomeValue}>Acquired by Perion</span>
+                    <span className={styles.projects__outcomeLabel}>outcome of the rebuild</span>
                   </div>
                 </div>
-              </ScrollReveal>
-            ))}
+              </div>
+            </ScrollReveal>
+
+            <div className={styles.projects__supporting}>
+              {[
+                {
+                  title: 'AI Workflow Optimizer',
+                  company: 'Swish.ai',
+                  description: 'Led development of AI-driven automation platform that optimizes IT workflows, reducing manual tasks by 60% and improving team efficiency across multiple departments.',
+                  tags: ['AI/ML', 'Automation', 'Workflow'],
+                },
+                {
+                  title: 'Internal Productivity Tools',
+                  company: 'Multiple Organizations',
+                  description: 'Designed and implemented custom productivity tools that streamlined development workflows, improved team collaboration, and enhanced project management across R&D teams.',
+                  tags: ['Tools', 'Productivity', 'Collaboration'],
+                },
+              ].map((project, index) => (
+                <ScrollReveal key={index} delay={index * ANIMATION_DELAY.MEDIUM} className={styles.projects__cardReveal}>
+                  <div className={styles.projects__card}>
+                    <h3 className={styles.projects__title}>{project.title}</h3>
+                    <p className={styles.projects__company}>{project.company}</p>
+                    <p className={styles.projects__description}>{project.description}</p>
+                    <div className={styles.projects__tags}>
+                      {project.tags.map((tag) => (
+                        <span key={tag} className={styles.projects__tag}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -718,18 +687,10 @@ export default function Home() {
                   initials: "CL",
                 },
               ].map((testimonial, index) => (
-                <ScrollReveal key={index} delay={index * ANIMATION_DELAY.MEDIUM}>
+                <ScrollReveal key={index} delay={index * ANIMATION_DELAY.MEDIUM} className={styles.testimonials__item}>
                   <div className={styles.testimonials__card}>
-                    <div>
-                      <motion.div
-                        className={styles.testimonials__icon}
-                        animate={{ rotate: [ROTATION.ZERO, TRANSFORM.ROTATE_RANGE, -TRANSFORM.ROTATE_RANGE, ROTATION.ZERO] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
-                      >
-                        <MessageCircle className="w-full h-full" />
-                      </motion.div>
-                      <p className={styles.testimonials__quote}>"{testimonial.quote}"</p>
-                    </div>
+                    <span className={styles.testimonials__mark} aria-hidden="true">&ldquo;</span>
+                    <p className={styles.testimonials__quote}>{testimonial.quote}</p>
                     <div className={styles.testimonials__author}>
                       <div className={styles.testimonials__avatar}>
                         <span className={styles.testimonials__initials}>{testimonial.initials}</span>
@@ -759,11 +720,12 @@ export default function Home() {
 
           <div className={styles.contact__content}>
             <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
-              <div className={styles.contact__card}>
-                <h3 className={styles.contact__title}>{CONTACT_CONTENT.TITLE}</h3>
-                <p className={styles.contact__intro}>
-                  {CONTACT_CONTENT.INTRO}
-                </p>
+              <div className={styles.contact__split}>
+                <div className={styles.contact__lede}>
+                  <p className={styles.contact__intro}>
+                    {CONTACT_CONTENT.INTRO}
+                  </p>
+                </div>
 
                 <div className={styles.contact__methods}>
                   <motion.div
@@ -791,7 +753,7 @@ export default function Home() {
                     transition={{ duration: ANIMATION_DURATION.FAST }}
                   >
                     <div className={styles.contact__iconWrapper}>
-                      <ExternalLink className={styles.contact__icon} />
+                      <Linkedin className={styles.contact__icon} />
                     </div>
                     <div className={styles.contact__methodInfo}>
                       <h4 className={styles.contact__methodTitle}>{CONTACT_CONTENT.LINKEDIN_LABEL}</h4>

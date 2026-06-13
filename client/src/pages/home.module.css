@@ -12,7 +12,7 @@
 }
 
 /* ==========================================================================
-   Type system — monospace for display & labels (body stays Inter)
+   Type system - monospace for display & labels (body stays Inter)
    ========================================================================== */
 .section__title,
 .hero__roleChip,
@@ -108,12 +108,10 @@
   width: 13rem;
   aspect-ratio: 3 / 4;
   margin: 0 auto;
-  /* Crisp rounded-rectangle, matching the site's card radius */
-  border-radius: var(--radius-lg);
+  /* Sharp square corners, no outline - clean editorial rectangle */
+  border-radius: 0;
   overflow: hidden;
-  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.12);
-  box-shadow: 0 0 14px hsla(42, 30%, 88%, 0.08),
-              0 18px 40px hsla(28, 12%, 4%, 0.5);
+  box-shadow: 0 24px 60px hsla(28, 12%, 4%, 0.5);
 }
 
 .hero__portrait-image {
@@ -142,7 +140,7 @@
 
 /* Static window that clips the streaming chars to the card.
    Edge-fade (matching the page CodeBackground's mask) so the code has no hard
-   rectangular border — it bleeds toward the edges and reads as the same ambient
+   rectangular border - it bleeds toward the edges and reads as the same ambient
    field flowing across the portrait, not a separate boxed-in patch. */
 .hero__scanStreamMask {
   position: absolute;
@@ -151,7 +149,7 @@
   /* Vertical fade-out aligned to the same content line as the background
      (--portrait-code-stop = where that line falls within the portrait, measured
      in JS; 100% fallback = full coverage when the line sits below the portrait,
-     e.g. stacked mobile) — intersected with a soft left/right edge fade so
+     e.g. stacked mobile) - intersected with a soft left/right edge fade so
      there's no hard rectangle. */
   -webkit-mask-image:
     linear-gradient(180deg, #000 0%, #000 calc(var(--portrait-code-stop, 100%) - 12%), transparent var(--portrait-code-stop, 100%)),
@@ -165,7 +163,7 @@
 
 /* Wide row (two identical char blocks) that scrolls right-to-left for a seamless data stream.
    Matched to the page-level CodeBackground (60s, same glyph scale) so it reads as the
-   SAME ambient field passing over the portrait — not a separate, faster overlay. */
+   SAME ambient field passing over the portrait - not a separate, faster overlay. */
 .hero__scanStream {
   position: absolute;
   top: 0;
@@ -245,7 +243,7 @@
 
 .hero__titleAccent {
   display: block;
-  /* Outlined (stroke-only) counterpart to the solid first name — a real
+  /* Outlined (stroke-only) counterpart to the solid first name - a real
      two-tone contrast that reads, unlike the near-white gradient before. */
   color: transparent;
   -webkit-text-stroke: 1.5px var(--color-neutral-300);
@@ -255,36 +253,29 @@
 .hero__roles {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* Align the kicker to the centred portrait's left edge: same width as the
+     portrait, centred, text pinned left. */
+  justify-content: flex-start;
   gap: var(--spacing-2);
-  margin: 0 auto var(--spacing-6);
-  max-width: 90%;
+  width: 13rem;
+  margin: 0 auto var(--spacing-2);
   font-weight: var(--font-weight-regular);
 }
 
-/* Editorial kicker (matches the About section's kicker + gradient rails) —
-   a short cream rule + uppercase, tracked label. No pill: the rounded chip
-   clashed with the brutalist, sharp-edged system. */
+/* Editorial kicker - plain uppercase, tracked label (no rule), matching the
+   reference's top-left role line. */
 .hero__roleChip {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-3);
   padding: 0;
   background: none;
   border: none;
-  color: var(--color-primary-400);
+  color: var(--color-neutral-600);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.18em;
   white-space: nowrap;
-}
-
-.hero__roleChip::before {
-  content: '';
-  width: var(--spacing-6);
-  height: 2px;
-  background: var(--gradient-primary);
 }
 
 .hero__tagline {
@@ -314,6 +305,10 @@
     width: 15rem;
   }
 
+  .hero__roles {
+    width: 15rem;
+  }
+
   .hero__title {
     font-size: var(--font-size-6xl);
   }
@@ -330,10 +325,21 @@
     font-size: var(--font-size-xl);
     max-width: 38ch;
   }
+
+  /* Room now to set the metric and its label inline on a shared baseline. */
+  .about__impactRow {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--spacing-3);
+  }
 }
 
 @media (min-width: 768px) {
   .hero__portrait {
+    width: 17rem;
+  }
+
+  .hero__roles {
     width: 17rem;
   }
 
@@ -361,19 +367,33 @@
     width: 17rem;
   }
 
-  /* Two-column hero: portrait left, intro right (left-aligned) */
+  /* Two-column hero: kicker spans the top row, portrait left + intro right below */
   .hero__content {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
     align-items: center;
-    gap: var(--spacing-16);
+    column-gap: var(--spacing-16);
+    row-gap: var(--spacing-2);
     width: auto;
     max-width: var(--content-max-width-lg);
     text-align: left;
   }
 
+  .hero__roles {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
   .hero__portrait-wrapper {
+    grid-column: 1;
+    grid-row: 2;
     margin-bottom: 0;
+  }
+
+  .hero__intro {
+    grid-column: 2;
+    grid-row: 2;
   }
 
   .hero__intro {
@@ -388,7 +408,8 @@
 
   .hero__roles {
     justify-content: flex-start;
-    margin-left: 0;
+    width: auto;
+    margin: 0;
     max-width: 100%;
   }
 
@@ -464,142 +485,162 @@
   padding: 0 var(--spacing-6);
 }
 
+/* All section titles share the ABOUT kicker treatment: a small, left-aligned,
+   letter-spaced mono label in warm muted taupe (matches .about__sectionLabel). */
 .section__title {
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-  text-align: center;
-  margin-bottom: var(--spacing-16);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  letter-spacing: 0.32em;
+  color: hsl(42, 17%, 56%);
+  /* Align every section title to the same centered column as the ABOUT title
+     (about__content, content-max-width-md) so all titles share one left edge. */
+  max-width: var(--content-max-width-md);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--spacing-10);
+  /* Promote the title to its own compositor layer so the ScrollReveal entrance
+     translate composites the letter-spaced glyphs crisply instead of leaving a
+     subpixel ghost mid-animation. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
+/* Uniform with the rest of the label - no gradient accent. */
 .section__titleAccent {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-@media (min-width: 768px) {
-  .section__title {
-    font-size: var(--font-size-5xl);
-  }
+  color: inherit;
 }
 
 /* ==========================================================================
    About Section
    ========================================================================== */
 
-/* Block: about */
+/* Block: about
+   Warm editorial palette lifted directly from mockup C - slightly warmer and
+   more saturated than the shared neutral tokens, so labels recede to a warm
+   taupe and titles/metrics read as bright cream (not the duller gradient). */
 .about {
   composes: section;
+  --about-bright: hsl(42, 31%, 92%);  /* manifesto title, metrics, cmd */
+  --about-lead: hsl(42, 20%, 76%);    /* lead prose, focus statement */
+  --about-quote: hsl(42, 22%, 80%);   /* serif pull-quote */
+  --about-muted: hsl(42, 17%, 56%);   /* kickers, labels, term chrome, aside */
+  --about-dim: hsl(42, 12%, 41%);     /* line numbers, comments */
 }
 
+/* Single editorial column: one narrow measure, blocks stacked with rhythm.
+   Reads as a considered essay rather than a dashboard of tiles. */
 .about__content {
-  max-width: var(--content-max-width-lg);
+  max-width: var(--content-max-width-md);
   margin: 0 auto;
 }
 
-/* Bento grid (mobile-first single column) */
-.about__bento {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-6);
+/* Manifesto - editorial lead statement; left-aligned, no rail. */
+.about__manifesto {
   position: relative;
+  padding: var(--spacing-4) 0 0;
+  margin-bottom: var(--spacing-12);
 }
 
-/* Tile: Manifesto */
-/* Compound selector beats the later `.card { padding }` shorthand so the
-   rail clears the text instead of crowding it (equal specificity = source
-   order would otherwise win). */
-.card.about__manifesto {
-  position: relative;
-  padding-left: var(--spacing-12);
+.about__manifestoProse {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: var(--spacing-5);
 }
 
-.about__rail {
-  position: absolute;
-  left: var(--spacing-6);
-  top: var(--spacing-8);
-  bottom: var(--spacing-8);
-  width: var(--border-width-thick);
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
+/* ABOUT - small letter-spaced mono kicker that opens the section (replaces the
+   centered gradient title). Doubles as the section's <h2>. */
+.about__sectionLabel {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--about-muted);
+  margin: 0 0 var(--spacing-6);
 }
 
+/* Solid bright cream (per mockup C) - the gradient's lower stop reads as a
+   dull brown on large display type, which is the mismatch. */
 .about__manifestoTitle {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-4xl);
   line-height: var(--line-height-tight);
   font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-6);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin-bottom: var(--spacing-8);
+  color: var(--about-bright);
+  text-wrap: balance;
 }
 
+/* Keep the second sentence intact so the leading "I" never strands at a
+   line end ("...culture. I" / "build both."). */
+.about__manifestoNoWrap {
+  white-space: nowrap;
+}
+
+/* Body prose: Inter (not mono) at a comfortable measure (~62ch) so the
+   paragraphs read as prose, not a wall of fixed-width glyphs. Copy unchanged. */
 .about__lead {
-  color: var(--color-neutral-100);
+  font-family: var(--font-family-base);
+  color: var(--about-lead);
   font-size: var(--font-size-lg);
   line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-4);
+  max-width: 62ch;
+  margin: 0;
 }
 
+/* Secondary aside: clearly demoted below the lead - smaller, more muted -
+   so it reads as a footnote to the thesis, not a co-equal paragraph. */
 .about__body {
-  color: var(--color-neutral-300);
+  font-family: var(--font-family-base);
+  color: var(--about-muted);
+  font-size: var(--font-size-sm);
   line-height: var(--line-height-relaxed);
-  margin-bottom: 0;
+  max-width: 62ch;
+  margin: 0;
 }
 
-/* Tile: Impact — outcomes, not adjectives (replaces the duplicate portrait) */
-.about__impactTile {
-  display: flex;
-  flex-direction: column;
+/* Proof - inline evidence block (no card). Sits between the thesis and the
+   method as the section's hard data. */
+.about__proof {
+  margin-bottom: var(--spacing-12);
 }
 
+/* 2-up grid: each metric stacks over its label. Reads as one scannable unit. */
 .about__impactList {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-5) var(--spacing-8);
 }
 
-/* Each proof point: metric leads, short label below.
-   Hairline divider between rows, none on the first. */
+/* Mobile: stack the metric over its label. Side-by-side at this width cramps
+   the metric until it wraps ("11+ yrs" -> two lines), and baseline alignment
+   then orphans the second line against a top-stuck label. Stacking avoids it. */
 .about__impactRow {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-1);
-  padding: var(--spacing-4) 0;
-  border-top: var(--border-width-thin) solid var(--color-border);
-}
-
-.about__impactRow:first-child {
-  border-top: none;
-  padding-top: 0;
-}
-
-.about__impactRow:last-child {
-  padding-bottom: 0;
 }
 
 .about__impactMetric {
+  white-space: nowrap;
+}
+
+/* Unified mono treatment for every metric - one face, no accidental slab
+   swaps - so the proof block reads as deliberate, not broken. */
+.about__impactMetric {
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   letter-spacing: -0.01em;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--about-bright);
 }
 
 .about__impactLabel {
-  color: var(--color-neutral-300);
+  color: var(--about-muted);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
 }
@@ -611,11 +652,11 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--color-primary-400);
+  color: var(--about-muted);
   margin-bottom: var(--spacing-6);
 }
 
-/* Tile: Method — rendered as a shell script (approach.sh) */
+/* Tile: Method - rendered as a shell script (approach.sh) */
 /* Compound selector beats the later `.card { padding }` shorthand so the
    terminal chrome can sit flush to the card edge. */
 .card.about__method {
@@ -626,6 +667,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  margin-bottom: var(--spacing-12);
 }
 
 /* Title bar: filename + interpreter, no traffic-light chrome (restraint) */
@@ -642,7 +684,7 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   letter-spacing: 0.04em;
-  color: var(--color-neutral-200);
+  color: var(--about-muted);
 }
 
 .about__termTag {
@@ -650,7 +692,7 @@
   font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: var(--color-neutral-600);
+  color: var(--about-muted);
 }
 
 .about__termBody {
@@ -663,7 +705,7 @@
 
 .about__termComment {
   margin: 0;
-  color: var(--color-neutral-600);
+  color: var(--about-dim);
   white-space: nowrap;
 }
 
@@ -686,71 +728,23 @@
   flex-shrink: 0;
   width: 1.5rem;
   text-align: right;
-  color: var(--color-neutral-600);
+  color: var(--about-dim);
   user-select: none;
 }
 
 .about__cmd {
   flex-shrink: 0;
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary-400);
+  color: var(--about-bright);
 }
 
 .about__args {
-  color: var(--color-neutral-300);
+  color: var(--about-muted);
   line-height: var(--line-height-relaxed);
 }
 
-/* Tile: Strengths (icon matrix) */
-.about__strengthGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-4);
-}
 
-.about__strengthTile {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-4);
-  padding: var(--spacing-4);
-  background: var(--color-border-light);
-  border: var(--border-width-thin) solid var(--color-border);
-  border-radius: var(--radius-xl);
-  transition: transform 0.3s var(--transition-curve),
-              box-shadow 0.3s var(--transition-curve);
-  will-change: transform;
-}
-
-.about__strengthTile:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-glow-blue);
-}
-
-.about__strengthIcon {
-  flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.about__strengthGlyph {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: var(--color-primary-foreground);
-}
-
-.about__strengthLabel {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-neutral-100);
-  line-height: var(--line-height-normal);
-}
-
-/* Tile: Signature — the personal sign-off that closes the About section.
+/* Tile: Signature - the personal sign-off that closes the About section.
    Reads as a signed statement: an oversized quote-mark watermark, the origin
    story as a pull-quote, then the forward-looking focus + her name. */
 .about__signature {
@@ -759,59 +753,58 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-6);
+  padding: var(--spacing-2) 0;
 }
 
-/* Oversized quotation glyph sitting behind the story for editorial weight */
-.about__quoteMark {
+/* Rotating wireframe figure - decorative, lives behind the text. Hidden on
+   small screens where the card is too narrow to share space; revealed on the
+   right once the layout has room (see tablet/desktop overrides below). */
+.about__figure {
+  display: none;
   position: absolute;
-  top: calc(-1 * var(--spacing-8));
-  right: var(--spacing-2);
-  z-index: var(--z-index-base);
-  font-family: var(--font-family-mono);
-  font-size: 11rem;
-  line-height: 1;
-  font-weight: var(--font-weight-bold);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0.1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
   pointer-events: none;
-  user-select: none;
 }
 
 .about__signatureBody {
   position: relative;
-  z-index: var(--z-index-base);
+  z-index: 2;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
 }
 
-/* Reset the shared kicker's bottom margin — the flex gap handles spacing here */
+/* Reset the shared kicker's bottom margin - the flex gap handles spacing here */
 .about__signature .about__kicker {
   margin-bottom: 0;
 }
 
+/* Serif italic pull-quote: a calmer, human register that closes the section
+   in a different voice from the mono/sans above it. */
 .about__journey {
   margin: 0;
   max-width: 42ch;
+  font-family: var(--font-family-serif);
+  font-style: italic;
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-light);
-  color: var(--color-foreground);
-  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-regular);
+  color: var(--about-quote);
+  line-height: var(--line-height-snug, 1.4);
 }
 
-/* Forward-looking footer: focus statement (left) + signature (right),
-   parted by a hairline that echoes the section's other dividers */
+/* Forward-looking footer: focus statement (left) + signature (right).
+   Separated from the quote by open space rather than a rule - the hairline
+   ran under the wireframe and read as a cut across the layout. */
 .about__signatureFooter {
   position: relative;
-  z-index: var(--z-index-base);
+  z-index: 2;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-5);
-  padding-top: var(--spacing-6);
-  border-top: var(--border-width-thin) solid var(--color-border);
+  padding-top: var(--spacing-4);
 }
 
 .about__focus {
@@ -819,7 +812,7 @@
   max-width: 52ch;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-regular);
-  color: var(--color-neutral-300);
+  color: var(--about-lead);
   line-height: var(--line-height-relaxed);
 }
 
@@ -831,78 +824,11 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--color-primary-400);
+  color: var(--about-muted);
 }
 
-/* The section literally ends with her name — a handwritten-style sign-off */
-.about__sign {
-  align-self: flex-start;
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.about__sign::before {
-  content: '— ';
-  -webkit-text-fill-color: var(--color-neutral-400);
-}
-
-/* Strength matrix: two columns once there's room */
-@media (min-width: 480px) {
-  .about__strengthGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* Tablet: 6-column bento */
+/* Tablet+ */
 @media (min-width: 768px) {
-  .about__bento {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .about__manifesto {
-    grid-column: 1 / 7;
-  }
-
-  .about__impactTile {
-    grid-column: 1 / 7;
-  }
-
-  /* Wide tile at this size: lay the proof points out in two columns */
-  .about__impactList {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 var(--spacing-8);
-  }
-
-  .about__impactRow:nth-child(2) {
-    border-top: none;
-    padding-top: 0;
-  }
-
-  .about__method {
-    grid-column: 1 / 4;
-  }
-
-  .about__strengthsTile {
-    grid-column: 4 / 7;
-  }
-
-  /* Half-width tile at this size: stack the matrix to one column */
-  .about__strengthGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .about__signature {
-    grid-column: 1 / 7;
-  }
-
   /* Story and forward-looking statement sit side by side once there's room */
   .about__signatureFooter {
     flex-direction: row;
@@ -911,68 +837,29 @@
     gap: var(--spacing-8);
   }
 
-  .about__sign {
-    align-self: flex-end;
-    flex-shrink: 0;
+  /* Reveal the wireframe gem on the right, given room - no longer clipped */
+  .about__figure {
+    display: block;
+    width: 36%;
+    max-width: 320px;
+  }
+
+  .about__signatureBody,
+  .about__signatureFooter {
+    max-width: 60%;
   }
 }
 
-/* Desktop: 12-column asymmetric bento */
+/* Desktop: scale the lead statement up to a true display title */
 @media (min-width: 1024px) {
-  .about__bento {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-auto-rows: auto;
-    align-items: stretch;
-  }
-
-  .about__manifesto {
-    grid-column: 1 / 8;
-  }
-
   .about__manifestoTitle {
-    font-size: var(--font-size-4xl);
+    font-size: var(--font-size-5xl);
+    max-width: 19ch;
   }
 
-  .about__impactTile {
-    grid-column: 8 / 13;
-  }
-
-  /* Narrow tile again on desktop: stack the proof points vertically */
-  .about__impactList {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .about__impactRow:nth-child(2) {
-    border-top: var(--border-width-thin) solid var(--color-border);
-    padding-top: var(--spacing-4);
-  }
-
-  .about__method {
-    grid-column: 1 / 7;
-  }
-
-  .about__strengthsTile {
-    grid-column: 7 / 13;
-  }
-
-  /* Wide enough again for the two-column matrix */
-  .about__strengthGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .about__signature {
-    grid-column: 1 / 13;
-  }
-
-  /* Full-width on desktop: scale the story up to a true display pull-quote */
   .about__journey {
-    max-width: 30ch;
     font-size: var(--font-size-3xl);
-  }
-
-  .about__quoteMark {
-    font-size: 15rem;
+    max-width: 38ch;
   }
 }
 
@@ -1040,21 +927,38 @@
 
 .experience__timelineLine {
   position: absolute;
-  left: 2rem;
+  left: calc(2rem - 1px);
   top: 0;
   bottom: 0;
   width: 2px;
-  background: var(--gradient-primary);
+  /* Fades as it travels into the past, mirroring the recency weighting */
+  background: linear-gradient(180deg, var(--color-primary-400), hsla(40, 18%, 76%, 0.12));
 }
 
 .experience__item {
   position: relative;
   margin-bottom: var(--spacing-12);
+  transition: opacity var(--transition-base);
+}
+
+/* Recency weighting: recent roles recede, older roles fade further back. */
+.experience__item--recent {
+  opacity: 0.82;
+}
+
+.experience__item--past {
+  opacity: 0.6;
+}
+
+.experience__item--recent:hover,
+.experience__item--past:hover {
+  opacity: 1;
 }
 
 .experience__dot {
   position: absolute;
   left: 1.5rem;
+  top: 0.4rem;
   width: 1rem;
   height: 1rem;
   background: var(--gradient-primary);
@@ -1062,8 +966,38 @@
   z-index: var(--z-index-base);
 }
 
+.experience__item--recent .experience__dot {
+  left: 1.575rem;
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.experience__item--past .experience__dot {
+  left: 1.65rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  background: var(--color-neutral-400);
+}
+
 .experience__dot--active {
   animation: pulse 2s ease-in-out infinite;
+}
+
+/* Older roles step down in scale so the current chapter dominates. */
+.experience__item--recent .experience__title {
+  font-size: var(--font-size-xl);
+}
+
+.experience__item--recent .experience__company {
+  font-size: var(--font-size-lg);
+}
+
+.experience__item--past .experience__title {
+  font-size: var(--font-size-lg);
+}
+
+.experience__item--past .experience__company {
+  font-size: var(--font-size-base);
 }
 
 .experience__card {
@@ -1094,10 +1028,15 @@
   margin-bottom: var(--spacing-4);
 }
 
+/* Body prose in Inter (not the mono default) so descriptions read as prose,
+   matching the About section. Mono is reserved for titles/labels/tags. */
 .experience__description {
+  font-family: var(--font-family-base);
   color: var(--color-neutral-300);
+  font-size: var(--font-size-base);
   line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-4);
+  max-width: 62ch;
+  margin-bottom: var(--spacing-5);
 }
 
 .experience__tags {
@@ -1151,62 +1090,64 @@
   margin: 0 auto;
 }
 
-.philosophy__card {
-  composes: card;
-  padding: var(--spacing-12);
-  border-radius: var(--radius-3xl);
-  text-align: center;
+.philosophy__statement {
+  text-align: left;
 }
 
-.philosophy__iconWrapper {
-  margin-bottom: var(--spacing-8);
-}
-
-.philosophy__icon {
-  width: 4rem;
-  height: 4rem;
-  margin: 0 auto;
+.philosophy__kicker {
+  display: block;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
   color: var(--color-primary-400);
+  margin-bottom: var(--spacing-6);
+}
+
+.philosophy__kicker::before {
+  content: '— ';
 }
 
 .philosophy__quote {
+  font-family: var(--font-family-base);
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-light);
   color: var(--color-neutral-100);
-  line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-8);
+  line-height: var(--line-height-tight);
+  max-width: 30ch;
+}
+
+.philosophy__quoteEmphasis {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-50);
 }
 
 .philosophy__principles {
   display: grid;
   gap: var(--spacing-8);
   margin-top: var(--spacing-12);
+  padding-top: var(--spacing-8);
+  border-top: 1px solid var(--color-neutral-800);
 }
 
 .philosophy__principle {
-  text-align: center;
+  text-align: left;
 }
 
-.philosophy__principleIconWrapper {
-  width: 3rem;
-  height: 3rem;
-  margin: 0 auto var(--spacing-4);
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.philosophy__principleIcon{
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--color-primary-foreground);
+.philosophy__principleNumber {
+  display: block;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-400);
+  margin-bottom: var(--spacing-3);
 }
 
 .philosophy__principleTitle {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--color-foreground);
   margin-bottom: var(--spacing-2);
 }
@@ -1214,15 +1155,18 @@
 .philosophy__principleDescription {
   color: var(--color-neutral-400);
   font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
 }
 
 @media (min-width: 768px) {
   .philosophy__quote {
-    font-size: var(--font-size-3xl);
+    font-size: var(--font-size-4xl);
+    max-width: 26ch;
   }
 
   .philosophy__principles {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-12);
   }
 }
 
@@ -1236,42 +1180,88 @@
 }
 
 .projects__grid {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-8);
-  max-width: var(--content-max-width-lg);
+  /* Match the section title's column (content-max-width-md) so the cards share
+     the headline's left/right edges instead of sticking out past it. */
+  max-width: var(--content-max-width-md);
   margin: 0 auto;
+}
+
+.projects__cardReveal {
+  height: 100%;
 }
 
 .projects__card {
   composes: card;
   composes: card--hover;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.projects__iconWrapper {
+.projects__cardFeatured {
+  border-color: hsla(42, 30%, 88%, 0.28);
+}
+
+.projects__featuredBadge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  /* Quiet glass chip - a faint translucent pill instead of the bright cream
+     fill, so "Featured" reads as a label, not an attention-grabbing button. */
+  color: hsl(42, 18%, 62%);
+  background: hsla(42, 30%, 88%, 0.06);
+  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.16);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-sm);
   margin-bottom: var(--spacing-6);
 }
 
-.projects__iconBg {
-  width: 4rem;
-  height: 4rem;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-2xl);
+.projects__featuredBody {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-6);
+  align-items: start;
+}
+
+.projects__featuredMain {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: var(--spacing-4);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  will-change: transform;
+  flex-direction: column;
 }
 
-.projects__card:hover .projects__iconBg {
-  transform: scale(1.1);
+.projects__featuredOutcome {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding-top: var(--spacing-4);
+  border-top: var(--border-width-thin) solid var(--color-border);
 }
 
-.projects__icon {
-  width: 2rem;
-  height: 2rem;
-  color: var(--color-primary-foreground);
+.projects__outcomeValue {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-foreground);
+}
+
+.projects__outcomeLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-400);
+}
+
+.projects__supporting {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-8);
 }
 
 .projects__title {
@@ -1288,6 +1278,7 @@
 }
 
 .projects__description {
+  font-family: var(--font-family-base);
   color: var(--color-neutral-300);
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-6);
@@ -1297,6 +1288,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
+  margin-top: auto;
 }
 
 .projects__tag {
@@ -1308,14 +1300,21 @@
 }
 
 @media (min-width: 768px) {
-  .projects__grid {
+  .projects__supporting {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-@media (min-width: 1024px) {
-  .projects__grid {
-    grid-template-columns: repeat(3, 1fr);
+  .projects__featuredBody {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: var(--spacing-10);
+  }
+
+  .projects__featuredOutcome {
+    padding-top: 0;
+    padding-left: var(--spacing-8);
+    border-top: none;
+    border-left: var(--border-width-thin) solid var(--color-border);
+    justify-content: center;
   }
 }
 
@@ -1329,7 +1328,9 @@
 }
 
 .testimonials__content {
-  max-width: var(--content-max-width-lg);
+  /* Match the section title's column (content-max-width-md) so the cards share
+     the headline's left/right edges instead of sticking out past it. */
+  max-width: var(--content-max-width-md);
   margin: 0 auto;
 }
 
@@ -1338,20 +1339,33 @@
   gap: var(--spacing-8);
 }
 
+.testimonials__item {
+  height: 100%;
+}
+
 .testimonials__card {
   composes: card;
   composes: card--hover;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.testimonials__icon {
-  width: 2rem;
-  height: 2rem;
+.testimonials__mark {
+  display: block;
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-6xl);
+  line-height: 0.4;
   color: var(--color-primary-400);
-  margin-bottom: var(--spacing-4);
+  opacity: 0.4;
+  margin-bottom: var(--spacing-5);
+  user-select: none;
 }
 
 .testimonials__quote {
-  color: var(--color-neutral-300);
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-lg);
+  color: var(--color-neutral-200);
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-6);
 }
@@ -1360,12 +1374,18 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-4);
+  margin-top: auto;
 }
 
 .testimonials__avatar {
   width: 3rem;
   height: 3rem;
-  background: var(--gradient-primary);
+  /* Quiet glass disc instead of the bright cream fill - the initials read as
+     a quiet identifier, not a spotlight (matches the Featured chip). */
+  background: hsla(42, 30%, 88%, 0.06);
+  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.16);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -1374,7 +1394,7 @@
 }
 
 .testimonials__initials {
-  color: var(--color-primary-foreground);
+  color: hsl(42, 18%, 62%);
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
 }
@@ -1385,12 +1405,18 @@
 
 .testimonials__name {
   color: var(--color-foreground);
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .testimonials__title {
   color: var(--color-neutral-400);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.04em;
 }
 
 @media (min-width: 768px) {
@@ -1417,13 +1443,23 @@
 }
 
 .contact__content {
-  max-width: var(--content-max-width-sm);
+  /* Share the headline's column (content-max-width-md) so the block's left
+     edge aligns with the section label, like every other section. */
+  max-width: var(--content-max-width-md);
   margin: 0 auto;
 }
 
-.contact__card {
-  composes: card;
-  composes: card--hover;
+/* Editorial split: invite copy (left) + contact methods (right), echoing the
+   About sign-off. No bordered card - the layout reads as open and deliberate. */
+.contact__split {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.contact__lede {
+  display: flex;
+  flex-direction: column;
 }
 
 .contact__title {
@@ -1434,9 +1470,11 @@
 }
 
 .contact__intro {
-  color: var(--color-neutral-300);
-  line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-8);
+  font-family: var(--font-family-base);
+  color: var(--color-neutral-200);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-snug, 1.4);
+  margin: 0;
 }
 
 .contact__methods {
@@ -1458,10 +1496,10 @@
 }
 
 .contact__iconWrapper {
-  width: 3rem;
-  height: 3rem;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
+  width: 2.125rem;
+  height: 2.125rem;
+  background: color-mix(in srgb, var(--color-primary-400) 10%, transparent);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1469,9 +1507,9 @@
 }
 
 .contact__icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--color-primary-foreground);
+  width: 1.0625rem;
+  height: 1.0625rem;
+  color: var(--color-primary-400);
 }
 
 .contact__methodInfo {
@@ -1495,6 +1533,30 @@
 
 .contact__text {
   color: var(--color-neutral-300);
+}
+
+/* Tablet+: invite copy and methods sit side by side, parted by a hairline
+   that echoes the section's other dividers. */
+@media (min-width: 768px) {
+  .contact__split {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--spacing-12);
+  }
+
+  .contact__lede {
+    flex: 1;
+  }
+
+  .contact__methods {
+    flex: 1;
+    padding-left: var(--spacing-12);
+    border-left: var(--border-width-thin) solid var(--color-border);
+  }
+
+  .contact__intro {
+    margin-bottom: 0;
+  }
 }
 
 /* ==========================================================================
@@ -1522,9 +1584,12 @@
   margin-bottom: var(--spacing-6);
 }
 
+/* Editorial quote: serif italic, matching the About sign-off and testimonials
+   (mono italic reads as a glitch, not a quote). */
 .footer__quote {
   max-width: 38rem;
   margin: 0 auto;
+  font-family: var(--font-family-serif);
   color: var(--color-neutral-300);
   font-style: italic;
   font-size: var(--font-size-lg);
@@ -1603,7 +1668,7 @@
 }
 
 /* ==========================================================================
-   Accessibility — respect reduced motion
+   Accessibility - respect reduced motion
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
