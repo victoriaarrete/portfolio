@@ -242,7 +242,7 @@ export default function Home() {
             >
               <h2 className={styles.about__sectionLabel}>{SECTION_TITLES.ABOUT}</h2>
               <h3 className={styles.about__manifestoTitle}>
-                Strong code needs strong culture.{' '}
+                <span className={styles.about__manifestoSentence}>Strong code needs strong culture.</span>{' '}
                 <span className={styles.about__manifestoNoWrap}>I build both.</span>
               </h3>
               <div className={styles.about__manifestoProse}>
@@ -290,7 +290,7 @@ export default function Home() {
                 <span className={styles.about__termTag}>bash</span>
               </div>
               <div className={styles.about__termBody}>
-                <p className={styles.about__termComment} aria-hidden="true">#!/bin/bash</p>
+                <p className={styles.about__termComment} aria-hidden="true"># my approach is simple</p>
                 <ol className={styles.about__script}>
                   {ABOUT_APPROACH.map((item, index) => (
                     <motion.li
@@ -301,9 +301,16 @@ export default function Home() {
                       viewport={{ once: true, margin: '-60px' }}
                       transition={{ delay: index * ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
                     >
-                      <span className={styles.about__lineNum} aria-hidden="true">{`0${index + 1}`}</span>
-                      <span className={styles.about__cmd}>{item.cmd}</span>
-                      <span className={styles.about__args}> {item.args}</span>
+                      <span className={styles.about__lineNum} aria-hidden="true">{index + 1}</span>
+                      <span className={styles.about__code}>
+                        <span className={styles.about__cmd}>{item.cmd}</span>
+                        {'flag' in item && item.flag ? (
+                          <span className={styles.about__flag}> {item.flag}</span>
+                        ) : null}
+                        <span className={styles.about__quote} aria-hidden="true"> "</span>
+                        <span className={styles.about__args}>{item.arg}</span>
+                        <span className={styles.about__quote} aria-hidden="true">"</span>
+                      </span>
                     </motion.li>
                   ))}
                 </ol>

@@ -571,11 +571,13 @@
   text-wrap: balance;
 }
 
-/* Keep the second sentence intact so the leading "I" never strands at a
-   line end ("...culture. I" / "build both."). */
+/* Keep the short second sentence intact so its leading "I" never strands. */
 .about__manifestoNoWrap {
   white-space: nowrap;
 }
+
+/* The first sentence wraps freely on narrow screens (it's too long to fit one
+   mono line); the desktop rule below pins it to a single line once there's room. */
 
 /* Body prose: Inter (not mono) at a comfortable measure (~62ch) so the
    paragraphs read as prose, not a wall of fixed-width glyphs. Copy unchanged. */
@@ -732,15 +734,29 @@
   user-select: none;
 }
 
+/* Code portion flows inline so the quotes sit flush against the string;
+   the line number stays a fixed gutter, so wrapped lines hang in their column. */
+.about__code {
+  flex: 1;
+  line-height: var(--line-height-relaxed);
+}
+
 .about__cmd {
-  flex-shrink: 0;
   font-weight: var(--font-weight-bold);
   color: var(--about-bright);
 }
 
+.about__flag {
+  color: var(--about-muted);
+  font-style: italic;
+}
+
+.about__quote {
+  color: var(--about-dim);
+}
+
 .about__args {
   color: var(--about-muted);
-  line-height: var(--line-height-relaxed);
 }
 
 
@@ -850,16 +866,26 @@
   }
 }
 
-/* Desktop: scale the lead statement up to a true display title */
+/* Desktop: scale the lead statement up to a true display title. We drop the
+   narrow cap and tighten tracking so the first sentence can fill the column. */
 @media (min-width: 1024px) {
   .about__manifestoTitle {
     font-size: var(--font-size-5xl);
-    max-width: 19ch;
+    letter-spacing: 0.02em;
   }
 
   .about__journey {
     font-size: var(--font-size-3xl);
     max-width: 38ch;
+  }
+}
+
+/* Pin the first sentence to a single line only once the column reaches its full
+   64rem measure — below this the content column is still padding-constrained and
+   narrower than the sentence, so nowrap would clip "...culture" off the edge. */
+@media (min-width: 1100px) {
+  .about__manifestoSentence {
+    white-space: nowrap;
   }
 }
 

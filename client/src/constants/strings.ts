@@ -303,13 +303,14 @@ export const ABOUT_IMPACT = [
 ] as const;
 
 // About Section - Approach List
-// Rendered as a shell script: `cmd` is the highlighted command/verb, `args`
-// the rest of the line. Read together ("cmd args") they form the original
-// sentence, so the ordered-list reading stays natural for screen readers.
+// Rendered as valid-looking shell: `cmd` is the command/verb, optional `flag`
+// is a long-form option, and `arg` is the quoted string operand. Read together
+// ("cmd flag arg") they form the original sentence, so the ordered-list reading
+// stays natural for screen readers; the quotes are decorative (aria-hidden).
 export const ABOUT_APPROACH = [
-  { cmd: 'understand', args: 'the system deeply (technical + human)' },
-  { cmd: 'remove', args: 'noise and unnecessary complexity' },
-  { cmd: 'build', args: 'environments where people can perform at their best' },
+  { cmd: 'understand', flag: '--deeply', arg: 'the system — technical + human' },
+  { cmd: 'remove', arg: 'noise and unnecessary complexity' },
+  { cmd: 'build', arg: 'environments where people perform at their best' },
 ] as const;
 
 // Contact Section Content
