@@ -58,7 +58,7 @@ export const SECTION_TITLES = {
   ABOUT: 'About',
   ABOUT_ACCENT: 'Me',
   EXPERIENCE: 'Experience',
-  EXPERIENCE_ACCENT: 'Timeline',
+  EXPERIENCE_ACCENT: 'git log',
   PHILOSOPHY: 'Leadership',
   PHILOSOPHY_ACCENT: 'Philosophy',
   PROJECTS: 'Key',
@@ -312,6 +312,103 @@ export const ABOUT_APPROACH = [
   { cmd: 'remove', arg: 'noise and unnecessary complexity' },
   { cmd: 'build', arg: 'environments where people perform at their best' },
 ] as const;
+
+// Experience Section - rendered as a `git log --graph` of the career.
+// `shape` drives the commit-graph gutter (see home.tsx): the Perion promotion
+// is a real merge — the full-stack track branches off and merges into the
+// leadership line. `type` is the conventional-commit verb shown before the role.
+type ExperienceCommit = {
+  hash: string;
+  type: 'feat' | 'merge' | 'init';
+  shape: 'head' | 'commit' | 'merge' | 'branch' | 'close' | 'tail';
+  role: string;
+  company: string;
+  period: string;
+  blurb: string;
+  head?: boolean;
+  root?: boolean;
+};
+
+export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
+  {
+    hash: 'a1f0c2e', type: 'feat', shape: 'head', head: true,
+    role: 'R&D Team Leader', company: 'Zencity', period: 'Mar 2026 — present',
+    blurb: 'Leading R&D as the team scales its civic-data platform.',
+  },
+  {
+    hash: '7e3b9d4', type: 'feat', shape: 'commit',
+    role: 'R&D Team Leader', company: 'Swish.ai', period: 'Apr 2024 — Oct 2025',
+    blurb: 'People-first leadership of AI-driven IT workflow automation, delivered with Scrum.',
+  },
+  {
+    hash: 'c4a07f1', type: 'merge', shape: 'merge',
+    role: 'R&D Team Leader', company: 'Perion Network', period: 'Apr 2021 — Apr 2024',
+    blurb: 'Promoted to lead 5 devs + QA across back-office, microservices and MongoDB.',
+  },
+  {
+    hash: '9b21e85', type: 'feat', shape: 'branch',
+    role: 'Full Stack Developer', company: 'Perion Network', period: 'Jun 2018 — Apr 2021',
+    blurb: 'Built scalable React / Next.js front ends and Node / MongoDB microservices.',
+  },
+  {
+    hash: '3d5c0aa', type: 'feat', shape: 'close',
+    role: 'Full Stack Developer', company: 'Mind Connect', period: 'Mar 2016 — Apr 2018',
+    blurb: 'Designed and shipped a full call-center management platform end to end.',
+  },
+  {
+    hash: 'f08e612', type: 'feat', shape: 'commit',
+    role: 'Full Stack Developer', company: 'PowerTech', period: 'Feb 2015 — Mar 2016',
+    blurb: 'Built a project-management web app on .NET and Microsoft SQL Server.',
+  },
+  {
+    hash: '2b4471c', type: 'feat', shape: 'commit',
+    role: 'Full Stack Developer', company: 'Early career', period: 'Dec 2012 — Jan 2015',
+    blurb: 'Foundation years building across the full stack.',
+  },
+  {
+    hash: 'd9aa130', type: 'init', shape: 'tail', root: true,
+    role: 'M.Sc. Computer Science', company: 'Penza State University', period: '2007 — 2012',
+    blurb: 'Root commit — computer-science foundations.',
+  },
+];
+
+// Testimonials Section
+// Rendered as an initials-selector (see home.tsx): the initials discs act as a
+// picker and a single quote shows at a time. Quotes are trimmed to their
+// sharpest line; the full recommendations live on LinkedIn.
+type Testimonial = {
+  quote: string;
+  name: string;
+  title: string;
+  initials: string;
+};
+
+export const TESTIMONIALS: readonly Testimonial[] = [
+  {
+    quote: 'A unique ability to challenge conventional thinking and drive meaningful improvements.',
+    name: 'Ofek',
+    title: 'Full-Stack Engineer',
+    initials: 'OF',
+  },
+  {
+    quote: 'Strategic mindset and leadership acumen that drive innovation and achieve results.',
+    name: 'Barak Maoz',
+    title: 'Senior Data / Back-End Engineer',
+    initials: 'BM',
+  },
+  {
+    quote: 'A true leader — she never failed to bring value to our collaborative efforts.',
+    name: 'Palie Răzvan-Mircea',
+    title: 'Frontend Developer',
+    initials: 'PR',
+  },
+  {
+    quote: 'Her ability to overcome challenges with a smile made her a cut above the rest.',
+    name: 'Chirieac Lăcrămioara',
+    title: 'QA Engineer',
+    initials: 'CL',
+  },
+];
 
 // Contact Section Content
 export const CONTACT_CONTENT = {

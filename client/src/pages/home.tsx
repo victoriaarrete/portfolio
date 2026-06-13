@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef, useMemo, type MouseEvent } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Mail, MapPin, Linkedin, User, ChevronDown } from 'lucide-react';
 import victoriaPortrait from '@assets/victoria_pic.png';
 import { ParticleSystem } from '@/components/particle-system';
 import { Navigation } from '@/components/navigation';
 import { ScrollReveal } from '@/components/scroll-reveal';
+import { useScramble } from '@/hooks/use-scramble';
 import { CodeBackground, buildField } from '@/components/code-background';
 import { GeometricWireframe } from '@/components/geometric-wireframe';
+import { TangleToClarity } from '@/components/tangle-to-clarity';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   ANIMATION_DURATION, 
@@ -27,6 +29,8 @@ import {
   ABOUT_CONTENT,
   ABOUT_APPROACH,
   ABOUT_IMPACT,
+  EXPERIENCE_LOG,
+  TESTIMONIALS,
   CONTACT_CONTENT,
   COPYRIGHT,
   SCROLL_BEHAVIOR,
@@ -37,6 +41,14 @@ import styles from './home.module.css';
 export default function Home() {
   const reduce = useReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
+  // Testimonials: the initials discs act as a picker; one quote shows at a time.
+  // The quote crossfades + rises (house ScrollReveal motion) while the mono
+  // name/role decode-scramble (scanner nod); both fall back to instant under
+  // reduced motion.
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const activeQuote = TESTIMONIALS[activeTestimonial];
+  const scrambledName = useScramble(activeQuote.name, { enabled: !reduce });
+  const scrambledTitle = useScramble(activeQuote.title, { enabled: !reduce });
   // Same generator as the page-level code field (unified look); enough glyphs to
   // fill the portrait so the overlay reaches the content line on every device.
   const scanField = useMemo(() => buildField(6000), []);
@@ -351,197 +363,91 @@ export default function Home() {
           </ScrollReveal>
 
           <div className={styles.experience__content}>
-            <div className={styles.experience__timeline}>
-              <div className={styles.experience__timelineLine}></div>
+            <div className={styles.experience__terminal}>
+              {/* Terminal chrome: traffic lights + the command that produced this log */}
+              <div className={styles.experience__bar} aria-hidden="true">
+                <span className={styles.experience__dots}>
+                  <span className={styles.experience__trafficDot} />
+                  <span className={styles.experience__trafficDot} />
+                  <span className={styles.experience__trafficDot} />
+                </span>
+                <span className={styles.experience__file}>career.log</span>
+              </div>
 
-              {/* Current Position - Zencity */}
-              <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
-                <div className={styles.experience__item}>
-                  <motion.div
-                    className={`${styles.experience__dot} ${styles['experience__dot--active']}`}
-                    animate={{ scale: [TRANSFORM.SCALE_MIN, TRANSFORM.SCALE_MAX, TRANSFORM.SCALE_MIN], boxShadow: ['0 0 0 0 rgba(235, 226, 208, 0.5)', '0 0 0 10px rgba(235, 226, 208, 0)', '0 0 0 0 rgba(235, 226, 208, 0)'] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
-                    <div className={styles.experience__header}>
-                      <h3 className={styles.experience__title}>R&D Team Leader</h3>
-                      <span className={styles.experience__period}>March 2026 - Present</span>
-                    </div>
-                    <h4 className={styles.experience__company}>Zencity • Tel Aviv, Israel</h4>
-                    <p className={styles.experience__description}>
-                      Leading R&D as the team scales its civic-data platform — early days, more to come.
-                    </p>
-                    <div className={styles.experience__tags}>
-                      {['GovTech', 'Team Leadership', 'R&D'].map((skill) => (
-                        <span key={skill} className={styles.experience__tag}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
+              <div className={styles.experience__prompt} aria-hidden="true">
+                <span className={styles.experience__promptSign}>victoria@career</span>
+                <span className={styles.experience__promptPath}> ~ </span>
+                <span className={styles.experience__promptCmd}>git log --author=victoria --graph</span>
+              </div>
 
-              {/* Swish.ai */}
-              <ScrollReveal delay={ANIMATION_DELAY.LONG}>
-                <div className={`${styles.experience__item} ${styles['experience__item--recent']}`}>
-                  <div className={styles.experience__dot} />
-                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
-                    <div className={styles.experience__header}>
-                      <h3 className={styles.experience__title}>R&D Team Leader</h3>
-                      <span className={styles.experience__period}>April 2024 - October 2025</span>
-                    </div>
-                    <h4 className={styles.experience__company}>Swish.ai • Tel Aviv, Israel</h4>
-                    <p className={styles.experience__description}>
-                      Led IT workflow optimization with a people-first approach. Drove innovation through AI-driven solutions while fostering a collaborative, growth-focused culture using Scrum methodology.
-                    </p>
-                    <div className={styles.experience__tags}>
-                      {['AI Automation', 'Team Leadership', 'Scrum', 'Workflow Optimization'].map((skill) => (
-                        <span key={skill} className={styles.experience__tag}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
+              <ol className={styles.experience__log}>
+                {EXPERIENCE_LOG.map((commit, index) => {
+                  const shape = commit.shape;
+                  const railUp = shape !== 'head';
+                  const railDown = shape !== 'tail';
+                  const isBranchNode = shape === 'branch';
+                  const rowOpacity = Math.max(0.55, 1 - index * 0.07);
 
-              {/* Perion Network - R&D Team Leader */}
-              <ScrollReveal delay={ANIMATION_DELAY.LONG}>
-                <div className={`${styles.experience__item} ${styles['experience__item--recent']}`}>
-                  <div className={styles.experience__dot} />
-                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
-                    <div className={styles.experience__header}>
-                      <h3 className={styles.experience__title}>R&D Team Leader</h3>
-                      <span className={styles.experience__period}>April 2021 - April 2024</span>
-                    </div>
-                    <h4 className={styles.experience__company}>Perion Network • Holon, Israel</h4>
-                    <p className={styles.experience__description}>
-                      Led a team of 5 developers and QA through scrum ceremonies, managing back-office projects focusing on configurations for layouts, posts, and advertising logic. Contributed to microservices architecture with MongoDB integration.
-                    </p>
-                    <div className={styles.experience__tags}>
-                      {['Team Management', 'Microservices', 'MongoDB', 'Ad Tech'].map((skill) => (
-                        <span key={skill} className={styles.experience__tag}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
+                  return (
+                    <ScrollReveal key={commit.hash} delay={index * ANIMATION_DELAY.SHORT}>
+                      <li
+                        className={styles.experience__commit}
+                        style={{ ['--row-op' as string]: rowOpacity }}
+                      >
+                        <div className={styles.experience__gutter} aria-hidden="true">
+                          {railUp && <span className={styles.experience__railUp} />}
+                          {railDown && <span className={styles.experience__railDown} />}
 
-              {/* Perion Network - Full Stack Developer */}
-              <ScrollReveal delay={ANIMATION_DELAY.VERY_LONG}>
-                <div className={`${styles.experience__item} ${styles['experience__item--past']}`}>
-                  <div className={styles.experience__dot} />
-                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
-                    <div className={styles.experience__header}>
-                      <h3 className={styles.experience__title}>Full Stack Developer</h3>
-                      <span className={styles.experience__period}>June 2018 - April 2021</span>
-                    </div>
-                    <h4 className={styles.experience__company}>Perion Network • Holon, Israel</h4>
-                    <p className={styles.experience__description}>
-                      Specialized in developing impactful web solutions using React and Next.js. Built scalable backend solutions with Node.js and MongoDB for microservices architecture.
-                    </p>
-                    <div className={styles.experience__tags}>
-                      {['React', 'Next.js', 'Node.js', 'MongoDB'].map((skill) => (
-                        <span key={skill} className={styles.experience__tag}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
+                          {shape === 'merge' && (
+                            <>
+                              <span className={styles.experience__elbowOpen} />
+                              <span className={styles.experience__branchDownMerge} />
+                            </>
+                          )}
+                          {shape === 'branch' && (
+                            <>
+                              <span className={styles.experience__branchUp} />
+                              <span className={styles.experience__branchDown} />
+                            </>
+                          )}
+                          {shape === 'close' && <span className={styles.experience__elbowClose} />}
 
-              {/* Mind Connect */}
-              <ScrollReveal delay={ANIMATION_DELAY.EXTRA_LONG}>
-                <div className={`${styles.experience__item} ${styles['experience__item--past']}`}>
-                  <div className={styles.experience__dot} />
-                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
-                    <div className={styles.experience__header}>
-                      <h3 className={styles.experience__title}>Full Stack Developer</h3>
-                      <span className={styles.experience__period}>March 2016 - April 2018</span>
-                    </div>
-                    <h4 className={styles.experience__company}>Mind Connect • Rishon LeZion, Israel</h4>
-                    <p className={styles.experience__description}>
-                      Designed and developed a call center management platform (web application) with full-stack implementation using modern technologies and custom solutions.
-                    </p>
-                    <div className={styles.experience__tags}>
-                      {['PHP', 'MySQL', 'JavaScript', 'jQuery', 'Bootstrap', 'Google Maps API'].map((skill) => (
-                        <span key={skill} className={styles.experience__tag}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
+                          <span
+                            className={`${styles.experience__node} ${
+                              isBranchNode ? styles['experience__node--branch'] : ''
+                            } ${commit.head ? styles['experience__node--head'] : ''} ${
+                              commit.root ? styles['experience__node--root'] : ''
+                            }`}
+                          />
+                        </div>
 
-              {/* PowerTech */}
-              <ScrollReveal delay={ANIMATION_DELAY.STAGGER_1}>
-                <div className={`${styles.experience__item} ${styles['experience__item--past']}`}>
-                  <div className={styles.experience__dot} />
-                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
-                    <div className={styles.experience__header}>
-                      <h3 className={styles.experience__title}>Full Stack Developer</h3>
-                      <span className={styles.experience__period}>February 2015 - March 2016</span>
-                    </div>
-                    <h4 className={styles.experience__company}>PowerTech • Rishon LeZion, Israel</h4>
-                    <p className={styles.experience__description}>
-                      Designed and implemented a project management web application using .NET framework and Microsoft SQL Server with modern frontend technologies.
-                    </p>
-                    <div className={styles.experience__tags}>
-                      {['ASP.NET', 'Microsoft SQL Server', 'JavaScript', 'HTML', 'CSS'].map((skill) => (
-                        <span key={skill} className={styles.experience__tag}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              {/* Early Career */}
-              <ScrollReveal delay={ANIMATION_DELAY.STAGGER_2}>
-                <div className={`${styles.experience__item} ${styles['experience__item--past']}`}>
-                  <div className={styles.experience__dot} />
-                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
-                    <div className={styles.experience__header}>
-                      <h3 className={styles.experience__title}>Full Stack Developer</h3>
-                      <span className={styles.experience__period}>December 2012 - January 2015</span>
-                    </div>
-                    <h4 className={styles.experience__company}>Early Career Development • Penza, Russia</h4>
-                    <p className={styles.experience__description}>
-                      Foundation years building comprehensive full-stack development skills and gaining experience in various technologies and project management methodologies.
-                    </p>
-                    <div className={styles.experience__tags}>
-                      {['Full Stack Development', 'Project Management', 'Software Architecture'].map((skill) => (
-                        <span key={skill} className={styles.experience__tag}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              {/* Education */}
-              <ScrollReveal delay={ANIMATION_DELAY.STAGGER_3}>
-                <div className={styles.experience__item}>
-                  <div className={styles.experience__dot} />
-                  <div className={`${styles.experience__card} ${styles.card} ${styles['card--hover']}`}>
-                    <div className={styles.experience__header}>
-                      <h3 className={styles.experience__title}>Master of Science</h3>
-                      <span className={styles.experience__period}>2007 - 2012</span>
-                    </div>
-                    <h4 className={styles.experience__company}>Penza State University • Computer Science</h4>
-                    <p className={styles.experience__description}>
-                      Advanced studies in Computer Science, building the foundation for solving complex problems and empowering teams to grow through collaboration, accountability, and purpose.
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
+                        <div className={styles.experience__body}>
+                          <p className={styles.experience__msg}>
+                            <span
+                              className={`${styles.experience__type} ${
+                                styles[`experience__type--${commit.type}`] ?? ''
+                              }`}
+                            >
+                              {commit.type}:
+                            </span>{' '}
+                            <span className={styles.experience__role}>{commit.role}</span>
+                            <span className={styles.experience__company}> {commit.company}</span>
+                            {commit.head && (
+                              <span className={styles.experience__ref}> (HEAD &rarr; main)</span>
+                            )}
+                          </p>
+                          <p className={styles.experience__meta}>
+                            <span className={styles.experience__hash}>{commit.hash}</span>
+                            <span className={styles.experience__metaSep}> · </span>
+                            {commit.period}
+                          </p>
+                          <p className={styles.experience__blurb}>{commit.blurb}</p>
+                        </div>
+                      </li>
+                    </ScrollReveal>
+                  );
+                })}
+              </ol>
             </div>
           </div>
         </div>
@@ -557,31 +463,38 @@ export default function Home() {
           </ScrollReveal>
 
           <div className={styles.philosophy__content}>
-            <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
-              <div className={styles.philosophy__statement}>
-                <span className={styles.philosophy__kicker}>{TAGLINES.PHILOSOPHY_KICKER}</span>
+            <div className={styles.philosophy__layout}>
+              <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
+                <div className={styles.philosophy__statement}>
+                  <span className={styles.philosophy__kicker}>{TAGLINES.PHILOSOPHY_KICKER}</span>
 
-                <blockquote className={styles.philosophy__quote}>
-                  {TAGLINES.PHILOSOPHY_QUOTE_LEAD}
-                  <span className={styles.philosophy__quoteEmphasis}>{TAGLINES.PHILOSOPHY_QUOTE_EMPHASIS}</span>
-                  {TAGLINES.PHILOSOPHY_QUOTE_REST}
-                </blockquote>
+                  <blockquote className={styles.philosophy__quote}>
+                    {TAGLINES.PHILOSOPHY_QUOTE_LEAD}
+                    <span className={styles.philosophy__quoteEmphasis}>{TAGLINES.PHILOSOPHY_QUOTE_EMPHASIS}</span>
+                    {TAGLINES.PHILOSOPHY_QUOTE_REST}
+                  </blockquote>
 
-                <div className={styles.philosophy__principles}>
-                  {LEADERSHIP_PRINCIPLES.map((item, index) => (
-                    <ScrollReveal key={item.title} delay={ANIMATION_DELAY.LONG + index * ANIMATION_DELAY.MEDIUM}>
-                      <div className={styles.philosophy__principle}>
-                        <span className={styles.philosophy__principleNumber}>
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-                        <h4 className={styles.philosophy__principleTitle}>{item.title}</h4>
-                        <p className={styles.philosophy__principleDescription}>{item.description}</p>
-                      </div>
-                    </ScrollReveal>
-                  ))}
+                  {/* Mobile-only horizontal band; desktop uses the side-column figure below */}
+                  <TangleToClarity variant="horizontal" className={styles.philosophy__band} />
+
+                  <div className={styles.philosophy__principles}>
+                    {LEADERSHIP_PRINCIPLES.map((item, index) => (
+                      <ScrollReveal key={item.title} delay={ANIMATION_DELAY.LONG + index * ANIMATION_DELAY.MEDIUM}>
+                        <div className={styles.philosophy__principle}>
+                          <span className={styles.philosophy__principleNumber}>
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
+                          <h4 className={styles.philosophy__principleTitle}>{item.title}</h4>
+                          <p className={styles.philosophy__principleDescription}>{item.description}</p>
+                        </div>
+                      </ScrollReveal>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </ScrollReveal>
+              </ScrollReveal>
+
+              <TangleToClarity variant="vertical" className={styles.philosophy__visual} />
+            </div>
           </div>
         </div>
       </section>
@@ -595,63 +508,92 @@ export default function Home() {
             </h2>
           </ScrollReveal>
 
-          <div className={styles.projects__grid}>
-            <ScrollReveal>
-              <div className={`${styles.projects__card} ${styles.projects__cardFeatured}`}>
-                <span className={styles.projects__featuredBadge}>Featured</span>
-                <div className={styles.projects__featuredBody}>
-                  <div className={styles.projects__featuredMain}>
-                    <h3 className={styles.projects__title}>Content Arbitrage Platform</h3>
-                    <p className={styles.projects__company}>CIQ/Perion</p>
-                    <p className={styles.projects__description}>
-                      Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily &mdash; work that led to the startup&rsquo;s acquisition by Perion.
-                    </p>
-                    <div className={styles.projects__tags}>
-                      {['Microservices', 'AdTech', 'Scale'].map((tag) => (
-                        <span key={tag} className={styles.projects__tag}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className={styles.projects__featuredOutcome}>
-                    <span className={styles.projects__outcomeValue}>Acquired by Perion</span>
-                    <span className={styles.projects__outcomeLabel}>outcome of the rebuild</span>
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
+          <div className={styles.projects__palette}>
+            {/* Palette chrome: a focused search field framing the work as ⌘K results */}
+            <div className={styles.projects__paletteSearch} aria-hidden="true">
+              <span className={styles.projects__paletteKbd}>&#8984;K</span>
+              <span className={styles.projects__palettePlaceholder}>search projects</span>
+              <span className={styles.projects__paletteCaret} />
+            </div>
 
-            <div className={styles.projects__supporting}>
+            <div className={styles.projects__paletteResults}>
               {[
                 {
+                  group: 'Featured',
+                  featured: true,
+                  title: 'Content Arbitrage Platform',
+                  company: 'CIQ/Perion',
+                  description: (
+                    <>
+                      Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily &mdash; work that led to the startup&rsquo;s acquisition by Perion.
+                    </>
+                  ),
+                  tags: ['Microservices', 'AdTech', 'Scale'],
+                },
+                {
+                  group: 'More',
                   title: 'AI Workflow Optimizer',
                   company: 'Swish.ai',
-                  description: 'Led development of AI-driven automation platform that optimizes IT workflows, reducing manual tasks by 60% and improving team efficiency across multiple departments.',
+                  description:
+                    'Led development of AI-driven automation platform that optimizes IT workflows, reducing manual tasks by 60% and improving team efficiency across multiple departments.',
                   tags: ['AI/ML', 'Automation', 'Workflow'],
                 },
                 {
                   title: 'Internal Productivity Tools',
                   company: 'Multiple Organizations',
-                  description: 'Designed and implemented custom productivity tools that streamlined development workflows, improved team collaboration, and enhanced project management across R&D teams.',
+                  description:
+                    'Designed and implemented custom productivity tools that streamlined development workflows, improved team collaboration, and enhanced project management across R&D teams.',
                   tags: ['Tools', 'Productivity', 'Collaboration'],
                 },
               ].map((project, index) => (
-                <ScrollReveal key={index} delay={index * ANIMATION_DELAY.MEDIUM} className={styles.projects__cardReveal}>
-                  <div className={styles.projects__card}>
-                    <h3 className={styles.projects__title}>{project.title}</h3>
-                    <p className={styles.projects__company}>{project.company}</p>
-                    <p className={styles.projects__description}>{project.description}</p>
-                    <div className={styles.projects__tags}>
-                      {project.tags.map((tag) => (
-                        <span key={tag} className={styles.projects__tag}>
-                          {tag}
-                        </span>
-                      ))}
+                <ScrollReveal key={project.title} delay={index * ANIMATION_DELAY.MEDIUM}>
+                  {project.group && (
+                    <p className={styles.projects__paletteGroup} aria-hidden="true">
+                      {project.group}
+                    </p>
+                  )}
+                  <div
+                    className={`${styles.projects__result} ${project.featured ? styles['projects__result--active'] : ''}`}
+                  >
+                    <span className={styles.projects__resultCaret} aria-hidden="true">
+                      {project.featured ? '❯' : '›'}
+                    </span>
+                    <div className={styles.projects__resultBody}>
+                      <div className={styles.projects__resultHead}>
+                        <div className={styles.projects__resultIdent}>
+                          <h3 className={styles.projects__title}>{project.title}</h3>
+                          <p className={styles.projects__company}>{project.company}</p>
+                        </div>
+                        {project.featured ? (
+                          <div className={styles.projects__resultAction}>
+                            <span className={styles.projects__acquiredChip}>
+                              Acquired by Perion <kbd>&#8629;</kbd>
+                            </span>
+                            <span className={styles.projects__outcomeLabel}>outcome of the rebuild</span>
+                          </div>
+                        ) : (
+                          <span className={styles.projects__enterHint} aria-hidden="true">
+                            &#8629;
+                          </span>
+                        )}
+                      </div>
+                      <p className={styles.projects__description}>{project.description}</p>
+                      <div className={styles.projects__tags}>
+                        {project.tags.map((tag) => (
+                          <span key={tag} className={styles.projects__tag}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </ScrollReveal>
               ))}
+            </div>
+
+            <div className={styles.projects__paletteFooter} aria-hidden="true">
+              <span>&#8593;&#8595; navigate</span>
+              <span>&#8629; open</span>
             </div>
           </div>
         </div>
@@ -666,52 +608,46 @@ export default function Home() {
             </h2>
           </ScrollReveal>
 
-          <div className={styles.testimonials__content}>
-            <div className={styles.testimonials__grid}>
-              {[
-                {
-                  quote: "Victoria has a unique ability to challenge conventional thinking and drive meaningful improvements. Her insights and creative approach led to more efficient processes and higher-quality outcomes. Working with her was both inspiring and rewarding.",
-                  name: "Ofek",
-                  title: "Full-Stack Engineer",
-                  initials: "OF",
-                },
-                {
-                  quote: "Victoria's leadership has been instrumental in optimizing project management and team collaboration. Her adaptability and strategic mindset, combined with technical expertise and leadership acumen, drive innovation and achieve results.",
-                  name: "Barak Maoz",
-                  title: "Senior Data/Back-End Engineer",
-                  initials: "BM",
-                },
-                {
-                  quote: "Victoria consistently demonstrated a willingness to provide help and support. Her communication skills were always effective and clear. As a true leader, she never failed to bring value to our collaborative efforts. Working with Victoria was an enriching experience!",
-                  name: "Palie Răzvan-Mircea",
-                  title: "Frontend Developer",
-                  initials: "PR",
-                },
-                {
-                  quote: "I've worked with Victoria almost a full year. She's always willing to lend a hand to anyone who needs it. Her ability to overcome challenges with a smile made her stand out as a cut above the rest. Her constant communication helped lift our spirits in challenging situations.",
-                  name: "Chirieac Lăcrămioara",
-                  title: "QA Engineer",
-                  initials: "CL",
-                },
-              ].map((testimonial, index) => (
-                <ScrollReveal key={index} delay={index * ANIMATION_DELAY.MEDIUM} className={styles.testimonials__item}>
-                  <div className={styles.testimonials__card}>
-                    <span className={styles.testimonials__mark} aria-hidden="true">&ldquo;</span>
-                    <p className={styles.testimonials__quote}>{testimonial.quote}</p>
-                    <div className={styles.testimonials__author}>
-                      <div className={styles.testimonials__avatar}>
-                        <span className={styles.testimonials__initials}>{testimonial.initials}</span>
-                      </div>
-                      <div className={styles.testimonials__authorInfo}>
-                        <h4 className={styles.testimonials__name}>{testimonial.name}</h4>
-                        <p className={styles.testimonials__title}>{testimonial.title}</p>
-                      </div>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              ))}
+          <ScrollReveal className={styles.testimonials__content}>
+            <figure className={styles.testimonials__feature}>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.blockquote
+                  key={activeTestimonial}
+                  className={styles.testimonials__quote}
+                  initial={reduce ? false : { opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0, transition: { duration: reduce ? 0 : 0.28, ease: EASING.DEFAULT } }}
+                  exit={reduce ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0, y: 8, transition: { duration: 0.14, ease: EASING.DEFAULT } }}
+                >
+                  <span className={styles.testimonials__mark} aria-hidden="true">&ldquo;</span>
+                  {activeQuote.quote}
+                  <span className={styles.testimonials__mark} aria-hidden="true">&rdquo;</span>
+                </motion.blockquote>
+              </AnimatePresence>
+              <figcaption className={styles.testimonials__caption}>
+                <span className={styles.testimonials__name}>{scrambledName}</span>
+                <span className={styles.testimonials__title}>{scrambledTitle}</span>
+              </figcaption>
+            </figure>
+
+            <div className={styles.testimonials__picker} role="tablist" aria-label="Colleague testimonials">
+              {TESTIMONIALS.map((testimonial, index) => {
+                const isActive = index === activeTestimonial;
+                return (
+                  <button
+                    key={testimonial.initials}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-label={`${testimonial.name}, ${testimonial.title}`}
+                    className={`${styles.testimonials__disc} ${isActive ? styles['testimonials__disc--active'] : ''}`}
+                    onClick={() => setActiveTestimonial(index)}
+                  >
+                    <span className={styles.testimonials__initials}>{testimonial.initials}</span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 

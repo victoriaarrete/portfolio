@@ -18,8 +18,6 @@
 .hero__roleChip,
 .about__kicker,
 .about__manifestoTitle,
-.experience__period,
-.experience__tag,
 .projects__tag,
 .footer__name {
   font-family: var(--font-family-mono);
@@ -30,7 +28,6 @@
 .hero__title,
 .about__manifestoTitle,
 .card__title,
-.experience__title,
 .projects__title,
 .philosophy__principleTitle,
 .contact__title,
@@ -947,158 +944,263 @@
   margin: 0 auto;
 }
 
-.experience__timeline {
+/* The experience timeline is rendered as a `git log --graph`: a terminal window
+   whose commit gutter draws the career, with the Perion promotion as a real
+   branch that splits off (the full-stack track) and merges into the leadership
+   line. --gline is the shared graph stroke; the lane geometry below assumes a
+   2.75rem gutter with the main lane centred at 14px and the branch lane at 32px. */
+.experience__terminal {
+  --gline: hsla(42, 30%, 88%, 0.22);
+  background: var(--color-surface);
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.experience__bar {
   position: relative;
-}
-
-.experience__timelineLine {
-  position: absolute;
-  left: calc(2rem - 1px);
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  /* Fades as it travels into the past, mirroring the recency weighting */
-  background: linear-gradient(180deg, var(--color-primary-400), hsla(40, 18%, 76%, 0.12));
-}
-
-.experience__item {
-  position: relative;
-  margin-bottom: var(--spacing-12);
-  transition: opacity var(--transition-base);
-}
-
-/* Recency weighting: recent roles recede, older roles fade further back. */
-.experience__item--recent {
-  opacity: 0.82;
-}
-
-.experience__item--past {
-  opacity: 0.6;
-}
-
-.experience__item--recent:hover,
-.experience__item--past:hover {
-  opacity: 1;
-}
-
-.experience__dot {
-  position: absolute;
-  left: 1.5rem;
-  top: 0.4rem;
-  width: 1rem;
-  height: 1rem;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
-  z-index: var(--z-index-base);
-}
-
-.experience__item--recent .experience__dot {
-  left: 1.575rem;
-  width: 0.85rem;
-  height: 0.85rem;
-}
-
-.experience__item--past .experience__dot {
-  left: 1.65rem;
-  width: 0.7rem;
-  height: 0.7rem;
-  background: var(--color-neutral-400);
-}
-
-.experience__dot--active {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-/* Older roles step down in scale so the current chapter dominates. */
-.experience__item--recent .experience__title {
-  font-size: var(--font-size-xl);
-}
-
-.experience__item--recent .experience__company {
-  font-size: var(--font-size-lg);
-}
-
-.experience__item--past .experience__title {
-  font-size: var(--font-size-lg);
-}
-
-.experience__item--past .experience__company {
-  font-size: var(--font-size-base);
-}
-
-.experience__card {
-  margin-left: var(--spacing-16);
-}
-
-.experience__header {
   display: flex;
-  flex-direction: column;
-  margin-bottom: var(--spacing-4);
+  align-items: center;
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: var(--border-width-thin) solid var(--color-border-light);
 }
 
-.experience__title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-foreground);
-}
-
-.experience__period {
-  color: var(--color-primary-400);
-  font-weight: var(--font-weight-semibold);
-  margin-top: var(--spacing-2);
-}
-
-.experience__company {
-  font-size: var(--font-size-xl);
-  color: var(--color-accent-400);
-  margin-bottom: var(--spacing-4);
-}
-
-/* Body prose in Inter (not the mono default) so descriptions read as prose,
-   matching the About section. Mono is reserved for titles/labels/tags. */
-.experience__description {
-  font-family: var(--font-family-base);
-  color: var(--color-neutral-300);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-relaxed);
-  max-width: 62ch;
-  margin-bottom: var(--spacing-5);
-}
-
-.experience__tags {
-  display: flex;
-  flex-wrap: wrap;
+.experience__dots {
+  display: inline-flex;
   gap: var(--spacing-2);
 }
 
-.experience__tag {
-  padding: var(--spacing-1) var(--spacing-3);
-  background: hsla(42, 30%, 88%, 0.1);
-  color: var(--color-primary-400);
-  border-radius: var(--radius-sm);
+.experience__trafficDot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: var(--radius-full);
+  background: hsla(38, 11%, 45%, 0.45);
+}
+
+.experience__file {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+  pointer-events: none;
+}
+
+.experience__prompt {
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
+  padding: var(--spacing-4) var(--spacing-4) var(--spacing-2);
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
-@media (min-width: 768px) {
-  .experience__header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .experience__period {
-    margin-top: 0;
-  }
+.experience__promptSign {
+  color: var(--color-primary-600);
 }
 
-@keyframes pulse {
+.experience__promptPath {
+  color: var(--color-neutral-600);
+}
+
+.experience__promptCmd {
+  color: var(--color-neutral-200);
+}
+
+.experience__log {
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-2) var(--spacing-4) var(--spacing-5);
+}
+
+.experience__commit {
+  display: flex;
+  position: relative;
+  min-height: 4.75rem;
+  opacity: var(--row-op, 1);
+  transition: opacity var(--transition-base);
+}
+
+.experience__commit:hover {
+  opacity: 1;
+}
+
+/* --- Commit graph gutter --- */
+.experience__gutter {
+  position: relative;
+  flex: 0 0 2.75rem;
+  align-self: stretch;
+}
+
+.experience__railUp,
+.experience__railDown,
+.experience__branchUp,
+.experience__branchDown,
+.experience__branchDownMerge {
+  position: absolute;
+  width: 2px;
+  background: var(--gline);
+}
+
+.experience__railUp {
+  left: 13px;
+  top: 0;
+  height: 18px;
+}
+
+.experience__railDown {
+  left: 13px;
+  top: 18px;
+  bottom: 0;
+}
+
+.experience__branchUp {
+  left: 31px;
+  top: 0;
+  height: 18px;
+}
+
+.experience__branchDown {
+  left: 31px;
+  top: 18px;
+  bottom: 0;
+}
+
+.experience__branchDownMerge {
+  left: 31px;
+  top: 32px;
+  bottom: 0;
+}
+
+/* ╮ — main lane turns right and dives into the branch lane (the promotion). */
+.experience__elbowOpen {
+  position: absolute;
+  left: 14px;
+  top: 18px;
+  width: 18px;
+  height: 14px;
+  border-top: 2px solid var(--gline);
+  border-right: 2px solid var(--gline);
+  border-top-right-radius: 8px;
+}
+
+/* ╯ — the branch lane curves back left and merges into the main lane. */
+.experience__elbowClose {
+  position: absolute;
+  left: 14px;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border-bottom: 2px solid var(--gline);
+  border-right: 2px solid var(--gline);
+  border-bottom-right-radius: 8px;
+}
+
+.experience__node {
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  z-index: var(--z-index-base);
+}
+
+.experience__node--branch {
+  left: 26px;
+  width: 11px;
+  height: 11px;
+  background: var(--color-primary-500);
+}
+
+.experience__node--head {
+  left: 7px;
+  top: 11px;
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 0 4px hsla(42, 30%, 88%, 0.12);
+  animation: experienceNodeGlow 2.4s ease-in-out infinite;
+}
+
+.experience__node--root {
+  background: transparent;
+  border: 2px solid var(--color-primary-600);
+}
+
+/* --- Commit body --- */
+.experience__body {
+  padding: 0 0 var(--spacing-6);
+  min-width: 0;
+}
+
+.experience__msg {
+  font-family: var(--font-family-mono);
+  font-size: 0.95rem;
+  line-height: var(--line-height-tight);
+  color: var(--color-neutral-300);
+  margin: 0;
+}
+
+.experience__type {
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-bold);
+}
+
+.experience__type--merge {
+  color: var(--color-primary-400);
+}
+
+.experience__type--init {
+  color: var(--color-neutral-400);
+}
+
+.experience__role {
+  color: var(--color-foreground);
+  font-weight: var(--font-weight-bold);
+}
+
+.experience__company {
+  color: var(--color-neutral-400);
+}
+
+.experience__ref {
+  color: hsl(145, 26%, 62%);
+  font-weight: var(--font-weight-bold);
+}
+
+.experience__meta {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+  margin: var(--spacing-2) 0 0;
+}
+
+.experience__hash {
+  color: var(--color-primary-500);
+}
+
+.experience__metaSep {
+  color: var(--color-neutral-600);
+}
+
+.experience__blurb {
+  font-family: var(--font-family-base);
+  color: var(--color-neutral-300);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  max-width: 60ch;
+  margin: var(--spacing-2) 0 0;
+}
+
+@keyframes experienceNodeGlow {
   0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 hsla(42, 30%, 88%, 0.5);
+    box-shadow: 0 0 0 3px hsla(42, 30%, 88%, 0.1);
   }
   50% {
-    transform: scale(1.3);
-    box-shadow: 0 0 0 10px hsla(42, 30%, 88%, 0);
+    box-shadow: 0 0 0 6px hsla(42, 30%, 88%, 0.04);
   }
 }
 
@@ -1112,8 +1214,31 @@
 }
 
 .philosophy__content {
+  /* Match the section title column (content-max-width-md) so the content never
+     overhangs the title — they share one left and right edge. */
   max-width: var(--content-max-width-md);
   margin: 0 auto;
+}
+
+.philosophy__layout {
+  display: grid;
+  gap: var(--spacing-12);
+  align-items: center;
+}
+
+/* Desktop side-column figure (vertical). Hidden on mobile, where the
+   horizontal band stands in to avoid a screen-high void. */
+.philosophy__visual {
+  display: none;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Mobile-only horizontal band, sits between the quote and the principles. */
+.philosophy__band {
+  width: 100%;
+  margin: var(--spacing-8) 0 var(--spacing-2);
 }
 
 .philosophy__statement {
@@ -1185,6 +1310,19 @@
 }
 
 @media (min-width: 768px) {
+  .philosophy__layout {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: var(--spacing-16);
+  }
+
+  .philosophy__visual {
+    display: block;
+  }
+
+  .philosophy__band {
+    display: none;
+  }
+
   .philosophy__quote {
     font-size: var(--font-size-4xl);
     max-width: 26ch;
@@ -1205,116 +1343,190 @@
   composes: section;
 }
 
-.projects__grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-8);
-  /* Match the section title's column (content-max-width-md) so the cards share
-     the headline's left/right edges instead of sticking out past it. */
+/* Projects as a command palette (⌘K): the work surfaced as searchable results
+   with the featured project pre-selected. Shares the section title's column
+   (content-max-width-md) so the panel lines up with the headline's edges. */
+.projects__palette {
   max-width: var(--content-max-width-md);
   margin: 0 auto;
+  background: var(--color-surface);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
 }
 
-.projects__cardReveal {
-  height: 100%;
-}
-
-.projects__card {
-  composes: card;
-  composes: card--hover;
+/* Focused search field — the chrome that signals "this is a palette" */
+.projects__paletteSearch {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.projects__cardFeatured {
-  border-color: hsla(42, 30%, 88%, 0.28);
-}
-
-.projects__featuredBadge {
-  display: inline-flex;
   align-items: center;
-  align-self: flex-start;
+  gap: var(--spacing-3);
+  padding: var(--spacing-5) var(--spacing-6);
+  border-bottom: var(--border-width-thin) solid var(--color-border-light);
+}
+
+.projects__paletteKbd {
   font-family: var(--font-mono);
   font-size: var(--font-size-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  /* Quiet glass chip - a faint translucent pill instead of the bright cream
-     fill, so "Featured" reads as a label, not an attention-grabbing button. */
-  color: hsl(42, 18%, 62%);
+  letter-spacing: 0.04em;
+  color: hsl(42, 17%, 56%);
   background: hsla(42, 30%, 88%, 0.06);
   border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.16);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  padding: var(--spacing-1) var(--spacing-3);
   border-radius: var(--radius-sm);
-  margin-bottom: var(--spacing-6);
+  padding: var(--spacing-1) var(--spacing-2);
 }
 
-.projects__featuredBody {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-6);
-  align-items: start;
-}
-
-.projects__featuredMain {
-  display: flex;
-  flex-direction: column;
-}
-
-.projects__featuredOutcome {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-  padding-top: var(--spacing-4);
-  border-top: var(--border-width-thin) solid var(--color-border);
-}
-
-.projects__outcomeValue {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  color: var(--color-foreground);
-}
-
-.projects__outcomeLabel {
-  font-size: var(--font-size-sm);
+.projects__palettePlaceholder {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
   color: var(--color-neutral-400);
 }
 
-.projects__supporting {
+/* Blinking caret sells the "input is focused" feel without a real text field */
+.projects__paletteCaret {
+  width: 1px;
+  height: 1.1em;
+  background: var(--color-primary-400);
+  margin-left: calc(-1 * var(--spacing-2));
+  animation: projectsCaret 1.1s steps(1) infinite;
+}
+
+@keyframes projectsCaret {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects__paletteCaret { animation: none; }
+}
+
+.projects__paletteResults {
+  padding: var(--spacing-2) 0;
+}
+
+.projects__paletteGroup {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: hsl(42, 17%, 56%);
+  padding: var(--spacing-4) var(--spacing-6) var(--spacing-2);
+}
+
+.projects__result {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-8);
+  grid-template-columns: var(--spacing-6) 1fr;
+  column-gap: var(--spacing-3);
+  padding: var(--spacing-5) var(--spacing-6);
+  border-left: 2px solid transparent;
+  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.projects__result:hover {
+  background: hsla(42, 30%, 88%, 0.02);
+}
+
+/* The featured result reads as the highlighted/selected row in the palette */
+.projects__result--active {
+  background: hsla(42, 30%, 88%, 0.04);
+  border-left-color: var(--color-primary-400);
+}
+
+.projects__resultCaret {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: hsl(42, 17%, 56%);
+  padding-top: 0.15em;
+}
+
+.projects__result--active .projects__resultCaret {
+  color: var(--color-primary-400);
+}
+
+.projects__resultBody {
+  min-width: 0;
+}
+
+.projects__resultHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+}
+
+.projects__resultIdent {
+  min-width: 0;
+}
+
+.projects__resultAction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-1);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Solid cream "action" chip — dark glyph on cream for contrast (primary-fg) */
+.projects__acquiredChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-foreground);
+  background: var(--color-primary-400);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-1) var(--spacing-2);
+  white-space: nowrap;
+}
+
+.projects__acquiredChip kbd {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  opacity: 0.65;
+}
+
+.projects__outcomeLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+}
+
+/* Quiet enter-hint stands in for the action on non-selected rows */
+.projects__enterHint {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: hsl(42, 17%, 56%);
+  opacity: 0.45;
+  flex-shrink: 0;
+  padding-top: 0.1em;
 }
 
 .projects__title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   color: var(--color-foreground);
-  margin-bottom: var(--spacing-2);
 }
 
 .projects__company {
   color: var(--color-neutral-400);
   font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-4);
+  margin-top: var(--spacing-1);
 }
 
 .projects__description {
   font-family: var(--font-family-base);
   color: var(--color-neutral-300);
   line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-6);
+  margin: var(--spacing-4) 0 var(--spacing-5);
 }
 
 .projects__tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
-  margin-top: auto;
 }
 
 .projects__tag {
@@ -1325,22 +1537,40 @@
   font-size: var(--font-size-xs);
 }
 
-@media (min-width: 768px) {
-  .projects__supporting {
-    grid-template-columns: repeat(2, 1fr);
+/* Keyboard-hint footer, the last familiar palette cue */
+.projects__paletteFooter {
+  display: flex;
+  gap: var(--spacing-5);
+  padding: var(--spacing-4) var(--spacing-6);
+  border-top: var(--border-width-thin) solid var(--color-border-light);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: hsl(42, 17%, 56%);
+}
+
+@media (max-width: 640px) {
+  .projects__result {
+    grid-template-columns: var(--spacing-5) 1fr;
+    column-gap: var(--spacing-2);
+    padding: var(--spacing-5);
   }
 
-  .projects__featuredBody {
-    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
-    gap: var(--spacing-10);
+  .projects__paletteGroup,
+  .projects__paletteSearch,
+  .projects__paletteFooter {
+    padding-left: var(--spacing-5);
+    padding-right: var(--spacing-5);
   }
 
-  .projects__featuredOutcome {
-    padding-top: 0;
-    padding-left: var(--spacing-8);
-    border-top: none;
-    border-left: var(--border-width-thin) solid var(--color-border);
-    justify-content: center;
+  /* Stack identity over the acquired callout so it doesn't crowd the title */
+  .projects__resultHead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .projects__resultAction {
+    align-items: flex-start;
+    text-align: left;
   }
 }
 
@@ -1353,80 +1583,51 @@
   composes: section;
 }
 
+/* Quiet, low-emphasis block: one quote shows at a time; the initials discs
+   below act as a picker. Flush-left under the section title (shares its left
+   edge), no card chrome - it supports the page rather than competing with it. */
 .testimonials__content {
-  /* Match the section title's column (content-max-width-md) so the cards share
-     the headline's left/right edges instead of sticking out past it. */
+  /* Share the section title's centered column (content-max-width-md) so the
+     content's left edge lines up exactly with the title above it; the quote
+     keeps its own narrower measure for readable line length. */
   max-width: var(--content-max-width-md);
   margin: 0 auto;
+  text-align: left;
 }
 
-.testimonials__grid {
-  display: grid;
-  gap: var(--spacing-8);
-}
-
-.testimonials__item {
-  height: 100%;
-}
-
-.testimonials__card {
-  composes: card;
-  composes: card--hover;
+.testimonials__feature {
+  margin: 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  align-items: flex-start;
 }
 
 .testimonials__mark {
-  display: block;
   font-family: var(--font-family-serif);
-  font-size: var(--font-size-6xl);
-  line-height: 0.4;
   color: var(--color-primary-400);
   opacity: 0.4;
-  margin-bottom: var(--spacing-5);
   user-select: none;
 }
 
 .testimonials__quote {
   font-family: var(--font-family-serif);
-  font-size: var(--font-size-lg);
-  color: var(--color-neutral-200);
+  font-style: italic;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary-400);
   line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-6);
+  margin: 0 0 var(--spacing-5);
+  max-width: 36rem;
+  /* Reserve the quote's height for its tallest wrap (2 lines on this desktop
+     column) so swapping a 2-line quote for a 1-line one keeps the caption and
+     picker fixed. Stays a block (not flex) so the inline quote marks flow as
+     punctuation around the text instead of becoming siblings beside it. */
+  min-height: calc(var(--font-size-xl) * var(--line-height-relaxed) * 2);
 }
 
-.testimonials__author {
+.testimonials__caption {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-4);
-  margin-top: auto;
-}
-
-.testimonials__avatar {
-  width: 3rem;
-  height: 3rem;
-  /* Quiet glass disc instead of the bright cream fill - the initials read as
-     a quiet identifier, not a spotlight (matches the Featured chip). */
-  background: hsla(42, 30%, 88%, 0.06);
-  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.16);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.testimonials__initials {
-  color: hsl(42, 18%, 62%);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-sm);
-}
-
-.testimonials__authorInfo {
-  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-1);
 }
 
 .testimonials__name {
@@ -1445,9 +1646,84 @@
   letter-spacing: 0.04em;
 }
 
-@media (min-width: 768px) {
-  .testimonials__grid {
-    grid-template-columns: repeat(2, 1fr);
+.testimonials__picker {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-8);
+  /* Pull the row left by the disc's tap-target inset ((2.75 - 2.375)/2 rem) so
+     the first visible disc's left edge lines up with the quote, not the
+     invisible 44px hit area. */
+  margin-left: -0.1875rem;
+}
+
+.testimonials__disc {
+  /* 44px tap target around a 38px visible disc (touch a11y). */
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.testimonials__disc:hover {
+  transform: translateY(-2px);
+}
+
+.testimonials__disc .testimonials__initials {
+  width: 2.375rem;
+  height: 2.375rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsla(42, 30%, 88%, 0.04);
+  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.16);
+  color: hsl(42, 18%, 62%);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+}
+
+.testimonials__disc--active .testimonials__initials {
+  background: hsla(42, 30%, 88%, 0.1);
+  border-color: var(--color-primary-400);
+  color: var(--color-primary-400);
+  /* Quick "settle" with a soft overshoot when a disc becomes active, so the
+     selection reads as physically confirmed. Re-fires each time the class lands
+     on a newly-picked disc. */
+  animation: testimonialDiscSettle 0.34s cubic-bezier(0.34, 1.4, 0.5, 1);
+}
+
+@keyframes testimonialDiscSettle {
+  from { transform: scale(0.86); }
+  to { transform: scale(1); }
+}
+
+/* Narrow column wraps the longest quote to 3 lines - reserve for that so the
+   picker stays put on mobile too. */
+@media (max-width: 767px) {
+  .testimonials__quote {
+    min-height: calc(var(--font-size-xl) * var(--line-height-relaxed) * 3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials__disc {
+    transition: none;
+  }
+  .testimonials__disc:hover {
+    transform: none;
+  }
+  .testimonials__disc--active .testimonials__initials {
+    animation: none;
   }
 }
 
