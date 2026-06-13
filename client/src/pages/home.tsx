@@ -595,7 +595,7 @@ export default function Home() {
                 <div className={styles.projects__featuredBody}>
                   <div className={styles.projects__featuredMain}>
                     <h3 className={styles.projects__title}>Content Arbitrage Platform</h3>
-                    <p className={styles.projects__company}>Perion Network</p>
+                    <p className={styles.projects__company}>CIQ/Perion</p>
                     <p className={styles.projects__description}>
                       Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily &mdash; work that led to the startup&rsquo;s acquisition by Perion.
                     </p>
