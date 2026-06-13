@@ -133,6 +133,7 @@ export default function Home() {
       {/* Hero Section */}
       <section ref={heroRef} id={NAV_SECTIONS.HERO} className={styles.hero}>
         <CodeBackground variant="band" />
+
         <div className={styles.hero__container}>
           <motion.div
             className={styles.hero__content}
@@ -140,7 +141,7 @@ export default function Home() {
             animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
             transition={{ duration: ANIMATION_DURATION.VERY_SLOW, ease: EASING.DEFAULT }}
           >
-            {/* Role kicker, top-left above the portrait (editorial placement) */}
+            {/* Role kicker, above the portrait (mobile) / above the name (desktop) */}
             <motion.h2
               className={styles.hero__roles}
               aria-label={ROLES.FULL_SUBTITLE}
@@ -153,34 +154,35 @@ export default function Home() {
               ))}
             </motion.h2>
 
-            {/* Portrait at the top center */}
-            <div className={styles['hero__portrait-wrapper']}>
-              <motion.div
-                className={styles['hero__portrait']}
-                onMouseMove={handlePortraitMove}
-                animate={reduce ? undefined : { y: [0, -8, 0] }}
-                transition={{ duration: 14, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
-              >
-                <img
-                  src={victoriaPortrait}
-                  alt={PERSONAL_INFO.NAME}
-                  className={styles['hero__portrait-image']}
-                />
-                {/* Scanner reveal: encrypted chars stream past a fixed central beam + cursor glow */}
-                <div className={styles['hero__scan']} aria-hidden="true">
-                  <div className={styles['hero__scanStreamMask']}>
-                    <div className={styles['hero__scanStream']}>
-                      <pre className={styles['hero__scanChars']}>{scanField}</pre>
-                      <pre className={styles['hero__scanChars']}>{scanField}</pre>
-                    </div>
+            {/* Portrait: mobile = centred card in flow; desktop = pinned full-bleed
+                to the left edge with the name overlapping its faded right edge. */}
+            <motion.div
+              className={styles['hero__portrait']}
+              onMouseMove={handlePortraitMove}
+              animate={reduce ? undefined : { y: [0, -8, 0] }}
+              transition={{ duration: 14, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
+            >
+              <img
+                src={victoriaPortrait}
+                alt={PERSONAL_INFO.NAME}
+                className={styles['hero__portrait-image']}
+              />
+              {/* Scanner reveal: encrypted chars stream past a fixed central beam + cursor glow */}
+              <div className={styles['hero__scan']} aria-hidden="true">
+                <div className={styles['hero__scanStreamMask']}>
+                  <div className={styles['hero__scanStream']}>
+                    <pre className={styles['hero__scanChars']}>{scanField}</pre>
+                    <pre className={styles['hero__scanChars']}>{scanField}</pre>
                   </div>
-                  <div className={styles['hero__scanGlow']} />
                 </div>
-              </motion.div>
-            </div>
+                <div className={styles['hero__scanGlow']} />
+              </div>
+              {/* Right-edge scrim: fades the portrait into the page so the name keeps
+                  contrast where it overlaps (desktop only). */}
+              <div className={styles['hero__portraitScrim']} aria-hidden="true" />
+            </motion.div>
 
-            <div className={styles.hero__intro}>
-            {/* Name below portrait */}
+            {/* Name - the only block that overlaps the portrait edge on desktop */}
             <motion.h1
               className={styles.hero__title}
               initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
@@ -221,7 +223,6 @@ export default function Home() {
                 {BUTTON_LABELS.LEARN_MORE}
               </button>
             </motion.div>
-            </div>
           </motion.div>
         </div>
 

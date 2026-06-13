@@ -46,8 +46,15 @@
    Hero Section
    ========================================================================== */
 
-/* Block: hero */
+/* Block: hero
+   Mobile-first: a centred column (portrait card on top, then the text block).
+   Desktop (>=1024) re-pins the portrait full-bleed to the left edge - see the
+   1024 media query. --hero-fade is the colour the portrait's right edge melts
+   into so the overlapping name keeps contrast. */
 .hero {
+  --hero-fade: hsl(28, 11%, 5%);
+  --hero-portrait-w: clamp(300px, 30vw, 420px);
+  --hero-overlap: clamp(2rem, 4.5vw, 4.5rem);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -79,7 +86,8 @@
   padding: 0 var(--spacing-6);
   text-align: center;
   position: relative;
-  z-index: var(--z-index-base);
+  /* Sits above the portrait so the name overlaps the image, not under it */
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -95,20 +103,30 @@
   width: 100%;
 }
 
-.hero__portrait-wrapper {
-  margin-bottom: var(--spacing-8);
-  position: relative;
-}
-
+/* Mobile: centred editorial card. Desktop overrides to full-bleed (see 1024). */
 .hero__portrait {
   position: relative;
+  z-index: 1;
   width: 13rem;
   aspect-ratio: 3 / 4;
-  margin: 0 auto;
+  margin: 0 auto var(--spacing-8);
   /* Sharp square corners, no outline - clean editorial rectangle */
   border-radius: 0;
   overflow: hidden;
   box-shadow: 0 24px 60px hsla(28, 12%, 4%, 0.5);
+}
+
+/* Right-edge fade - only meaningful on desktop where the name overlaps; hidden
+   on the centred mobile card. */
+.hero__portraitScrim {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 42%, var(--hero-fade) 100%),
+    linear-gradient(180deg, hsla(28, 11%, 5%, 0.7) 0%, transparent 22%);
 }
 
 .hero__portrait-image {
@@ -359,48 +377,59 @@
   }
 }
 
+/* ── Desktop: full-bleed portrait pinned to the left edge ───────────────────
+   The portrait leaves the flex flow and pins floor-to-ceiling against the
+   viewport's left edge. The text column clears it, and only the name is pulled
+   left (negative margin) to overlap the portrait's faded right edge. */
 @media (min-width: 1024px) {
-  .hero__portrait {
-    width: 17rem;
+  /* Container/content stay un-positioned so the portrait's absolute box resolves
+     to .hero (the viewport edge), not to the centred container. Stacking is then
+     handled per-element: portrait z0, the overlapping name z1. */
+  .hero__container {
+    position: static;
+    min-height: 100vh;
+    max-width: none;
+    /* Clear the portrait on the left; keep a comfortable gutter on the right */
+    padding-left: var(--hero-portrait-w);
+    padding-right: var(--spacing-8);
   }
 
-  /* Two-column hero: kicker spans the top row, portrait left + intro right below */
   .hero__content {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: auto auto;
-    align-items: center;
-    column-gap: var(--spacing-16);
-    row-gap: var(--spacing-2);
-    width: auto;
-    max-width: var(--content-max-width-lg);
+    position: static;
+    align-items: flex-start;
     text-align: left;
+    width: 100%;
+    max-width: var(--content-max-width-lg);
+    /* Sit just past the portrait, then let the name overlap back over its edge */
+    padding-left: var(--spacing-10);
+    margin: 0 auto;
   }
 
-  .hero__roles {
-    grid-column: 1 / -1;
-    grid-row: 1;
+  /* Pin floor-to-ceiling against the left edge. Overscan top/bottom by the float
+     amount (8px) so the gentle drift never exposes a gap. */
+  .hero__portrait {
+    position: absolute;
+    left: 0;
+    top: -8px;
+    height: calc(100% + 16px);
+    width: var(--hero-portrait-w);
+    aspect-ratio: auto;
+    margin: 0;
+    box-shadow: none;
+    z-index: 0;
   }
 
-  .hero__portrait-wrapper {
-    grid-column: 1;
-    grid-row: 2;
-    margin-bottom: 0;
+  .hero__portraitScrim {
+    display: block;
   }
 
-  .hero__intro {
-    grid-column: 2;
-    grid-row: 2;
-  }
-
-  .hero__intro {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero__title {
-    align-items: flex-start;
+  /* Lift the text above the portrait + code band */
+  .hero__roles,
+  .hero__title,
+  .hero__tagline,
+  .hero__actions {
+    position: relative;
+    z-index: 1;
   }
 
   .hero__roles {
@@ -408,6 +437,12 @@
     width: auto;
     margin: 0;
     max-width: 100%;
+  }
+
+  /* Only the name crosses the seam onto the portrait */
+  .hero__title {
+    align-items: flex-start;
+    margin-left: calc(-1 * var(--hero-overlap));
   }
 
   .hero__tagline {
@@ -419,6 +454,13 @@
 
   .hero__actions {
     justify-content: flex-start;
+  }
+}
+
+/* Widescreen: cap how far the portrait grows so it stays a column, not a half-page */
+@media (min-width: 1600px) {
+  .hero {
+    --hero-portrait-w: 460px;
   }
 }
 
