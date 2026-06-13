@@ -79,54 +79,65 @@
   z-index: var(--z-index-base);
 }
 
+/* Mobile-first = M1 "cover": the portrait bleeds edge-to-edge across the top,
+   fades into the page, and the name rises into that fade. Top-anchored, left
+   aligned. Desktop (>=1024) re-pins the portrait to the left edge instead. */
 .hero__container {
   max-width: var(--container-max-width);
   width: 100%;
   margin: 0 auto;
   padding: 0 var(--spacing-6);
-  text-align: center;
+  text-align: left;
   position: relative;
   /* Sits above the portrait so the name overlaps the image, not under it */
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: stretch;
   min-height: 100vh;
 }
 
 .hero__content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
   width: 100%;
 }
 
-/* Mobile: centred editorial card. Desktop overrides to full-bleed (see 1024). */
+/* Mobile: full-bleed cover banner across the top. Desktop overrides to the
+   left-edge column (see 1024). order:-1 keeps it visually first while the
+   kicker still precedes it in the DOM. */
 .hero__portrait {
+  order: -1;
   position: relative;
   z-index: 1;
-  width: 13rem;
-  aspect-ratio: 3 / 4;
-  margin: 0 auto var(--spacing-8);
-  /* Sharp square corners, no outline - clean editorial rectangle */
+  /* Break out of the container's horizontal padding to reach the viewport edges */
+  width: calc(100% + 2 * var(--spacing-6));
+  margin: 0 calc(-1 * var(--spacing-6));
+  height: 56vh;
+  aspect-ratio: auto;
   border-radius: 0;
   overflow: hidden;
-  box-shadow: 0 24px 60px hsla(28, 12%, 4%, 0.5);
+  box-shadow: none;
 }
 
-/* Right-edge fade - only meaningful on desktop where the name overlaps; hidden
-   on the centred mobile card. */
+/* Mobile: a bottom fade (name rises into it) + a soft top fade so the fixed
+   nav stays legible. Desktop swaps to a right-edge fade (see 1024). */
 .hero__portraitScrim {
-  display: none;
+  display: block;
   position: absolute;
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, transparent 42%, var(--hero-fade) 100%),
-    linear-gradient(180deg, hsla(28, 11%, 5%, 0.7) 0%, transparent 22%);
+  background: linear-gradient(
+    180deg,
+    hsla(28, 11%, 4%, 0.92) 0%,
+    hsla(28, 11%, 4%, 0.4) 12%,
+    transparent 28%,
+    transparent 56%,
+    var(--hero-fade) 100%
+  );
 }
 
 .hero__portrait-image {
@@ -135,6 +146,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Keep the face in frame when the banner crop is wide (mobile) */
+  object-position: center 22%;
   /* Slight zoom so the drift never exposes an edge */
   transform: scale(1.1);
   animation: heroPortraitDrift 38s ease-in-out infinite alternate;
@@ -246,7 +259,7 @@
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0;
 }
 
@@ -268,12 +281,14 @@
 .hero__roles {
   display: flex;
   flex-wrap: wrap;
-  /* Align the kicker to the centred portrait's left edge: same width as the
-     portrait, centred, text pinned left. */
   justify-content: flex-start;
   gap: var(--spacing-2);
-  width: 13rem;
-  margin: 0 auto var(--spacing-2);
+  width: auto;
+  /* Pull the kicker (and the name group that follows it) up into the portrait's
+     bottom fade so the cover reads as one composition. z-index keeps it above. */
+  position: relative;
+  z-index: 2;
+  margin: calc(-1 * var(--spacing-8)) 0 var(--spacing-2);
   font-weight: var(--font-weight-regular);
 }
 
@@ -298,32 +313,25 @@
   font-size: var(--font-size-xl);
   color: var(--color-neutral-200);
   font-style: normal;
-  margin-bottom: var(--spacing-8);
+  margin: 0 0 var(--spacing-8);
   max-width: 34ch;
-  margin-left: auto;
-  margin-right: auto;
   text-wrap: balance;
   line-height: var(--line-height-normal);
-  text-align: center;
+  text-align: left;
+  position: relative;
+  z-index: 2;
 }
 
+/* Mobile: full-width pair (bigger tap targets). Desktop reverts to inline row. */
 .hero__actions {
-  display: flex;
-  flex-direction: row;
-  gap: var(--spacing-4);
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3);
+  position: relative;
+  z-index: 2;
 }
 
 @media (min-width: 480px) {
-  .hero__portrait {
-    width: 15rem;
-  }
-
-  .hero__roles {
-    width: 15rem;
-  }
-
   .hero__title {
     font-size: var(--font-size-6xl);
   }
@@ -350,25 +358,22 @@
 }
 
 @media (min-width: 768px) {
+  /* Tablet: a touch more banner height; cap the name so it doesn't dominate */
   .hero__portrait {
-    width: 17rem;
-  }
-
-  .hero__roles {
-    width: 17rem;
+    height: 58vh;
   }
 
   .hero__title {
-    font-size: var(--font-size-7xl);
+    font-size: var(--font-size-6xl);
     margin-bottom: var(--spacing-6);
   }
 
   .hero__titleMain {
-    font-size: var(--font-size-7xl);
+    font-size: var(--font-size-6xl);
   }
 
   .hero__titleAccent {
-    font-size: var(--font-size-7xl);
+    font-size: var(--font-size-6xl);
   }
 
   .hero__tagline {
@@ -389,6 +394,8 @@
     position: static;
     min-height: 100vh;
     max-width: none;
+    /* Re-centre the content column vertically (mobile anchors it to the top) */
+    justify-content: center;
     /* Clear the portrait on the left; keep a comfortable gutter on the right */
     padding-left: var(--hero-portrait-w);
     padding-right: var(--spacing-8);
@@ -408,6 +415,7 @@
   /* Pin floor-to-ceiling against the left edge. Overscan top/bottom by the float
      amount (8px) so the gentle drift never exposes a gap. */
   .hero__portrait {
+    order: 0;
     position: absolute;
     left: 0;
     top: -8px;
@@ -419,8 +427,12 @@
     z-index: 0;
   }
 
+  /* Swap the mobile bottom-fade for the desktop right-edge fade (+ soft top) */
   .hero__portraitScrim {
     display: block;
+    background:
+      linear-gradient(90deg, transparent 42%, var(--hero-fade) 100%),
+      linear-gradient(180deg, hsla(28, 11%, 5%, 0.7) 0%, transparent 22%);
   }
 
   /* Lift the text above the portrait + code band */
@@ -435,6 +447,7 @@
   .hero__roles {
     justify-content: flex-start;
     width: auto;
+    /* Reset the mobile pull-up into the fade */
     margin: 0;
     max-width: 100%;
   }
@@ -452,8 +465,13 @@
     max-width: 42ch;
   }
 
+  /* Back to an inline button row (mobile uses a full-width 2-up grid) */
   .hero__actions {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-4);
     justify-content: flex-start;
+    flex-wrap: wrap;
   }
 }
 

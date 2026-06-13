@@ -45,7 +45,7 @@ export default function Home() {
   // The quote crossfades + rises (house ScrollReveal motion) while the mono
   // name/role decode-scramble (scanner nod); both fall back to instant under
   // reduced motion.
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeTestimonial, setActiveTestimonial] = useState(3);
   const activeQuote = TESTIMONIALS[activeTestimonial];
   const scrambledName = useScramble(activeQuote.name, { enabled: !reduce });
   const scrambledTitle = useScramble(activeQuote.title, { enabled: !reduce });
@@ -159,8 +159,6 @@ export default function Home() {
             <motion.div
               className={styles['hero__portrait']}
               onMouseMove={handlePortraitMove}
-              animate={reduce ? undefined : { y: [0, -8, 0] }}
-              transition={{ duration: 14, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
             >
               <img
                 src={victoriaPortrait}
