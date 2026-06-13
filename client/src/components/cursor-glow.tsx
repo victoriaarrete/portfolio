@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import styles from './cursor-glow.module.css';
 
 /**
- * A subtle warm glow that follows the cursor across the entire page —
+ * A subtle warm glow that follows the cursor across the entire page -
  * the same cream radial light used on the hero portrait, applied globally.
  * Stays inert when the user prefers reduced motion or uses a coarse pointer.
  */

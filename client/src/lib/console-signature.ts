@@ -1,5 +1,5 @@
 /**
- * Interactive console "SDK" — the developer easter egg exposed as `window.victoria`.
+ * Interactive console "SDK" - the developer easter egg exposed as `window.victoria`.
  *
  * On load it renders a portrait into the DevTools console (Chrome) with a graceful
  * text fallback, prints a concise greeting, and installs a small, explorable command
@@ -58,7 +58,7 @@ function renderPortrait(url: string): void {
         src = canvas.toDataURL('image/jpeg', 0.82);
       }
     } catch {
-      /* tainted/unsupported — fall back to the raw url */
+      /* tainted/unsupported - fall back to the raw url */
     }
     console.log(
       '%c ',
@@ -68,7 +68,7 @@ function renderPortrait(url: string): void {
     );
   };
   img.onerror = () => {
-    /* no portrait — the text greeting carries the moment */
+    /* no portrait - the text greeting carries the moment */
   };
   img.src = url;
 }

@@ -1,0 +1,40 @@
+.visual {
+  width: 100%;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.line {
+  fill: none;
+  stroke: var(--color-neutral-50);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.isVisible .line {
+  animation: tangleDraw var(--dur, 0.6s) ease forwards var(--delay, 0s);
+}
+
+@keyframes tangleDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Reduced motion: skip the draw-in, render the figure fully resolved. */
+@media (prefers-reduced-motion: reduce) {
+  .line {
+    stroke-dashoffset: 0;
+  }
+
+  .isVisible .line {
+    animation: none;
+  }
+}

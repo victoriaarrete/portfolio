@@ -12,14 +12,12 @@
 }
 
 /* ==========================================================================
-   Type system — monospace for display & labels (body stays Inter)
+   Type system - monospace for display & labels (body stays Inter)
    ========================================================================== */
 .section__title,
 .hero__roleChip,
 .about__kicker,
 .about__manifestoTitle,
-.experience__period,
-.experience__tag,
 .projects__tag,
 .footer__name {
   font-family: var(--font-family-mono);
@@ -30,7 +28,6 @@
 .hero__title,
 .about__manifestoTitle,
 .card__title,
-.experience__title,
 .projects__title,
 .philosophy__principleTitle,
 .contact__title,
@@ -108,12 +105,10 @@
   width: 13rem;
   aspect-ratio: 3 / 4;
   margin: 0 auto;
-  /* Crisp rounded-rectangle, matching the site's card radius */
-  border-radius: var(--radius-lg);
+  /* Sharp square corners, no outline - clean editorial rectangle */
+  border-radius: 0;
   overflow: hidden;
-  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.12);
-  box-shadow: 0 0 14px hsla(42, 30%, 88%, 0.08),
-              0 18px 40px hsla(28, 12%, 4%, 0.5);
+  box-shadow: 0 24px 60px hsla(28, 12%, 4%, 0.5);
 }
 
 .hero__portrait-image {
@@ -142,7 +137,7 @@
 
 /* Static window that clips the streaming chars to the card.
    Edge-fade (matching the page CodeBackground's mask) so the code has no hard
-   rectangular border — it bleeds toward the edges and reads as the same ambient
+   rectangular border - it bleeds toward the edges and reads as the same ambient
    field flowing across the portrait, not a separate boxed-in patch. */
 .hero__scanStreamMask {
   position: absolute;
@@ -151,7 +146,7 @@
   /* Vertical fade-out aligned to the same content line as the background
      (--portrait-code-stop = where that line falls within the portrait, measured
      in JS; 100% fallback = full coverage when the line sits below the portrait,
-     e.g. stacked mobile) — intersected with a soft left/right edge fade so
+     e.g. stacked mobile) - intersected with a soft left/right edge fade so
      there's no hard rectangle. */
   -webkit-mask-image:
     linear-gradient(180deg, #000 0%, #000 calc(var(--portrait-code-stop, 100%) - 12%), transparent var(--portrait-code-stop, 100%)),
@@ -165,7 +160,7 @@
 
 /* Wide row (two identical char blocks) that scrolls right-to-left for a seamless data stream.
    Matched to the page-level CodeBackground (60s, same glyph scale) so it reads as the
-   SAME ambient field passing over the portrait — not a separate, faster overlay. */
+   SAME ambient field passing over the portrait - not a separate, faster overlay. */
 .hero__scanStream {
   position: absolute;
   top: 0;
@@ -245,7 +240,7 @@
 
 .hero__titleAccent {
   display: block;
-  /* Outlined (stroke-only) counterpart to the solid first name — a real
+  /* Outlined (stroke-only) counterpart to the solid first name - a real
      two-tone contrast that reads, unlike the near-white gradient before. */
   color: transparent;
   -webkit-text-stroke: 1.5px var(--color-neutral-300);
@@ -255,36 +250,29 @@
 .hero__roles {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* Align the kicker to the centred portrait's left edge: same width as the
+     portrait, centred, text pinned left. */
+  justify-content: flex-start;
   gap: var(--spacing-2);
-  margin: 0 auto var(--spacing-6);
-  max-width: 90%;
+  width: 13rem;
+  margin: 0 auto var(--spacing-2);
   font-weight: var(--font-weight-regular);
 }
 
-/* Editorial kicker (matches the About section's kicker + gradient rails) —
-   a short cream rule + uppercase, tracked label. No pill: the rounded chip
-   clashed with the brutalist, sharp-edged system. */
+/* Editorial kicker - plain uppercase, tracked label (no rule), matching the
+   reference's top-left role line. */
 .hero__roleChip {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-3);
   padding: 0;
   background: none;
   border: none;
-  color: var(--color-primary-400);
+  color: var(--color-neutral-600);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.18em;
   white-space: nowrap;
-}
-
-.hero__roleChip::before {
-  content: '';
-  width: var(--spacing-6);
-  height: 2px;
-  background: var(--gradient-primary);
 }
 
 .hero__tagline {
@@ -314,6 +302,10 @@
     width: 15rem;
   }
 
+  .hero__roles {
+    width: 15rem;
+  }
+
   .hero__title {
     font-size: var(--font-size-6xl);
   }
@@ -330,10 +322,21 @@
     font-size: var(--font-size-xl);
     max-width: 38ch;
   }
+
+  /* Room now to set the metric and its label inline on a shared baseline. */
+  .about__impactRow {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--spacing-3);
+  }
 }
 
 @media (min-width: 768px) {
   .hero__portrait {
+    width: 17rem;
+  }
+
+  .hero__roles {
     width: 17rem;
   }
 
@@ -361,19 +364,33 @@
     width: 17rem;
   }
 
-  /* Two-column hero: portrait left, intro right (left-aligned) */
+  /* Two-column hero: kicker spans the top row, portrait left + intro right below */
   .hero__content {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
     align-items: center;
-    gap: var(--spacing-16);
+    column-gap: var(--spacing-16);
+    row-gap: var(--spacing-2);
     width: auto;
     max-width: var(--content-max-width-lg);
     text-align: left;
   }
 
+  .hero__roles {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
   .hero__portrait-wrapper {
+    grid-column: 1;
+    grid-row: 2;
     margin-bottom: 0;
+  }
+
+  .hero__intro {
+    grid-column: 2;
+    grid-row: 2;
   }
 
   .hero__intro {
@@ -388,7 +405,8 @@
 
   .hero__roles {
     justify-content: flex-start;
-    margin-left: 0;
+    width: auto;
+    margin: 0;
     max-width: 100%;
   }
 
@@ -464,142 +482,164 @@
   padding: 0 var(--spacing-6);
 }
 
+/* All section titles share the ABOUT kicker treatment: a small, left-aligned,
+   letter-spaced mono label in warm muted taupe (matches .about__sectionLabel). */
 .section__title {
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-  text-align: center;
-  margin-bottom: var(--spacing-16);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  letter-spacing: 0.32em;
+  color: hsl(42, 17%, 56%);
+  /* Align every section title to the same centered column as the ABOUT title
+     (about__content, content-max-width-md) so all titles share one left edge. */
+  max-width: var(--content-max-width-md);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--spacing-10);
+  /* Promote the title to its own compositor layer so the ScrollReveal entrance
+     translate composites the letter-spaced glyphs crisply instead of leaving a
+     subpixel ghost mid-animation. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
+/* Uniform with the rest of the label - no gradient accent. */
 .section__titleAccent {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-@media (min-width: 768px) {
-  .section__title {
-    font-size: var(--font-size-5xl);
-  }
+  color: inherit;
 }
 
 /* ==========================================================================
    About Section
    ========================================================================== */
 
-/* Block: about */
+/* Block: about
+   Warm editorial palette lifted directly from mockup C - slightly warmer and
+   more saturated than the shared neutral tokens, so labels recede to a warm
+   taupe and titles/metrics read as bright cream (not the duller gradient). */
 .about {
   composes: section;
+  --about-bright: hsl(42, 31%, 92%);  /* manifesto title, metrics, cmd */
+  --about-lead: hsl(42, 20%, 76%);    /* lead prose, focus statement */
+  --about-quote: hsl(42, 22%, 80%);   /* serif pull-quote */
+  --about-muted: hsl(42, 17%, 56%);   /* kickers, labels, term chrome, aside */
+  --about-dim: hsl(42, 12%, 41%);     /* line numbers, comments */
 }
 
+/* Single editorial column: one narrow measure, blocks stacked with rhythm.
+   Reads as a considered essay rather than a dashboard of tiles. */
 .about__content {
-  max-width: var(--content-max-width-lg);
+  max-width: var(--content-max-width-md);
   margin: 0 auto;
 }
 
-/* Bento grid (mobile-first single column) */
-.about__bento {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-6);
+/* Manifesto - editorial lead statement; left-aligned, no rail. */
+.about__manifesto {
   position: relative;
+  padding: var(--spacing-4) 0 0;
+  margin-bottom: var(--spacing-12);
 }
 
-/* Tile: Manifesto */
-/* Compound selector beats the later `.card { padding }` shorthand so the
-   rail clears the text instead of crowding it (equal specificity = source
-   order would otherwise win). */
-.card.about__manifesto {
-  position: relative;
-  padding-left: var(--spacing-12);
+.about__manifestoProse {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: var(--spacing-5);
 }
 
-.about__rail {
-  position: absolute;
-  left: var(--spacing-6);
-  top: var(--spacing-8);
-  bottom: var(--spacing-8);
-  width: var(--border-width-thick);
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
+/* ABOUT - small letter-spaced mono kicker that opens the section (replaces the
+   centered gradient title). Doubles as the section's <h2>. */
+.about__sectionLabel {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--about-muted);
+  margin: 0 0 var(--spacing-6);
 }
 
+/* Solid bright cream (per mockup C) - the gradient's lower stop reads as a
+   dull brown on large display type, which is the mismatch. */
 .about__manifestoTitle {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-4xl);
   line-height: var(--line-height-tight);
   font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-6);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin-bottom: var(--spacing-8);
+  color: var(--about-bright);
+  text-wrap: balance;
 }
 
+/* Keep the short second sentence intact so its leading "I" never strands. */
+.about__manifestoNoWrap {
+  white-space: nowrap;
+}
+
+/* The first sentence wraps freely on narrow screens (it's too long to fit one
+   mono line); the desktop rule below pins it to a single line once there's room. */
+
+/* Body prose: Inter (not mono) at a comfortable measure (~62ch) so the
+   paragraphs read as prose, not a wall of fixed-width glyphs. Copy unchanged. */
 .about__lead {
-  color: var(--color-neutral-100);
+  font-family: var(--font-family-base);
+  color: var(--about-lead);
   font-size: var(--font-size-lg);
   line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-4);
+  max-width: 62ch;
+  margin: 0;
 }
 
+/* Secondary aside: clearly demoted below the lead - smaller, more muted -
+   so it reads as a footnote to the thesis, not a co-equal paragraph. */
 .about__body {
-  color: var(--color-neutral-300);
+  font-family: var(--font-family-base);
+  color: var(--about-muted);
+  font-size: var(--font-size-sm);
   line-height: var(--line-height-relaxed);
-  margin-bottom: 0;
+  max-width: 62ch;
+  margin: 0;
 }
 
-/* Tile: Impact — outcomes, not adjectives (replaces the duplicate portrait) */
-.about__impactTile {
-  display: flex;
-  flex-direction: column;
+/* Proof - inline evidence block (no card). Sits between the thesis and the
+   method as the section's hard data. */
+.about__proof {
+  margin-bottom: var(--spacing-12);
 }
 
+/* 2-up grid: each metric stacks over its label. Reads as one scannable unit. */
 .about__impactList {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-5) var(--spacing-8);
 }
 
-/* Each proof point: metric leads, short label below.
-   Hairline divider between rows, none on the first. */
+/* Mobile: stack the metric over its label. Side-by-side at this width cramps
+   the metric until it wraps ("11+ yrs" -> two lines), and baseline alignment
+   then orphans the second line against a top-stuck label. Stacking avoids it. */
 .about__impactRow {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-1);
-  padding: var(--spacing-4) 0;
-  border-top: var(--border-width-thin) solid var(--color-border);
-}
-
-.about__impactRow:first-child {
-  border-top: none;
-  padding-top: 0;
-}
-
-.about__impactRow:last-child {
-  padding-bottom: 0;
 }
 
 .about__impactMetric {
+  white-space: nowrap;
+}
+
+/* Unified mono treatment for every metric - one face, no accidental slab
+   swaps - so the proof block reads as deliberate, not broken. */
+.about__impactMetric {
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   letter-spacing: -0.01em;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--about-bright);
 }
 
 .about__impactLabel {
-  color: var(--color-neutral-300);
+  color: var(--about-muted);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
 }
@@ -611,11 +651,11 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--color-primary-400);
+  color: var(--about-muted);
   margin-bottom: var(--spacing-6);
 }
 
-/* Tile: Method — rendered as a shell script (approach.sh) */
+/* Tile: Method - rendered as a shell script (approach.sh) */
 /* Compound selector beats the later `.card { padding }` shorthand so the
    terminal chrome can sit flush to the card edge. */
 .card.about__method {
@@ -626,6 +666,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  margin-bottom: var(--spacing-12);
 }
 
 /* Title bar: filename + interpreter, no traffic-light chrome (restraint) */
@@ -642,7 +683,7 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   letter-spacing: 0.04em;
-  color: var(--color-neutral-200);
+  color: var(--about-muted);
 }
 
 .about__termTag {
@@ -650,7 +691,7 @@
   font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: var(--color-neutral-600);
+  color: var(--about-muted);
 }
 
 .about__termBody {
@@ -663,7 +704,7 @@
 
 .about__termComment {
   margin: 0;
-  color: var(--color-neutral-600);
+  color: var(--about-dim);
   white-space: nowrap;
 }
 
@@ -686,71 +727,37 @@
   flex-shrink: 0;
   width: 1.5rem;
   text-align: right;
-  color: var(--color-neutral-600);
+  color: var(--about-dim);
   user-select: none;
 }
 
-.about__cmd {
-  flex-shrink: 0;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary-400);
-}
-
-.about__args {
-  color: var(--color-neutral-300);
+/* Code portion flows inline so the quotes sit flush against the string;
+   the line number stays a fixed gutter, so wrapped lines hang in their column. */
+.about__code {
+  flex: 1;
   line-height: var(--line-height-relaxed);
 }
 
-/* Tile: Strengths (icon matrix) */
-.about__strengthGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-4);
+.about__cmd {
+  font-weight: var(--font-weight-bold);
+  color: var(--about-bright);
 }
 
-.about__strengthTile {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-4);
-  padding: var(--spacing-4);
-  background: var(--color-border-light);
-  border: var(--border-width-thin) solid var(--color-border);
-  border-radius: var(--radius-xl);
-  transition: transform 0.3s var(--transition-curve),
-              box-shadow 0.3s var(--transition-curve);
-  will-change: transform;
+.about__flag {
+  color: var(--about-muted);
+  font-style: italic;
 }
 
-.about__strengthTile:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-glow-blue);
+.about__quote {
+  color: var(--about-dim);
 }
 
-.about__strengthIcon {
-  flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.about__args {
+  color: var(--about-muted);
 }
 
-.about__strengthGlyph {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: var(--color-primary-foreground);
-}
 
-.about__strengthLabel {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-neutral-100);
-  line-height: var(--line-height-normal);
-}
-
-/* Tile: Signature — the personal sign-off that closes the About section.
+/* Tile: Signature - the personal sign-off that closes the About section.
    Reads as a signed statement: an oversized quote-mark watermark, the origin
    story as a pull-quote, then the forward-looking focus + her name. */
 .about__signature {
@@ -759,59 +766,58 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-6);
+  padding: var(--spacing-2) 0;
 }
 
-/* Oversized quotation glyph sitting behind the story for editorial weight */
-.about__quoteMark {
+/* Rotating wireframe figure - decorative, lives behind the text. Hidden on
+   small screens where the card is too narrow to share space; revealed on the
+   right once the layout has room (see tablet/desktop overrides below). */
+.about__figure {
+  display: none;
   position: absolute;
-  top: calc(-1 * var(--spacing-8));
-  right: var(--spacing-2);
-  z-index: var(--z-index-base);
-  font-family: var(--font-family-mono);
-  font-size: 11rem;
-  line-height: 1;
-  font-weight: var(--font-weight-bold);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0.1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
   pointer-events: none;
-  user-select: none;
 }
 
 .about__signatureBody {
   position: relative;
-  z-index: var(--z-index-base);
+  z-index: 2;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
 }
 
-/* Reset the shared kicker's bottom margin — the flex gap handles spacing here */
+/* Reset the shared kicker's bottom margin - the flex gap handles spacing here */
 .about__signature .about__kicker {
   margin-bottom: 0;
 }
 
+/* Serif italic pull-quote: a calmer, human register that closes the section
+   in a different voice from the mono/sans above it. */
 .about__journey {
   margin: 0;
   max-width: 42ch;
+  font-family: var(--font-family-serif);
+  font-style: italic;
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-light);
-  color: var(--color-foreground);
-  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-regular);
+  color: var(--about-quote);
+  line-height: var(--line-height-snug, 1.4);
 }
 
-/* Forward-looking footer: focus statement (left) + signature (right),
-   parted by a hairline that echoes the section's other dividers */
+/* Forward-looking footer: focus statement (left) + signature (right).
+   Separated from the quote by open space rather than a rule - the hairline
+   ran under the wireframe and read as a cut across the layout. */
 .about__signatureFooter {
   position: relative;
-  z-index: var(--z-index-base);
+  z-index: 2;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-5);
-  padding-top: var(--spacing-6);
-  border-top: var(--border-width-thin) solid var(--color-border);
+  padding-top: var(--spacing-4);
 }
 
 .about__focus {
@@ -819,7 +825,7 @@
   max-width: 52ch;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-regular);
-  color: var(--color-neutral-300);
+  color: var(--about-lead);
   line-height: var(--line-height-relaxed);
 }
 
@@ -831,78 +837,11 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--color-primary-400);
+  color: var(--about-muted);
 }
 
-/* The section literally ends with her name — a handwritten-style sign-off */
-.about__sign {
-  align-self: flex-start;
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.about__sign::before {
-  content: '— ';
-  -webkit-text-fill-color: var(--color-neutral-400);
-}
-
-/* Strength matrix: two columns once there's room */
-@media (min-width: 480px) {
-  .about__strengthGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* Tablet: 6-column bento */
+/* Tablet+ */
 @media (min-width: 768px) {
-  .about__bento {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .about__manifesto {
-    grid-column: 1 / 7;
-  }
-
-  .about__impactTile {
-    grid-column: 1 / 7;
-  }
-
-  /* Wide tile at this size: lay the proof points out in two columns */
-  .about__impactList {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 var(--spacing-8);
-  }
-
-  .about__impactRow:nth-child(2) {
-    border-top: none;
-    padding-top: 0;
-  }
-
-  .about__method {
-    grid-column: 1 / 4;
-  }
-
-  .about__strengthsTile {
-    grid-column: 4 / 7;
-  }
-
-  /* Half-width tile at this size: stack the matrix to one column */
-  .about__strengthGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .about__signature {
-    grid-column: 1 / 7;
-  }
-
   /* Story and forward-looking statement sit side by side once there's room */
   .about__signatureFooter {
     flex-direction: row;
@@ -911,68 +850,39 @@
     gap: var(--spacing-8);
   }
 
-  .about__sign {
-    align-self: flex-end;
-    flex-shrink: 0;
+  /* Reveal the wireframe gem on the right, given room - no longer clipped */
+  .about__figure {
+    display: block;
+    width: 36%;
+    max-width: 320px;
+  }
+
+  .about__signatureBody,
+  .about__signatureFooter {
+    max-width: 60%;
   }
 }
 
-/* Desktop: 12-column asymmetric bento */
+/* Desktop: scale the lead statement up to a true display title. We drop the
+   narrow cap and tighten tracking so the first sentence can fill the column. */
 @media (min-width: 1024px) {
-  .about__bento {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-auto-rows: auto;
-    align-items: stretch;
-  }
-
-  .about__manifesto {
-    grid-column: 1 / 8;
-  }
-
   .about__manifestoTitle {
-    font-size: var(--font-size-4xl);
+    font-size: var(--font-size-5xl);
+    letter-spacing: 0.02em;
   }
 
-  .about__impactTile {
-    grid-column: 8 / 13;
-  }
-
-  /* Narrow tile again on desktop: stack the proof points vertically */
-  .about__impactList {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .about__impactRow:nth-child(2) {
-    border-top: var(--border-width-thin) solid var(--color-border);
-    padding-top: var(--spacing-4);
-  }
-
-  .about__method {
-    grid-column: 1 / 7;
-  }
-
-  .about__strengthsTile {
-    grid-column: 7 / 13;
-  }
-
-  /* Wide enough again for the two-column matrix */
-  .about__strengthGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .about__signature {
-    grid-column: 1 / 13;
-  }
-
-  /* Full-width on desktop: scale the story up to a true display pull-quote */
   .about__journey {
-    max-width: 30ch;
     font-size: var(--font-size-3xl);
+    max-width: 38ch;
   }
+}
 
-  .about__quoteMark {
-    font-size: 15rem;
+/* Pin the first sentence to a single line only once the column reaches its full
+   64rem measure — below this the content column is still padding-constrained and
+   narrower than the sentence, so nowrap would clip "...culture" off the edge. */
+@media (min-width: 1100px) {
+  .about__manifestoSentence {
+    white-space: nowrap;
   }
 }
 
@@ -1034,106 +944,263 @@
   margin: 0 auto;
 }
 
-.experience__timeline {
+/* The experience timeline is rendered as a `git log --graph`: a terminal window
+   whose commit gutter draws the career, with the Perion promotion as a real
+   branch that splits off (the full-stack track) and merges into the leadership
+   line. --gline is the shared graph stroke; the lane geometry below assumes a
+   2.75rem gutter with the main lane centred at 14px and the branch lane at 32px. */
+.experience__terminal {
+  --gline: hsla(42, 30%, 88%, 0.22);
+  background: var(--color-surface);
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.experience__bar {
   position: relative;
-}
-
-.experience__timelineLine {
-  position: absolute;
-  left: 2rem;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--gradient-primary);
-}
-
-.experience__item {
-  position: relative;
-  margin-bottom: var(--spacing-12);
-}
-
-.experience__dot {
-  position: absolute;
-  left: 1.5rem;
-  width: 1rem;
-  height: 1rem;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
-  z-index: var(--z-index-base);
-}
-
-.experience__dot--active {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.experience__card {
-  margin-left: var(--spacing-16);
-}
-
-.experience__header {
   display: flex;
-  flex-direction: column;
-  margin-bottom: var(--spacing-4);
+  align-items: center;
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: var(--border-width-thin) solid var(--color-border-light);
 }
 
-.experience__title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-foreground);
-}
-
-.experience__period {
-  color: var(--color-primary-400);
-  font-weight: var(--font-weight-semibold);
-  margin-top: var(--spacing-2);
-}
-
-.experience__company {
-  font-size: var(--font-size-xl);
-  color: var(--color-accent-400);
-  margin-bottom: var(--spacing-4);
-}
-
-.experience__description {
-  color: var(--color-neutral-300);
-  line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-4);
-}
-
-.experience__tags {
-  display: flex;
-  flex-wrap: wrap;
+.experience__dots {
+  display: inline-flex;
   gap: var(--spacing-2);
 }
 
-.experience__tag {
-  padding: var(--spacing-1) var(--spacing-3);
-  background: hsla(42, 30%, 88%, 0.1);
-  color: var(--color-primary-400);
-  border-radius: var(--radius-sm);
+.experience__trafficDot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: var(--radius-full);
+  background: hsla(38, 11%, 45%, 0.45);
+}
+
+.experience__file {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+  pointer-events: none;
+}
+
+.experience__prompt {
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
+  padding: var(--spacing-4) var(--spacing-4) var(--spacing-2);
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
-@media (min-width: 768px) {
-  .experience__header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .experience__period {
-    margin-top: 0;
-  }
+.experience__promptSign {
+  color: var(--color-primary-600);
 }
 
-@keyframes pulse {
+.experience__promptPath {
+  color: var(--color-neutral-600);
+}
+
+.experience__promptCmd {
+  color: var(--color-neutral-200);
+}
+
+.experience__log {
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-2) var(--spacing-4) var(--spacing-5);
+}
+
+.experience__commit {
+  display: flex;
+  position: relative;
+  min-height: 4.75rem;
+  opacity: var(--row-op, 1);
+  transition: opacity var(--transition-base);
+}
+
+.experience__commit:hover {
+  opacity: 1;
+}
+
+/* --- Commit graph gutter --- */
+.experience__gutter {
+  position: relative;
+  flex: 0 0 2.75rem;
+  align-self: stretch;
+}
+
+.experience__railUp,
+.experience__railDown,
+.experience__branchUp,
+.experience__branchDown,
+.experience__branchDownMerge {
+  position: absolute;
+  width: 2px;
+  background: var(--gline);
+}
+
+.experience__railUp {
+  left: 13px;
+  top: 0;
+  height: 18px;
+}
+
+.experience__railDown {
+  left: 13px;
+  top: 18px;
+  bottom: 0;
+}
+
+.experience__branchUp {
+  left: 31px;
+  top: 0;
+  height: 18px;
+}
+
+.experience__branchDown {
+  left: 31px;
+  top: 18px;
+  bottom: 0;
+}
+
+.experience__branchDownMerge {
+  left: 31px;
+  top: 32px;
+  bottom: 0;
+}
+
+/* ╮ — main lane turns right and dives into the branch lane (the promotion). */
+.experience__elbowOpen {
+  position: absolute;
+  left: 14px;
+  top: 18px;
+  width: 18px;
+  height: 14px;
+  border-top: 2px solid var(--gline);
+  border-right: 2px solid var(--gline);
+  border-top-right-radius: 8px;
+}
+
+/* ╯ — the branch lane curves back left and merges into the main lane. */
+.experience__elbowClose {
+  position: absolute;
+  left: 14px;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border-bottom: 2px solid var(--gline);
+  border-right: 2px solid var(--gline);
+  border-bottom-right-radius: 8px;
+}
+
+.experience__node {
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  z-index: var(--z-index-base);
+}
+
+.experience__node--branch {
+  left: 26px;
+  width: 11px;
+  height: 11px;
+  background: var(--color-primary-500);
+}
+
+.experience__node--head {
+  left: 7px;
+  top: 11px;
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 0 4px hsla(42, 30%, 88%, 0.12);
+  animation: experienceNodeGlow 2.4s ease-in-out infinite;
+}
+
+.experience__node--root {
+  background: transparent;
+  border: 2px solid var(--color-primary-600);
+}
+
+/* --- Commit body --- */
+.experience__body {
+  padding: 0 0 var(--spacing-6);
+  min-width: 0;
+}
+
+.experience__msg {
+  font-family: var(--font-family-mono);
+  font-size: 0.95rem;
+  line-height: var(--line-height-tight);
+  color: var(--color-neutral-300);
+  margin: 0;
+}
+
+.experience__type {
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-bold);
+}
+
+.experience__type--merge {
+  color: var(--color-primary-400);
+}
+
+.experience__type--init {
+  color: var(--color-neutral-400);
+}
+
+.experience__role {
+  color: var(--color-foreground);
+  font-weight: var(--font-weight-bold);
+}
+
+.experience__company {
+  color: var(--color-neutral-400);
+}
+
+.experience__ref {
+  color: hsl(145, 26%, 62%);
+  font-weight: var(--font-weight-bold);
+}
+
+.experience__meta {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+  margin: var(--spacing-2) 0 0;
+}
+
+.experience__hash {
+  color: var(--color-primary-500);
+}
+
+.experience__metaSep {
+  color: var(--color-neutral-600);
+}
+
+.experience__blurb {
+  font-family: var(--font-family-base);
+  color: var(--color-neutral-300);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  max-width: 60ch;
+  margin: var(--spacing-2) 0 0;
+}
+
+@keyframes experienceNodeGlow {
   0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 hsla(42, 30%, 88%, 0.5);
+    box-shadow: 0 0 0 3px hsla(42, 30%, 88%, 0.1);
   }
   50% {
-    transform: scale(1.3);
-    box-shadow: 0 0 0 10px hsla(42, 30%, 88%, 0);
+    box-shadow: 0 0 0 6px hsla(42, 30%, 88%, 0.04);
   }
 }
 
@@ -1147,66 +1214,91 @@
 }
 
 .philosophy__content {
+  /* Match the section title column (content-max-width-md) so the content never
+     overhangs the title — they share one left and right edge. */
   max-width: var(--content-max-width-md);
   margin: 0 auto;
 }
 
-.philosophy__card {
-  composes: card;
-  padding: var(--spacing-12);
-  border-radius: var(--radius-3xl);
-  text-align: center;
+.philosophy__layout {
+  display: grid;
+  gap: var(--spacing-12);
+  align-items: center;
 }
 
-.philosophy__iconWrapper {
-  margin-bottom: var(--spacing-8);
-}
-
-.philosophy__icon {
-  width: 4rem;
-  height: 4rem;
+/* Desktop side-column figure (vertical). Hidden on mobile, where the
+   horizontal band stands in to avoid a screen-high void. */
+.philosophy__visual {
+  display: none;
+  width: 100%;
+  max-width: 300px;
   margin: 0 auto;
+}
+
+/* Mobile-only horizontal band, sits between the quote and the principles. */
+.philosophy__band {
+  width: 100%;
+  margin: var(--spacing-8) 0 var(--spacing-2);
+}
+
+.philosophy__statement {
+  text-align: left;
+}
+
+.philosophy__kicker {
+  display: block;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
   color: var(--color-primary-400);
+  margin-bottom: var(--spacing-6);
+}
+
+.philosophy__kicker::before {
+  content: '— ';
 }
 
 .philosophy__quote {
+  font-family: var(--font-family-base);
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-light);
   color: var(--color-neutral-100);
-  line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-8);
+  line-height: var(--line-height-tight);
+  max-width: 30ch;
+}
+
+.philosophy__quoteEmphasis {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-50);
 }
 
 .philosophy__principles {
   display: grid;
   gap: var(--spacing-8);
   margin-top: var(--spacing-12);
+  padding-top: var(--spacing-8);
+  border-top: 1px solid var(--color-neutral-800);
 }
 
 .philosophy__principle {
-  text-align: center;
+  text-align: left;
 }
 
-.philosophy__principleIconWrapper {
-  width: 3rem;
-  height: 3rem;
-  margin: 0 auto var(--spacing-4);
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.philosophy__principleIcon{
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--color-primary-foreground);
+.philosophy__principleNumber {
+  display: block;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-400);
+  margin-bottom: var(--spacing-3);
 }
 
 .philosophy__principleTitle {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--color-foreground);
   margin-bottom: var(--spacing-2);
 }
@@ -1214,15 +1306,31 @@
 .philosophy__principleDescription {
   color: var(--color-neutral-400);
   font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
 }
 
 @media (min-width: 768px) {
+  .philosophy__layout {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: var(--spacing-16);
+  }
+
+  .philosophy__visual {
+    display: block;
+  }
+
+  .philosophy__band {
+    display: none;
+  }
+
   .philosophy__quote {
-    font-size: var(--font-size-3xl);
+    font-size: var(--font-size-4xl);
+    max-width: 26ch;
   }
 
   .philosophy__principles {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-12);
   }
 }
 
@@ -1235,62 +1343,184 @@
   composes: section;
 }
 
-.projects__grid {
-  display: grid;
-  gap: var(--spacing-8);
-  max-width: var(--content-max-width-lg);
+/* Projects as a command palette (⌘K): the work surfaced as searchable results
+   with the featured project pre-selected. Shares the section title's column
+   (content-max-width-md) so the panel lines up with the headline's edges. */
+.projects__palette {
+  max-width: var(--content-max-width-md);
   margin: 0 auto;
+  background: var(--color-surface);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
 }
 
-.projects__card {
-  composes: card;
-  composes: card--hover;
-}
-
-.projects__iconWrapper {
-  margin-bottom: var(--spacing-6);
-}
-
-.projects__iconBg {
-  width: 4rem;
-  height: 4rem;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-2xl);
+/* Focused search field — the chrome that signals "this is a palette" */
+.projects__paletteSearch {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: var(--spacing-4);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  will-change: transform;
+  gap: var(--spacing-3);
+  padding: var(--spacing-5) var(--spacing-6);
+  border-bottom: var(--border-width-thin) solid var(--color-border-light);
 }
 
-.projects__card:hover .projects__iconBg {
-  transform: scale(1.1);
+.projects__paletteKbd {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.04em;
+  color: hsl(42, 17%, 56%);
+  background: hsla(42, 30%, 88%, 0.06);
+  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.16);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-1) var(--spacing-2);
 }
 
-.projects__icon {
-  width: 2rem;
-  height: 2rem;
+.projects__palettePlaceholder {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: var(--color-neutral-400);
+}
+
+/* Blinking caret sells the "input is focused" feel without a real text field */
+.projects__paletteCaret {
+  width: 1px;
+  height: 1.1em;
+  background: var(--color-primary-400);
+  margin-left: calc(-1 * var(--spacing-2));
+  animation: projectsCaret 1.1s steps(1) infinite;
+}
+
+@keyframes projectsCaret {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects__paletteCaret { animation: none; }
+}
+
+.projects__paletteResults {
+  padding: var(--spacing-2) 0;
+}
+
+.projects__paletteGroup {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: hsl(42, 17%, 56%);
+  padding: var(--spacing-4) var(--spacing-6) var(--spacing-2);
+}
+
+.projects__result {
+  display: grid;
+  grid-template-columns: var(--spacing-6) 1fr;
+  column-gap: var(--spacing-3);
+  padding: var(--spacing-5) var(--spacing-6);
+  border-left: 2px solid transparent;
+  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.projects__result:hover {
+  background: hsla(42, 30%, 88%, 0.02);
+}
+
+/* The featured result reads as the highlighted/selected row in the palette */
+.projects__result--active {
+  background: hsla(42, 30%, 88%, 0.04);
+  border-left-color: var(--color-primary-400);
+}
+
+.projects__resultCaret {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: hsl(42, 17%, 56%);
+  padding-top: 0.15em;
+}
+
+.projects__result--active .projects__resultCaret {
+  color: var(--color-primary-400);
+}
+
+.projects__resultBody {
+  min-width: 0;
+}
+
+.projects__resultHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+}
+
+.projects__resultIdent {
+  min-width: 0;
+}
+
+.projects__resultAction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-1);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Solid cream "action" chip — dark glyph on cream for contrast (primary-fg) */
+.projects__acquiredChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
   color: var(--color-primary-foreground);
+  background: var(--color-primary-400);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-1) var(--spacing-2);
+  white-space: nowrap;
+}
+
+.projects__acquiredChip kbd {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  opacity: 0.65;
+}
+
+.projects__outcomeLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+}
+
+/* Quiet enter-hint stands in for the action on non-selected rows */
+.projects__enterHint {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: hsl(42, 17%, 56%);
+  opacity: 0.45;
+  flex-shrink: 0;
+  padding-top: 0.1em;
 }
 
 .projects__title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   color: var(--color-foreground);
-  margin-bottom: var(--spacing-2);
 }
 
 .projects__company {
   color: var(--color-neutral-400);
   font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-4);
+  margin-top: var(--spacing-1);
 }
 
 .projects__description {
+  font-family: var(--font-family-base);
   color: var(--color-neutral-300);
   line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-6);
+  margin: var(--spacing-4) 0 var(--spacing-5);
 }
 
 .projects__tags {
@@ -1307,15 +1537,40 @@
   font-size: var(--font-size-xs);
 }
 
-@media (min-width: 768px) {
-  .projects__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* Keyboard-hint footer, the last familiar palette cue */
+.projects__paletteFooter {
+  display: flex;
+  gap: var(--spacing-5);
+  padding: var(--spacing-4) var(--spacing-6);
+  border-top: var(--border-width-thin) solid var(--color-border-light);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: hsl(42, 17%, 56%);
 }
 
-@media (min-width: 1024px) {
-  .projects__grid {
-    grid-template-columns: repeat(3, 1fr);
+@media (max-width: 640px) {
+  .projects__result {
+    grid-template-columns: var(--spacing-5) 1fr;
+    column-gap: var(--spacing-2);
+    padding: var(--spacing-5);
+  }
+
+  .projects__paletteGroup,
+  .projects__paletteSearch,
+  .projects__paletteFooter {
+    padding-left: var(--spacing-5);
+    padding-right: var(--spacing-5);
+  }
+
+  /* Stack identity over the acquired callout so it doesn't crowd the title */
+  .projects__resultHead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .projects__resultAction {
+    align-items: flex-start;
+    text-align: left;
   }
 }
 
@@ -1328,74 +1583,147 @@
   composes: section;
 }
 
+/* Quiet, low-emphasis block: one quote shows at a time; the initials discs
+   below act as a picker. Flush-left under the section title (shares its left
+   edge), no card chrome - it supports the page rather than competing with it. */
 .testimonials__content {
-  max-width: var(--content-max-width-lg);
+  /* Share the section title's centered column (content-max-width-md) so the
+     content's left edge lines up exactly with the title above it; the quote
+     keeps its own narrower measure for readable line length. */
+  max-width: var(--content-max-width-md);
   margin: 0 auto;
+  text-align: left;
 }
 
-.testimonials__grid {
-  display: grid;
-  gap: var(--spacing-8);
+.testimonials__feature {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.testimonials__card {
-  composes: card;
-  composes: card--hover;
-}
-
-.testimonials__icon {
-  width: 2rem;
-  height: 2rem;
+.testimonials__mark {
+  font-family: var(--font-family-serif);
   color: var(--color-primary-400);
-  margin-bottom: var(--spacing-4);
+  opacity: 0.4;
+  user-select: none;
 }
 
 .testimonials__quote {
-  color: var(--color-neutral-300);
+  font-family: var(--font-family-serif);
+  font-style: italic;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary-400);
   line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-6);
+  margin: 0 0 var(--spacing-5);
+  max-width: 36rem;
+  /* Reserve the quote's height for its tallest wrap (2 lines on this desktop
+     column) so swapping a 2-line quote for a 1-line one keeps the caption and
+     picker fixed. Stays a block (not flex) so the inline quote marks flow as
+     punctuation around the text instead of becoming siblings beside it. */
+  min-height: calc(var(--font-size-xl) * var(--line-height-relaxed) * 2);
 }
 
-.testimonials__author {
+.testimonials__caption {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-4);
-}
-
-.testimonials__avatar {
-  width: 3rem;
-  height: 3rem;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.testimonials__initials {
-  color: var(--color-primary-foreground);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-sm);
-}
-
-.testimonials__authorInfo {
-  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-1);
 }
 
 .testimonials__name {
   color: var(--color-foreground);
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .testimonials__title {
   color: var(--color-neutral-400);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.04em;
 }
 
-@media (min-width: 768px) {
-  .testimonials__grid {
-    grid-template-columns: repeat(2, 1fr);
+.testimonials__picker {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-8);
+  /* Pull the row left by the disc's tap-target inset ((2.75 - 2.375)/2 rem) so
+     the first visible disc's left edge lines up with the quote, not the
+     invisible 44px hit area. */
+  margin-left: -0.1875rem;
+}
+
+.testimonials__disc {
+  /* 44px tap target around a 38px visible disc (touch a11y). */
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.testimonials__disc:hover {
+  transform: translateY(-2px);
+}
+
+.testimonials__disc .testimonials__initials {
+  width: 2.375rem;
+  height: 2.375rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsla(42, 30%, 88%, 0.04);
+  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.16);
+  color: hsl(42, 18%, 62%);
+  font-family: var(--font-family-mono);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+}
+
+.testimonials__disc--active .testimonials__initials {
+  background: hsla(42, 30%, 88%, 0.1);
+  border-color: var(--color-primary-400);
+  color: var(--color-primary-400);
+  /* Quick "settle" with a soft overshoot when a disc becomes active, so the
+     selection reads as physically confirmed. Re-fires each time the class lands
+     on a newly-picked disc. */
+  animation: testimonialDiscSettle 0.34s cubic-bezier(0.34, 1.4, 0.5, 1);
+}
+
+@keyframes testimonialDiscSettle {
+  from { transform: scale(0.86); }
+  to { transform: scale(1); }
+}
+
+/* Narrow column wraps the longest quote to 3 lines - reserve for that so the
+   picker stays put on mobile too. */
+@media (max-width: 767px) {
+  .testimonials__quote {
+    min-height: calc(var(--font-size-xl) * var(--line-height-relaxed) * 3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials__disc {
+    transition: none;
+  }
+  .testimonials__disc:hover {
+    transform: none;
+  }
+  .testimonials__disc--active .testimonials__initials {
+    animation: none;
   }
 }
 
@@ -1417,13 +1745,23 @@
 }
 
 .contact__content {
-  max-width: var(--content-max-width-sm);
+  /* Share the headline's column (content-max-width-md) so the block's left
+     edge aligns with the section label, like every other section. */
+  max-width: var(--content-max-width-md);
   margin: 0 auto;
 }
 
-.contact__card {
-  composes: card;
-  composes: card--hover;
+/* Editorial split: invite copy (left) + contact methods (right), echoing the
+   About sign-off. No bordered card - the layout reads as open and deliberate. */
+.contact__split {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.contact__lede {
+  display: flex;
+  flex-direction: column;
 }
 
 .contact__title {
@@ -1434,9 +1772,11 @@
 }
 
 .contact__intro {
-  color: var(--color-neutral-300);
-  line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-8);
+  font-family: var(--font-family-base);
+  color: var(--color-neutral-200);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-snug, 1.4);
+  margin: 0;
 }
 
 .contact__methods {
@@ -1458,10 +1798,10 @@
 }
 
 .contact__iconWrapper {
-  width: 3rem;
-  height: 3rem;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
+  width: 2.125rem;
+  height: 2.125rem;
+  background: color-mix(in srgb, var(--color-primary-400) 10%, transparent);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1469,9 +1809,9 @@
 }
 
 .contact__icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--color-primary-foreground);
+  width: 1.0625rem;
+  height: 1.0625rem;
+  color: var(--color-primary-400);
 }
 
 .contact__methodInfo {
@@ -1495,6 +1835,30 @@
 
 .contact__text {
   color: var(--color-neutral-300);
+}
+
+/* Tablet+: invite copy and methods sit side by side, parted by a hairline
+   that echoes the section's other dividers. */
+@media (min-width: 768px) {
+  .contact__split {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--spacing-12);
+  }
+
+  .contact__lede {
+    flex: 1;
+  }
+
+  .contact__methods {
+    flex: 1;
+    padding-left: var(--spacing-12);
+    border-left: var(--border-width-thin) solid var(--color-border);
+  }
+
+  .contact__intro {
+    margin-bottom: 0;
+  }
 }
 
 /* ==========================================================================
@@ -1522,9 +1886,12 @@
   margin-bottom: var(--spacing-6);
 }
 
+/* Editorial quote: serif italic, matching the About sign-off and testimonials
+   (mono italic reads as a glitch, not a quote). */
 .footer__quote {
   max-width: 38rem;
   margin: 0 auto;
+  font-family: var(--font-family-serif);
   color: var(--color-neutral-300);
   font-style: italic;
   font-size: var(--font-size-lg);
@@ -1603,7 +1970,7 @@
 }
 
 /* ==========================================================================
-   Accessibility — respect reduced motion
+   Accessibility - respect reduced motion
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {

@@ -3,7 +3,7 @@ import styles from './code-background.module.css';
 
 /**
  * Scoped "encrypted" code field that streams right-to-left behind its
- * positioned parent — the same motion/texture as the hero portrait scan.
+ * positioned parent - the same motion/texture as the hero portrait scan.
  * Drop it as the first child of a `position: relative; overflow: hidden`
  * container; it fills that container (not the viewport).
  *
@@ -13,7 +13,7 @@ import styles from './code-background.module.css';
 const GLYPHS = '01{}[]()<>/\\|=+-*&^%$#@!?;:.AEF9DCB7x';
 
 export function buildField(length: number): string {
-  // Deterministic pseudo-random fill (no Math.random — keeps SSR/build stable)
+  // Deterministic pseudo-random fill (no Math.random - keeps SSR/build stable)
   let out = '';
   let seed = 1337;
   for (let i = 0; i < length; i++) {
