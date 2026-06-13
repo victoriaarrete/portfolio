@@ -159,8 +159,6 @@ export default function Home() {
             <motion.div
               className={styles['hero__portrait']}
               onMouseMove={handlePortraitMove}
-              animate={reduce ? undefined : { y: [0, -8, 0] }}
-              transition={{ duration: 14, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
             >
               <img
                 src={victoriaPortrait}
