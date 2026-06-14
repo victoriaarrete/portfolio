@@ -7,7 +7,7 @@ export const PERSONAL_INFO = {
   NAME: 'Victoria Kirichenko',
   FIRST_NAME: 'Victoria',
   LAST_NAME: 'Kirichenko',
-  EMAIL: 'victoria.arrete@gmail.com',
+  EMAIL: 'talk@victoriakirichenko.com',
   LINKEDIN_URL: 'https://www.linkedin.com/in/victoria-kirichenko/',
   LINKEDIN_DISPLAY: 'linkedin.com/in/victoria-kirichenko',
   LOCATION: 'Tel Aviv District, Israel',
