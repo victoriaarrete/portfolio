@@ -1353,6 +1353,10 @@
   margin-bottom: var(--spacing-3);
 }
 
+.philosophy__principleNumberName {
+  color: var(--color-neutral-600);
+}
+
 .philosophy__principleTitle {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-base);

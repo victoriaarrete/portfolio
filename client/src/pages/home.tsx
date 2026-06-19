@@ -487,7 +487,7 @@ export default function Home() {
                       <ScrollReveal key={item.title} delay={ANIMATION_DELAY.LONG + index * ANIMATION_DELAY.MEDIUM}>
                         <div className={styles.philosophy__principle}>
                           <span className={styles.philosophy__principleNumber}>
-                            {String(index + 1).padStart(2, '0')}
+                            <span className={styles.philosophy__principleNumberName}>values</span>[{index}]
                           </span>
                           <h4 className={styles.philosophy__principleTitle}>{item.title}</h4>
                           <p className={styles.philosophy__principleDescription}>{item.description}</p>
