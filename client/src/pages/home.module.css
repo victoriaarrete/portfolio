@@ -1349,8 +1349,14 @@
   display: block;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
-  color: var(--color-primary-400);
+  color: var(--color-foreground);
+  letter-spacing: 0.1em;
   margin-bottom: var(--spacing-3);
+}
+
+.philosophy__principleNumberBracket {
+  color: hsl(42, 17%, 56%);
+  margin: 0 0.35em;
 }
 
 .philosophy__principleTitle {
