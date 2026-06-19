@@ -1316,7 +1316,7 @@
 }
 
 .philosophy__kicker::before {
-  content: '— ';
+  content: '- ';
 }
 
 .philosophy__quote {
