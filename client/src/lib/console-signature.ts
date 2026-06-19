@@ -1,10 +1,9 @@
 /**
  * Interactive console "SDK" - the developer easter egg exposed as `window.victoria`.
  *
- * On load it renders a portrait into the DevTools console (Chrome) with a graceful
- * text fallback, prints a concise greeting, and installs a small, explorable command
- * API. The medium is the message: a clean, documented, namespaced object that rewards
- * the curious developer or recruiter who opens the console.
+ * On load it prints a concise greeting and installs a small, explorable command API.
+ * The medium is the message: a clean, documented, namespaced object that rewards the
+ * curious developer or recruiter who opens the console.
  */
 import { CONSOLE_PALETTE, CONSOLE_FONT_SIZE } from '@/constants/colors';
 import {
@@ -31,46 +30,6 @@ function line(text: string, style: string): void {
 function block(title: string, items: readonly string[]): void {
   line(`\n${title}`, STYLE.heading);
   items.forEach((item) => line(`  • ${item}`, STYLE.body));
-}
-
-/** Paint the portrait straight into the console (Chrome). Silently no-ops elsewhere. */
-function renderPortrait(url: string): void {
-  if (typeof Image === 'undefined') return;
-  const PORTRAIT_WIDTH = 168;
-  const img = new Image();
-  img.onload = () => {
-    const naturalWidth = img.naturalWidth || PORTRAIT_WIDTH;
-    const naturalHeight = img.naturalHeight || PORTRAIT_WIDTH;
-    const scale = Math.min(1, PORTRAIT_WIDTH / naturalWidth);
-    const w = Math.round(naturalWidth * scale);
-    const h = Math.round(naturalHeight * scale);
-    let src = url;
-    // Rasterize at *display* size (not natural size) so the data URL stays a few KB,
-    // not megabytes. Same-origin asset → canvas won't taint.
-    try {
-      const canvas = document.createElement('canvas');
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.drawImage(img, 0, 0, w, h);
-        // JPEG over PNG: it's a photo, so this is ~10KB instead of ~115KB.
-        src = canvas.toDataURL('image/jpeg', 0.82);
-      }
-    } catch {
-      /* tainted/unsupported - fall back to the raw url */
-    }
-    console.log(
-      '%c ',
-      `font-size:1px;line-height:${h}px;` +
-        `padding:${Math.floor(h / 2)}px ${Math.floor(w / 2)}px;` +
-        `background:url('${src}') no-repeat center / contain;border-radius:10px;`,
-    );
-  };
-  img.onerror = () => {
-    /* no portrait - the text greeting carries the moment */
-  };
-  img.src = url;
 }
 
 function greet(): void {
@@ -168,11 +127,10 @@ function buildApi() {
 let mounted = false;
 
 /** Print the greeting and install `window.victoria`. Safe to call more than once. */
-export function mountConsoleSignature(portraitUrl: string): void {
+export function mountConsoleSignature(): void {
   if (mounted || typeof window === 'undefined') return;
   mounted = true;
 
-  renderPortrait(portraitUrl);
   greet();
 
   (window as unknown as { victoria: ReturnType<typeof buildApi> }).victoria = buildApi();
