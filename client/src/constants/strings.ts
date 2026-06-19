@@ -27,7 +27,7 @@ export const TAGLINES = {
   HERO: 'I build systems that scale - and teams that want to.',
   ABOUT_TITLE: 'Strong code needs strong culture. I build both.',
   PHILOSOPHY_KICKER: 'How I operate',
-  PHILOSOPHY_QUOTE_LEAD: "I don't lead by adding process — I lead by ",
+  PHILOSOPHY_QUOTE_LEAD: "I don't lead by adding process - I lead by ",
   PHILOSOPHY_QUOTE_EMPHASIS: 'removing noise.',
   PHILOSOPHY_QUOTE_REST: " Give people a clear goal, real ownership, and a high bar, and they'll surprise you.",
   FOOTER_QUOTE: 'Not despite the struggle, but because of it. The hard problems are the ones that taught me everything.',
@@ -282,8 +282,8 @@ export const LEADERSHIP_PRINCIPLES = [
 
 // About Section Content
 export const ABOUT_CONTENT = {
-  INTRO: "I lead R&D teams, and I treat the system and the people as one problem — because they are. The cleanest architecture won't save a team that doesn't trust each other.",
-  PHILOSOPHY: "I optimize for clarity over cleverness — I'd rather ship the decision that moves the product than the one that looks good in a doc.",
+  INTRO: "I lead R&D teams, and I treat the system and the people as one problem - because they are. The cleanest architecture won't save a team that doesn't trust each other.",
+  PHILOSOPHY: "I optimize for clarity over cleverness - I'd rather ship the decision that moves the product than the one that looks good in a doc.",
   APPROACH_TITLE: 'My approach is simple:',
   SIGNATURE_KICKER: 'What shaped me',
   BACKGROUND: 'I moved to a new country alone and built my career from scratch - that experience shaped how I lead: direct, resilient, and focused on what actually matters.',
@@ -308,7 +308,7 @@ export const ABOUT_IMPACT = [
 // ("cmd flag arg") they form the original sentence, so the ordered-list reading
 // stays natural for screen readers; the quotes are decorative (aria-hidden).
 export const ABOUT_APPROACH = [
-  { cmd: 'understand', flag: '--deeply', arg: 'the system — technical + human' },
+  { cmd: 'understand', flag: '--deeply', arg: 'the system - technical + human' },
   { cmd: 'remove', arg: 'noise and unnecessary complexity' },
   { cmd: 'build', arg: 'environments where people perform at their best' },
 ] as const;
@@ -332,43 +332,43 @@ type ExperienceCommit = {
 export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
   {
     hash: 'a1f0c2e', type: 'feat', shape: 'head', head: true,
-    role: 'R&D Team Leader', company: 'Zencity', period: 'Mar 2026 — present',
+    role: 'R&D Team Leader', company: 'Zencity', period: 'Mar 2026 - present',
     blurb: 'Leading R&D as the team scales its civic-data platform.',
   },
   {
     hash: '7e3b9d4', type: 'feat', shape: 'commit',
-    role: 'R&D Team Leader', company: 'Swish.ai', period: 'Apr 2024 — Oct 2025',
+    role: 'R&D Team Leader', company: 'Swish.ai', period: 'Apr 2024 - Oct 2025',
     blurb: 'People-first leadership of AI-driven IT workflow automation, delivered with Scrum.',
   },
   {
     hash: 'c4a07f1', type: 'merge', shape: 'merge',
-    role: 'R&D Team Leader', company: 'Perion Network', period: 'Apr 2021 — Apr 2024',
+    role: 'R&D Team Leader', company: 'Perion Network', period: 'Apr 2021 - Apr 2024',
     blurb: 'Promoted to lead 5 devs + QA across back-office, microservices and MongoDB.',
   },
   {
     hash: '9b21e85', type: 'feat', shape: 'branch',
-    role: 'Full Stack Developer', company: 'Perion Network', period: 'Jun 2018 — Apr 2021',
+    role: 'Full Stack Developer', company: 'Perion Network', period: 'Jun 2018 - Apr 2021',
     blurb: 'Built scalable React / Next.js front ends and Node / MongoDB microservices.',
   },
   {
     hash: '3d5c0aa', type: 'feat', shape: 'close',
-    role: 'Full Stack Developer', company: 'Mind Connect', period: 'Mar 2016 — Apr 2018',
+    role: 'Full Stack Developer', company: 'Mind Connect', period: 'Mar 2016 - Apr 2018',
     blurb: 'Designed and shipped a full call-center management platform end to end.',
   },
   {
     hash: 'f08e612', type: 'feat', shape: 'commit',
-    role: 'Full Stack Developer', company: 'PowerTech', period: 'Feb 2015 — Mar 2016',
+    role: 'Full Stack Developer', company: 'PowerTech', period: 'Feb 2015 - Mar 2016',
     blurb: 'Built a project-management web app on .NET and Microsoft SQL Server.',
   },
   {
     hash: '2b4471c', type: 'feat', shape: 'commit',
-    role: 'Full Stack Developer', company: 'Early career', period: 'Dec 2012 — Jan 2015',
+    role: 'Full Stack Developer', company: 'Early career', period: 'Dec 2012 - Jan 2015',
     blurb: 'Foundation years building across the full stack.',
   },
   {
     hash: 'd9aa130', type: 'init', shape: 'tail', root: true,
-    role: 'M.Sc. Computer Science', company: 'Penza State University', period: '2007 — 2012',
-    blurb: 'Root commit — computer-science foundations.',
+    role: 'M.Sc. Computer Science', company: 'Penza State University', period: '2007 - 2012',
+    blurb: 'Root commit - computer-science foundations.',
   },
 ];
 
@@ -397,7 +397,7 @@ export const TESTIMONIALS: readonly Testimonial[] = [
     initials: 'BM',
   },
   {
-    quote: 'A true leader — she never failed to bring value to our collaborative efforts.',
+    quote: 'A true leader - she never failed to bring value to our collaborative efforts.',
     name: 'Palie Răzvan-Mircea',
     title: 'Frontend Developer',
     initials: 'PR',

@@ -122,7 +122,7 @@ export default function Home() {
 
   // Install the interactive console experience for fellow developers (window.victoria).
   useEffect(() => {
-    mountConsoleSignature(victoriaPortrait);
+    mountConsoleSignature();
   }, []);
 
   return (
