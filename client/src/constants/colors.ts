@@ -11,7 +11,8 @@ export const CONSOLE_PALETTE = {
   HEADING: 'hsl(42, 40%, 76%)', // champagne - section headers
   SUBHEADING: 'hsl(40, 22%, 84%)', // soft cream - sub-headers
   BODY: 'hsl(38, 11%, 66%)', // warm gray - body copy
-  ACCENT: 'hsl(44, 46%, 71%)', // champagne - the single functional pop (commands, links)
+  ACCENT: 'hsl(44, 46%, 71%)', // champagne - links, punchlines, hints
+  COMMAND: 'hsl(122, 70%, 55%)', // phosphor green - the "code/command" token color
   DIM: 'hsl(34, 8%, 50%)', // muted warm gray - secondary detail
 } as const;
 

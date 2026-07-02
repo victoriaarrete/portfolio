@@ -20,13 +20,47 @@ const STYLE = {
   subheading: `color:${CONSOLE_PALETTE.SUBHEADING};font-weight:bold;`,
   body: `color:${CONSOLE_PALETTE.BODY};font-size:${CONSOLE_FONT_SIZE.SMALL};`,
   accent: `color:${CONSOLE_PALETTE.ACCENT};`,
-  command: `color:${CONSOLE_PALETTE.ACCENT};font-weight:bold;`,
+  command: `color:${CONSOLE_PALETTE.COMMAND};font-weight:bold;`,
   comment: `color:${CONSOLE_PALETTE.DIM};font-style:italic;font-size:${CONSOLE_FONT_SIZE.SMALL};`,
   name: `color:${CONSOLE_PALETTE.TITLE};font-weight:bold;`,
+  tableHead: `color:${CONSOLE_PALETTE.DIM};font-size:${CONSOLE_FONT_SIZE.SMALL};`,
 } as const;
 
 function line(text: string, style: string): void {
   console.log(`%c${text}`, style);
+}
+
+// Log a command's closing punchline in the phosphor accent color and return
+// undefined - so the line reads green rather than the browser's own (blue)
+// color for an echoed return value.
+function close(text: string): void {
+  line(`\n${text}`, STYLE.accent);
+}
+
+// A console.table replacement we can actually color: console.table cell text is
+// drawn by DevTools (always blue) and can't be styled, so we render aligned,
+// monospace columns via %c instead - command column in phosphor green, the rest warm.
+type TableColumn = { key: string; header: string; style: string };
+function styledTable(rows: readonly Record<string, unknown>[], columns: TableColumn[]): void {
+  const cell = (row: Record<string, unknown>, key: string) => String(row[key] ?? '');
+  const widths = columns.map((c) =>
+    Math.max(c.header.length, ...rows.map((r) => cell(r, c.key).length)),
+  );
+  const styles: string[] = [];
+  let fmt = '';
+  const pushRow = (values: string[], rowStyles: string[]) => {
+    values.forEach((v, ci) => {
+      const last = ci === columns.length - 1;
+      fmt += `%c${last ? v : v.padEnd(widths[ci] + 2)}`;
+      styles.push(rowStyles[ci]);
+    });
+  };
+  pushRow(columns.map((c) => c.header), columns.map(() => STYLE.tableHead));
+  rows.forEach((r) => {
+    fmt += '\n';
+    pushRow(columns.map((c) => cell(r, c.key)), columns.map((c) => c.style));
+  });
+  console.log(fmt, ...styles);
 }
 
 // --- victoria.maze(): a fresh, always-solvable maze with its one path traced ---
@@ -151,8 +185,7 @@ function drawMaze(): void {
   console.log(fmt, ...styles);
 }
 
-function block(title: string, items: readonly string[]): void {
-  line(`\n${title}`, STYLE.heading);
+function bullets(items: readonly string[]): void {
   items.forEach((item) => line(`  • ${item}`, STYLE.body));
 }
 
@@ -179,53 +212,59 @@ function greet(): void {
 function buildApi() {
   const api = {
     help() {
-      line(CONSOLE_SDK.HELP_TITLE, STYLE.heading);
-      console.table(CONSOLE_SDK.COMMANDS);
-      return CONSOLE_SDK.HELP_RETURN;
+      styledTable(CONSOLE_SDK.COMMANDS, [
+        { key: 'command', header: 'command', style: STYLE.command },
+        { key: 'what', header: 'what', style: STYLE.body },
+      ]);
+      close(CONSOLE_SDK.HELP_RETURN);
     },
     readme() {
-      line(CONSOLE_SDK.README_TITLE, STYLE.heading);
       CONSOLE_SDK.README_SECTIONS.forEach((section) => {
         line(`\n${section.h}`, STYLE.subheading);
         line(`  ${section.body}`, STYLE.body);
       });
-      return CONSOLE_SDK.README_RETURN;
+      close(CONSOLE_SDK.README_RETURN);
     },
-    // A getter, so `victoria.experience` (no parens) prints the table *and* hands back
-    // the array for the reader to expand and interrogate.
+    // A getter, so `victoria.experience` (no parens) prints the timeline on access.
     get experience() {
-      line(`\n${CONSOLE_SDK.EXPERIENCE_TITLE}`, STYLE.heading);
-      console.table(CONSOLE_SDK.EXPERIENCE);
-      return CONSOLE_SDK.EXPERIENCE;
+      styledTable(CONSOLE_SDK.EXPERIENCE, [
+        { key: 'role', header: 'role', style: STYLE.command },
+        { key: 'company', header: 'company', style: STYLE.subheading },
+        { key: 'period', header: 'period', style: STYLE.body },
+        { key: 'focus', header: 'focus', style: STYLE.body },
+      ]);
+      close(CONSOLE_SDK.EXPERIENCE_RETURN);
+      return undefined;
     },
     impact() {
-      line(CONSOLE_SDK.IMPACT_TITLE, STYLE.heading);
-      console.table(CONSOLE_SDK.IMPACT);
-      return CONSOLE_SDK.IMPACT_RETURN;
+      styledTable(CONSOLE_SDK.IMPACT, [
+        { key: 'area', header: 'area', style: STYLE.command },
+        { key: 'where', header: 'where', style: STYLE.subheading },
+        { key: 'outcome', header: 'outcome', style: STYLE.accent },
+      ]);
+      close(CONSOLE_SDK.IMPACT_RETURN);
     },
     decisions() {
-      block(CONSOLE_SDK.DECISIONS_TITLE, CONSOLE_SDK.DECISIONS);
-      return CONSOLE_SDK.DECISIONS_RETURN;
+      bullets(CONSOLE_SDK.DECISIONS);
+      close(CONSOLE_SDK.DECISIONS_RETURN);
     },
     principles() {
-      line(CONSOLE_SDK.PRINCIPLES_TITLE, STYLE.heading);
       LEADERSHIP_PRINCIPLES.forEach((principle) => {
         line(`\n${principle.title}`, STYLE.subheading);
         line(`  ${principle.description}`, STYLE.body);
       });
-      return CONSOLE_SDK.PRINCIPLES_RETURN;
+      close(CONSOLE_SDK.PRINCIPLES_RETURN);
     },
     story() {
-      block(CONSOLE_SDK.STORY_TITLE, CONSOLE_SDK.STORY);
-      return CONSOLE_SDK.STORY_RETURN;
+      bullets(CONSOLE_SDK.STORY);
+      close(CONSOLE_SDK.STORY_RETURN);
     },
     maze() {
       drawMaze();
       line(`\n${CONSOLE_SDK.MAZE_CAPTION}`, STYLE.subheading);
-      return CONSOLE_SDK.MAZE_RETURN;
+      close(CONSOLE_SDK.MAZE_RETURN);
     },
     skills() {
-      line(CONSOLE_MESSAGES.SKILLS_TITLE, STYLE.heading);
       [
         CONSOLE_MESSAGES.SKILLS_LANGUAGES,
         CONSOLE_MESSAGES.SKILLS_FRONTEND,
@@ -233,19 +272,18 @@ function buildApi() {
         CONSOLE_MESSAGES.SKILLS_CLOUD,
         CONSOLE_MESSAGES.SKILLS_LEADERSHIP,
       ].forEach((skill) => line(skill, STYLE.body));
-      return CONSOLE_MESSAGES.SKILLS_RETURN;
+      close(CONSOLE_MESSAGES.SKILLS_RETURN);
     },
     hire() {
-      block(CONSOLE_SDK.HIRE_TITLE, CONSOLE_SDK.HIRE);
+      bullets(CONSOLE_SDK.HIRE);
       line(`\n${CONSOLE_SDK.HIRE_HINT}`, STYLE.accent);
-      return TAGLINES.PRIMARY;
+      close(TAGLINES.PRIMARY);
     },
     contact() {
-      line(CONSOLE_SDK.CONTACT_TITLE, STYLE.heading);
       line(`  Email     ${PERSONAL_INFO.EMAIL}`, STYLE.accent);
       line(`  LinkedIn  ${PERSONAL_INFO.LINKEDIN_URL}`, STYLE.accent);
       line(`  Location  ${PERSONAL_INFO.LOCATION}`, STYLE.body);
-      return CONSOLE_SDK.CONTACT_RETURN;
+      close(CONSOLE_SDK.CONTACT_RETURN);
     },
   };
 
