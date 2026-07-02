@@ -113,7 +113,6 @@ export const CONSOLE_MESSAGES = {
   DIVIDER: '─────────────────────────────────────────────────────────────',
   
   // Window functions
-  SKILLS_TITLE: "🚀 Victoria's Tech Arsenal:",
   SKILLS_LANGUAGES: '   Languages: TypeScript, Python, JavaScript, .NET',
   SKILLS_FRONTEND: '   Frontend: React, HTML5, CSS3',
   SKILLS_BACKEND: '   Backend: Node.js, Express, .NET, PHP',
@@ -149,10 +148,9 @@ export const CONSOLE_SDK = {
   // Returned when the object is coerced to a string (e.g. `${victoria}`).
   SIGNATURE: 'Victoria Kirichenko - R&D Leader. I build systems that scale, and teams that want to.',
 
-  HELP_TITLE: '🗂  victoria.* - call any of these:',
   COMMANDS: [
     { command: 'victoria.readme()', what: 'how I work, what I value, how to get my best' },
-    { command: 'victoria.experience', what: 'the timeline, as data you can expand' },
+    { command: 'victoria.experience', what: 'the timeline, role by role' },
     { command: 'victoria.impact()', what: 'outcomes, not adjectives' },
     { command: 'victoria.decisions()', what: 'how I make the hard calls' },
     { command: 'victoria.principles()', what: 'what I lead by' },
@@ -164,7 +162,6 @@ export const CONSOLE_SDK = {
   ],
   HELP_RETURN: '↑ call any command, e.g. victoria.readme()',
 
-  README_TITLE: '📄 README - working with Victoria',
   README_SECTIONS: [
     {
       h: 'What I optimize for',
@@ -197,7 +194,6 @@ export const CONSOLE_SDK = {
   ],
   README_RETURN: "That's the contract. Reciprocity is the point - send me yours.",
 
-  DECISIONS_TITLE: '🧭 How I make the hard calls',
   DECISIONS: [
     'One-way doors vs. reversible: I move fast on what we can undo, and slow down only for what we genuinely can’t.',
     'Clarity beats cleverness: the solution the whole team understands usually beats the elegant one only I do.',
@@ -206,7 +202,6 @@ export const CONSOLE_SDK = {
   ],
   DECISIONS_RETURN: 'Judgment over job titles.',
 
-  IMPACT_TITLE: '📈 Outcomes, not adjectives',
   IMPACT: [
     { area: 'AI workflow automation', where: 'Swish.ai', outcome: '−60% manual tasks automated' },
     { area: 'Team leadership', where: 'Swish.ai · Perion', outcome: '5+ QA engineers led - offshore & onsite' },
@@ -215,7 +210,6 @@ export const CONSOLE_SDK = {
   ],
   IMPACT_RETURN: "Numbers I'm happy to walk you through.",
 
-  EXPERIENCE_TITLE: '🗓  Experience - the timeline',
   EXPERIENCE: [
     { role: 'R&D Team Leader', company: 'Zencity', period: 'Mar 2026 → now', focus: 'Just getting started - magic in progress' },
     { role: 'R&D Team Leader', company: 'Swish.ai', period: 'Apr 2024 → Oct 2025', focus: 'AI-driven IT workflow optimization' },
@@ -226,8 +220,8 @@ export const CONSOLE_SDK = {
     { role: 'Full-Stack Developer', company: 'Early Career', period: 'Dec 2012 → Jan 2015', focus: 'Foundations across the stack' },
     { role: 'MSc, Computer Science', company: 'Penza State University', period: '2007 → 2012', focus: 'Foundations' },
   ],
+  EXPERIENCE_RETURN: 'Eleven years, one direction: up and toward the hard problems.',
 
-  STORY_TITLE: '🌍 How I actually got here',
   STORY: [
     'I started in Penza, Russia, and moved to a new country alone - no network, no shortcuts.',
     'I built my career from scratch, in a second language, one hard problem at a time.',
@@ -236,10 +230,8 @@ export const CONSOLE_SDK = {
   ],
   STORY_RETURN: 'Not despite the struggle - because of it.',
 
-  PRINCIPLES_TITLE: '⚖️  What I lead by',
   PRINCIPLES_RETURN: 'Clarity. Safety. Accountability - in that order.',
 
-  HIRE_TITLE: '🤝 Why we should talk',
   HIRE: [
     'Most companies hide a recruiting pitch in their console. Plot twist: here, I’m the one worth recruiting.',
     'I turn ambiguous R&D into shipped product, and I raise the bar of everyone around me.',
@@ -247,7 +239,6 @@ export const CONSOLE_SDK = {
   ],
   HIRE_HINT: '→ victoria.contact() to start the conversation',
 
-  CONTACT_TITLE: '📬 Reach me directly',
   CONTACT_RETURN: 'I read every message. The interesting ones I answer fast.',
 
   MAZE_CAPTION: "WHEN THERE'S A WILL, THERE'S A WAY.",
