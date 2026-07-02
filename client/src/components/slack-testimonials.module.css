@@ -1,0 +1,326 @@
+/* ==========================================================================
+   Slack-style testimonials — minimal
+   The Slack direct-message metaphor stripped to its bones: a "Direct messages"
+   sidebar of colleagues and the selected message. No window title bar, tabs,
+   search, conversation header, or composer. Colours use the site's warm
+   palette so it sits beside the Experience `git log` terminal; type is Lato
+   (Slack's typeface) to keep it recognisably Slack.
+   ========================================================================== */
+
+.window {
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* Fill the section's content column (same as the title above and the
+     Experience `git log` terminal) so the left edge lines up with the title. */
+  width: 100%;
+  background: var(--color-surface);
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  color: var(--color-neutral-200);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.55);
+}
+
+.body {
+  display: flex;
+  min-height: 15rem;
+}
+
+/* --- sidebar ----------------------------------------------------------- */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: var(--border-width-thin) solid var(--color-border-light);
+  padding: 14px 10px;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--color-neutral-400);
+  padding: 0 8px 10px;
+}
+
+.dmList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dm {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 8px;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.dm:hover {
+  background: hsla(42, 30%, 88%, 0.06);
+}
+
+.dmActive {
+  background: hsla(42, 30%, 88%, 0.1);
+}
+
+.dmText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.dmName {
+  font-size: 14px;
+  color: var(--color-neutral-300);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Last-message preview under the name — only shown on the mobile DM list. */
+.dmPreview {
+  display: none;
+  font-size: 12px;
+  color: var(--color-neutral-400);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* unread DM: bright, bold name (Slack convention) */
+.dmUnread .dmName,
+.dmActive .dmName {
+  color: var(--color-foreground);
+  font-weight: 700;
+}
+
+/* Unread count in the site's warm palette (not Slack pink): cream gradient
+   fill with dark glyphs. Pops in with a soft overshoot when its "ping" lands
+   after the panel scrolls into view. */
+.unreadBadge {
+  margin-left: auto;
+  background: var(--gradient-primary);
+  color: var(--color-primary-foreground);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: 9px;
+  padding: 3px 8px;
+  flex-shrink: 0;
+  animation: slackPingPop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes slackPingPop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* --- message pane ------------------------------------------------------ */
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 18px 20px;
+}
+
+.message {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+}
+
+.msgBody {
+  min-width: 0;
+}
+
+.msgMeta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.msgAuthor {
+  font-weight: 900;
+  color: var(--color-foreground);
+  font-size: 15px;
+}
+
+.msgTime {
+  font-size: 12px;
+  color: var(--color-neutral-400);
+}
+
+.msgTitle {
+  font-size: 11.5px;
+  color: var(--color-neutral-400);
+  margin: 1px 0 4px;
+}
+
+.msgText {
+  color: var(--color-neutral-200);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* --- avatar ------------------------------------------------------------ */
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.avatarSm { width: 20px; height: 20px; font-size: 8px; border-radius: 5px; }
+.avatarMd { width: 36px; height: 36px; font-size: 13px; }
+.avatarXs { width: 28px; height: 28px; font-size: 11px; }
+
+/* --- mobile-only back bar (drill-down conversation header) ------------- */
+.backBar {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-bottom: var(--border-width-thin) solid var(--color-border-light);
+  margin: -18px -20px 14px;
+}
+
+.backBtn {
+  border: none;
+  background: transparent;
+  color: var(--color-neutral-200);
+  font-size: 26px;
+  line-height: 1;
+  padding: 0 4px 0 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.backHead {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.backName {
+  font-weight: 900;
+  color: var(--color-foreground);
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.backRole {
+  font-size: 11px;
+  color: var(--color-neutral-400);
+}
+
+/* --- responsive: Slack-mobile drill-down (list ↔ conversation) --------- */
+@media (max-width: 767px) {
+  /* One screen at a time, stacked. The list shows by default; tapping a row
+     adds .showConversation, which swaps to the conversation screen. */
+  .body {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    padding: 8px 6px 10px;
+  }
+
+  .sectionLabel {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--color-foreground);
+    letter-spacing: 0;
+    padding: 10px 10px 8px;
+  }
+
+  /* Full-width DM rows. The avatar carries the identity (initials), so the
+     name is dropped and the quote preview gets two full lines. The full name,
+     role and untruncated quote appear on tap, in the conversation. */
+  .dm {
+    gap: 11px;
+    padding: 10px 10px;
+    border-radius: 8px;
+  }
+
+  .dmName {
+    display: none;
+  }
+
+  .dmPreview {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  /* Unread emphasis moves to the preview text (the name is gone): brighter
+     and slightly heavier for unread, muted for read. */
+  .dmUnread .dmPreview {
+    color: var(--color-foreground);
+    font-weight: 500;
+  }
+
+  .avatarSm {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+
+  .unreadBadge {
+    align-self: center;
+  }
+
+  /* Conversation screen hidden until a row is tapped. */
+  .main {
+    display: none;
+    padding: 18px 20px;
+    min-height: 13rem;
+  }
+
+  .showConversation .sidebar {
+    display: none;
+  }
+
+  .showConversation .main {
+    display: block;
+  }
+
+  .backBar {
+    display: flex;
+  }
+
+  /* No persistent "selected" row on the mobile list — Slack's DM list doesn't
+     pre-highlight a conversation. An opened row just reads as a normal (read)
+     DM: no highlight block. Unread rows stay emphasized (brighter preview). */
+  .dmActive {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unreadBadge {
+    animation: none;
+  }
+}
