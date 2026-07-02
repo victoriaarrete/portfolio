@@ -250,7 +250,6 @@ export const CONSOLE_SDK = {
   CONTACT_TITLE: '📬 Reach me directly',
   CONTACT_RETURN: 'I read every message. The interesting ones I answer fast.',
 
-  MAZE_TITLE: '🧩 A tangle - and the way through',
   MAZE_CAPTION: "WHEN THERE'S A WILL, THERE'S A WAY.",
   MAZE_RETURN: 'Every tangle has a path - my job is finding it.',
 } as const;

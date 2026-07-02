@@ -220,7 +220,6 @@ function buildApi() {
       return CONSOLE_SDK.STORY_RETURN;
     },
     maze() {
-      line(`\n${CONSOLE_SDK.MAZE_TITLE}`, STYLE.heading);
       drawMaze();
       line(`\n${CONSOLE_SDK.MAZE_CAPTION}`, STYLE.subheading);
       return CONSOLE_SDK.MAZE_RETURN;
