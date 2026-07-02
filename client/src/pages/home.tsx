@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, useMemo, type MouseEvent } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Mail, MapPin, Linkedin, User, ChevronDown } from 'lucide-react';
 import victoriaPortrait from '@assets/victoria_pic.png';
 import { ParticleSystem } from '@/components/particle-system';
 import { Navigation } from '@/components/navigation';
 import { ScrollReveal } from '@/components/scroll-reveal';
-import { useScramble } from '@/hooks/use-scramble';
+import { SlackTestimonials } from '@/components/slack-testimonials';
 import { CodeBackground, buildField } from '@/components/code-background';
 import { GeometricWireframe } from '@/components/geometric-wireframe';
 import { TangleToClarity } from '@/components/tangle-to-clarity';
@@ -30,7 +30,6 @@ import {
   ABOUT_APPROACH,
   ABOUT_IMPACT,
   EXPERIENCE_LOG,
-  TESTIMONIALS,
   CONTACT_CONTENT,
   COPYRIGHT,
   SCROLL_BEHAVIOR,
@@ -41,14 +40,6 @@ import styles from './home.module.css';
 export default function Home() {
   const reduce = useReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
-  // Testimonials: the initials discs act as a picker; one quote shows at a time.
-  // The quote crossfades + rises (house ScrollReveal motion) while the mono
-  // name/role decode-scramble (scanner nod); both fall back to instant under
-  // reduced motion.
-  const [activeTestimonial, setActiveTestimonial] = useState(3);
-  const activeQuote = TESTIMONIALS[activeTestimonial];
-  const scrambledName = useScramble(activeQuote.name, { enabled: !reduce });
-  const scrambledTitle = useScramble(activeQuote.title, { enabled: !reduce });
   // Same generator as the page-level code field (unified look); enough glyphs to
   // fill the portrait so the overlay reaches the content line on every device.
   const scanField = useMemo(() => buildField(6000), []);
@@ -615,46 +606,9 @@ export default function Home() {
             </h2>
           </ScrollReveal>
 
-          <ScrollReveal className={styles.testimonials__content}>
-            <figure className={styles.testimonials__feature}>
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.blockquote
-                  key={activeTestimonial}
-                  className={styles.testimonials__quote}
-                  initial={reduce ? false : { opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0, transition: { duration: reduce ? 0 : 0.28, ease: EASING.DEFAULT } }}
-                  exit={reduce ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0, y: 8, transition: { duration: 0.14, ease: EASING.DEFAULT } }}
-                >
-                  <span className={styles.testimonials__mark} aria-hidden="true">&ldquo;</span>
-                  {activeQuote.quote}
-                  <span className={styles.testimonials__mark} aria-hidden="true">&rdquo;</span>
-                </motion.blockquote>
-              </AnimatePresence>
-              <figcaption className={styles.testimonials__caption}>
-                <span className={styles.testimonials__name}>{scrambledName}</span>
-                <span className={styles.testimonials__title}>{scrambledTitle}</span>
-              </figcaption>
-            </figure>
-
-            <div className={styles.testimonials__picker} role="tablist" aria-label="Colleague testimonials">
-              {TESTIMONIALS.map((testimonial, index) => {
-                const isActive = index === activeTestimonial;
-                return (
-                  <button
-                    key={testimonial.initials}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    aria-label={`${testimonial.name}, ${testimonial.title}`}
-                    className={`${styles.testimonials__disc} ${isActive ? styles['testimonials__disc--active'] : ''}`}
-                    onClick={() => setActiveTestimonial(index)}
-                  >
-                    <span className={styles.testimonials__initials}>{testimonial.initials}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </ScrollReveal>
+          <div className={styles.testimonials__content}>
+            <SlackTestimonials />
+          </div>
         </div>
       </section>
 
