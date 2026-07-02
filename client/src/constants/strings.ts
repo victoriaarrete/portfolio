@@ -135,12 +135,16 @@ export const CONSOLE_MESSAGES = {
 // Console SDK - the interactive `window.victoria` developer experience.
 // Content lives here (the repo centralizes strings); rendering lives in lib/console-signature.ts.
 export const CONSOLE_SDK = {
-  GREETING_TITLE: '👋 You found the console - good instinct.',
-  GREETING_BODY:
-    "This is `victoria`: a tiny SDK about how I build and lead. Same thing I do in real systems - make the parts that matter easy to find.",
-  GREETING_HINT_PREFIX: 'Run ',
-  GREETING_HINT_CMD: 'victoria.help()',
-  GREETING_HINT_SUFFIX: ' to explore - or just expand the object below.',
+  // Greeting reads as a code snippet: a comment, a `const` declaration, then two
+  // command hints tagged like inline comments. Understated, dev-native.
+  GREETING_COMMENT: '// most of the story is on the page. the rest is here.',
+  GREETING_CODE_KEYWORD: 'const',
+  GREETING_CODE_NAME: 'victoria',
+  GREETING_CODE_REST: ' = sdk({ build, lead })',
+  GREETING_HELP_CMD: 'victoria.help()',
+  GREETING_HELP_TAG: '→ explore',
+  GREETING_MAZE_CMD: 'victoria.maze()',
+  GREETING_MAZE_TAG: "→ there's always a way through",
 
   // Returned when the object is coerced to a string (e.g. `${victoria}`).
   SIGNATURE: 'Victoria Kirichenko - R&D Leader. I build systems that scale, and teams that want to.',
@@ -153,6 +157,7 @@ export const CONSOLE_SDK = {
     { command: 'victoria.decisions()', what: 'how I make the hard calls' },
     { command: 'victoria.principles()', what: 'what I lead by' },
     { command: 'victoria.story()', what: 'how I actually got here' },
+    { command: 'victoria.maze()', what: 'a tangle, solved - the way through' },
     { command: 'victoria.skills()', what: 'the tech arsenal' },
     { command: 'victoria.hire()', what: 'why we should talk' },
     { command: 'victoria.contact()', what: 'reach me directly' },
@@ -244,6 +249,10 @@ export const CONSOLE_SDK = {
 
   CONTACT_TITLE: '📬 Reach me directly',
   CONTACT_RETURN: 'I read every message. The interesting ones I answer fast.',
+
+  MAZE_TITLE: '🧩 A tangle - and the way through',
+  MAZE_CAPTION: "WHEN THERE'S A WILL, THERE'S A WAY.",
+  MAZE_RETURN: 'Every tangle has a path - my job is finding it.',
 } as const;
 
 // ASCII Art
