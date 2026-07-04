@@ -190,12 +190,12 @@
 
 .navigation__mobile-item:hover {
   color: var(--color-primary-400);
-  background: hsla(42, 30%, 88%, 0.08);
+  background: color-mix(in srgb, var(--color-primary-400) 8%, transparent);
   transform: translateX(4px);
 }
 
 .navigation__mobile-item:active {
-  background: hsla(42, 30%, 88%, 0.12);
+  background: color-mix(in srgb, var(--color-primary-400) 12%, transparent);
 }
 
 .navigation__mobile-item:focus-visible {
@@ -208,7 +208,7 @@
 .navigation__mobile-item--active {
   color: var(--color-primary-400);
   font-weight: var(--font-weight-semibold);
-  background: hsla(42, 30%, 88%, 0.08);
+  background: color-mix(in srgb, var(--color-primary-400) 8%, transparent);
 }
 
 /* Modifier: navigation__mobile-menu--open */

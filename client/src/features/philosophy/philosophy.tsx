@@ -1,4 +1,4 @@
-import { ScrollReveal } from '@/shared/components/scroll-reveal';
+import { ScrollReveal } from '@/shared/components/scroll-reveal/scroll-reveal';
 import { TangleToClarity } from './tangle-to-clarity';
 import { ANIMATION_DELAY } from '@/shared/constants/layout';
 import {
@@ -7,14 +7,22 @@ import {
   TAGLINES,
   LEADERSHIP_PRINCIPLES,
 } from '@/shared/constants/strings';
-import { SectionTitle } from '@/shared/components/section-title';
+import { SectionTitle } from '@/shared/components/section-title/section-title';
 import styles from '@/pages/home/home.module.css';
 
 export function Philosophy() {
   return (
-    <section id={NAV_SECTIONS.PHILOSOPHY} className={styles.philosophy}>
+    <section
+      id={NAV_SECTIONS.PHILOSOPHY}
+      aria-labelledby={`${NAV_SECTIONS.PHILOSOPHY}-title`}
+      className={styles.philosophy}
+    >
       <div className={styles.section__container}>
-        <SectionTitle title={SECTION_TITLES.PHILOSOPHY} accent={SECTION_TITLES.PHILOSOPHY_ACCENT} />
+        <SectionTitle
+          id={`${NAV_SECTIONS.PHILOSOPHY}-title`}
+          title={SECTION_TITLES.PHILOSOPHY}
+          accent={SECTION_TITLES.PHILOSOPHY_ACCENT}
+        />
 
         <div className={styles.philosophy__content}>
           <div className={styles.philosophy__layout}>

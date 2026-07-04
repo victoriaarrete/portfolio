@@ -525,6 +525,13 @@ type Project = {
   tags: readonly string[];
 };
 
+export const PROJECTS_PALETTE = {
+  ARIA_LABEL: 'Search projects',
+  PLACEHOLDER: 'search projects',
+  EMPTY: 'no matches for',
+  EMPTY_HINT: 'try "microservices" or "AI"',
+} as const;
+
 export const PROJECTS: readonly Project[] = [
   {
     group: 'Featured',

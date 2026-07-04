@@ -1,14 +1,22 @@
-import { ScrollReveal } from '@/shared/components/scroll-reveal';
+import { ScrollReveal } from '@/shared/components/scroll-reveal/scroll-reveal';
 import { ANIMATION_DELAY } from '@/shared/constants/layout';
 import { SECTION_TITLES, NAV_SECTIONS, EXPERIENCE_LOG } from '@/shared/constants/strings';
-import { SectionTitle } from '@/shared/components/section-title';
+import { SectionTitle } from '@/shared/components/section-title/section-title';
 import styles from '@/pages/home/home.module.css';
 
 export function Experience() {
   return (
-    <section id={NAV_SECTIONS.EXPERIENCE} className={styles.experience}>
+    <section
+      id={NAV_SECTIONS.EXPERIENCE}
+      aria-labelledby={`${NAV_SECTIONS.EXPERIENCE}-title`}
+      className={styles.experience}
+    >
       <div className={styles.section__container}>
-        <SectionTitle title={SECTION_TITLES.EXPERIENCE} accent={SECTION_TITLES.EXPERIENCE_ACCENT} />
+        <SectionTitle
+          id={`${NAV_SECTIONS.EXPERIENCE}-title`}
+          title={SECTION_TITLES.EXPERIENCE}
+          accent={SECTION_TITLES.EXPERIENCE_ACCENT}
+        />
 
         <div className={styles.experience__content}>
           <div className={styles.experience__terminal}>

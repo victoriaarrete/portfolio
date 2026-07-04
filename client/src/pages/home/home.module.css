@@ -14,7 +14,6 @@
 /* ==========================================================================
    Type system - monospace for display & labels (body stays Inter)
    ========================================================================== */
-.section__title,
 .hero__role-chip,
 .about__kicker,
 .about__manifesto-title,
@@ -24,7 +23,6 @@
 }
 
 /* Titles & buttons in uppercase (matches the monospace brutalist look) */
-.section__title,
 .hero__title,
 .about__manifesto-title,
 .card__title,
@@ -34,12 +32,6 @@
 .footer__name,
 .button {
   text-transform: uppercase;
-}
-
-/* Spaced caps for the large display titles */
-.section__title,
-.about__manifesto-title {
-  letter-spacing: 0.04em;
 }
 
 /* ==========================================================================
@@ -74,7 +66,11 @@
   transform: translate(-50%, -50%);
   width: min(900px, 92%);
   height: 620px;
-  background: radial-gradient(ellipse at center, hsla(42, 30%, 88%, 0.06) 0%, transparent 62%);
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--color-primary-400) 6%, transparent) 0%,
+    transparent 62%
+  );
   pointer-events: none;
   z-index: var(--z-index-base);
 }
@@ -559,32 +555,6 @@
   padding: 0 var(--spacing-6);
 }
 
-/* All section titles share the ABOUT kicker treatment: a small, left-aligned,
-   letter-spaced mono label in warm muted taupe (matches .about__section-label). */
-.section__title {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  text-align: left;
-  letter-spacing: 0.32em;
-  color: var(--color-label-muted);
-  /* Align every section title to the same centered column as the ABOUT title
-     (about__content, content-max-width-md) so all titles share one left edge. */
-  max-width: var(--content-max-width-md);
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: var(--spacing-10);
-  /* Promote the title to its own compositor layer so the ScrollReveal entrance
-     translate composites the letter-spaced glyphs crisply instead of leaving a
-     subpixel ghost mid-animation. */
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Uniform with the rest of the label - no gradient accent. */
-.section__title-accent {
-  color: inherit;
-}
-
 /* ==========================================================================
    About Section
    ========================================================================== */
@@ -640,6 +610,8 @@
   font-size: var(--font-size-4xl);
   line-height: var(--line-height-tight);
   font-weight: var(--font-weight-bold);
+  /* Spaced caps for the large display title */
+  letter-spacing: 0.04em;
   margin-bottom: var(--spacing-8);
   color: var(--about-bright);
   text-wrap: balance;
@@ -1024,7 +996,7 @@
    line. --gline is the shared graph stroke; the lane geometry below assumes a
    2.75rem gutter with the main lane centred at 14px and the branch lane at 32px. */
 .experience__terminal {
-  --gline: hsla(42, 30%, 88%, 0.22);
+  --gline: color-mix(in srgb, var(--color-primary-400) 22%, transparent);
   background: var(--color-surface);
   border: var(--border-width-thin) solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -1195,7 +1167,7 @@
   top: 11px;
   width: 14px;
   height: 14px;
-  box-shadow: 0 0 0 4px hsla(42, 30%, 88%, 0.12);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary-400) 12%, transparent);
   animation: experienceNodeGlow 2.4s ease-in-out infinite;
 }
 
@@ -1272,10 +1244,10 @@
 @keyframes experienceNodeGlow {
   0%,
   100% {
-    box-shadow: 0 0 0 3px hsla(42, 30%, 88%, 0.1);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-400) 10%, transparent);
   }
   50% {
-    box-shadow: 0 0 0 6px hsla(42, 30%, 88%, 0.04);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-primary-400) 4%, transparent);
   }
 }
 
@@ -1452,25 +1424,47 @@
   font-size: var(--font-size-xs);
   letter-spacing: 0.04em;
   color: var(--color-label-muted);
-  background: hsla(42, 30%, 88%, 0.06);
-  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.16);
+  background: color-mix(in srgb, var(--color-primary-400) 6%, transparent);
+  border: var(--border-width-thin) solid
+    color-mix(in srgb, var(--color-primary-400) 16%, transparent);
   border-radius: var(--radius-sm);
   padding: var(--spacing-1) var(--spacing-2);
 }
 
-.projects__palette-placeholder {
+.projects__palette-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
+  color: var(--color-foreground);
+  caret-color: var(--color-primary-400);
+}
+
+.projects__palette-input::placeholder {
   color: var(--color-neutral-400);
 }
 
-/* Blinking caret sells the "input is focused" feel without a real text field */
+/* The input has no outline of its own; the search row signals focus instead */
+.projects__palette-search:focus-within {
+  border-bottom-color: var(--color-border);
+}
+
+/* Blinking caret invites typing while the field is idle; the real caret
+   takes over on focus */
 .projects__palette-caret {
   width: 1px;
   height: 1.1em;
   background: var(--color-primary-400);
-  margin-left: calc(-1 * var(--spacing-2));
+  margin-right: calc(-1 * var(--spacing-2));
   animation: projectsCaret 1.1s steps(1) infinite;
+}
+
+.projects__palette-search:focus-within .projects__palette-caret {
+  display: none;
 }
 
 @keyframes projectsCaret {
@@ -1513,12 +1507,12 @@
 }
 
 .projects__result:hover {
-  background: hsla(42, 30%, 88%, 0.02);
+  background: color-mix(in srgb, var(--color-primary-400) 2%, transparent);
 }
 
 /* The featured result reads as the highlighted/selected row in the palette */
 .projects__result--active {
-  background: hsla(42, 30%, 88%, 0.04);
+  background: color-mix(in srgb, var(--color-primary-400) 4%, transparent);
   border-left-color: var(--color-primary-400);
 }
 
@@ -1572,25 +1566,23 @@
   white-space: nowrap;
 }
 
-.projects__acquired-chip kbd {
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-xs);
-  opacity: 0.65;
-}
-
 .projects__outcome-label {
   font-size: var(--font-size-xs);
   color: var(--color-neutral-400);
 }
 
-/* Quiet enter-hint stands in for the action on non-selected rows */
-.projects__enter-hint {
+/* Empty state for queries that match nothing */
+.projects__palette-empty {
+  padding: var(--spacing-8) var(--spacing-6);
+  text-align: center;
+  color: var(--color-neutral-300);
+}
+
+.projects__palette-empty-hint {
+  margin-top: var(--spacing-2);
   font-family: var(--font-family-mono);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-label-muted);
-  opacity: 0.45;
-  flex-shrink: 0;
-  padding-top: 0.1em;
 }
 
 .projects__title {
@@ -1620,7 +1612,7 @@
 
 .projects__tag {
   padding: var(--spacing-1) var(--spacing-2);
-  background: hsla(42, 30%, 88%, 0.1);
+  background: color-mix(in srgb, var(--color-primary-400) 10%, transparent);
   color: var(--color-primary-400);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
@@ -1873,7 +1865,8 @@
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.02em;
   border-radius: 0;
-  border: var(--border-width-thin) solid hsla(42, 30%, 88%, 0.4);
+  border: var(--border-width-thin) solid
+    color-mix(in srgb, var(--color-primary-400) 40%, transparent);
   background: transparent;
   color: var(--color-foreground);
   cursor: pointer;
@@ -1906,8 +1899,8 @@
 }
 
 .button--outline:hover {
-  background: hsla(42, 30%, 88%, 0.06);
-  border-color: hsla(42, 30%, 88%, 0.5);
+  background: color-mix(in srgb, var(--color-primary-400) 6%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary-400) 50%, transparent);
 }
 
 .button:focus-visible {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { ParticleSystem } from '@/shared/components/particle-system';
-import { Navigation } from '@/shared/components/navigation';
+import { ParticleSystem } from '@/shared/components/particle-system/particle-system';
+import { Navigation } from '@/shared/components/navigation/navigation';
 import { SCROLL_BEHAVIOR } from '@/shared/constants/strings';
 import { mountConsoleSignature } from '@/shared/lib/console-signature';
 import { Hero } from '@/features/hero/hero';
