@@ -189,9 +189,24 @@
   flex-shrink: 0;
 }
 
-.avatarSm { width: 20px; height: 20px; font-size: 8px; border-radius: 5px; }
-.avatarMd { width: 36px; height: 36px; font-size: 13px; }
-.avatarXs { width: 28px; height: 28px; font-size: 11px; }
+.avatarSm {
+  width: 20px;
+  height: 20px;
+  font-size: 8px;
+  border-radius: 5px;
+}
+
+.avatarMd {
+  width: 36px;
+  height: 36px;
+  font-size: 13px;
+}
+
+.avatarXs {
+  width: 28px;
+  height: 28px;
+  font-size: 11px;
+}
 
 /* --- mobile-only back bar (drill-down conversation header) ------------- */
 .backBar {

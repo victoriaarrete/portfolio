@@ -1,12 +1,12 @@
-import { lazy, Suspense } from "react";
-import { Router, Switch, Route } from "wouter";
-import { MotionConfig } from "motion/react";
-import Home from "@/pages/home";
-import { CursorGlow } from "@/components/cursor-glow";
+import { lazy, Suspense } from 'react';
+import { Router, Switch, Route } from 'wouter';
+import { MotionConfig } from 'motion/react';
+import Home from '@/pages/home';
+import { CursorGlow } from '@/components/cursor-glow';
 
 // Separate chunk: the 404 page (and the shadcn card it drags in) stays out
 // of the main bundle's critical path.
-const NotFound = lazy(() => import("@/pages/not-found"));
+const NotFound = lazy(() => import('@/pages/not-found'));
 
 function AppRoutes() {
   return (

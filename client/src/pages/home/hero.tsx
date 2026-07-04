@@ -52,7 +52,9 @@ export function Hero() {
       // sits as a full-width horizontal band over the content, not above it.
       const content = hero.querySelector<HTMLElement>('.' + styles['hero__content']);
       if (content) {
-        const startPct = clamp(((content.getBoundingClientRect().top - heroRect.top) / heroRect.height) * 100);
+        const startPct = clamp(
+          ((content.getBoundingClientRect().top - heroRect.top) / heroRect.height) * 100,
+        );
         hero.style.setProperty('--code-start', `${startPct.toFixed(1)}%`);
       }
 
@@ -118,19 +120,22 @@ export function Hero() {
             aria-label={ROLES.FULL_SUBTITLE}
             initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
             animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
-            transition={{ delay: ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
+            transition={{
+              delay: ANIMATION_DELAY.SHORT,
+              duration: ANIMATION_DURATION.MEDIUM,
+              ease: EASING.DEFAULT,
+            }}
           >
             {ROLES.LIST.map((role) => (
-              <span key={role} className={styles.hero__roleChip}>{role}</span>
+              <span key={role} className={styles.hero__roleChip}>
+                {role}
+              </span>
             ))}
           </motion.p>
 
           {/* Portrait: mobile = centred card in flow; desktop = pinned full-bleed
               to the left edge with the name overlapping its faded right edge. */}
-          <motion.div
-            className={styles['hero__portrait']}
-            onMouseMove={handlePortraitMove}
-          >
+          <motion.div className={styles['hero__portrait']} onMouseMove={handlePortraitMove}>
             {/* Stable public path (not a hashed import) so index.html preloads it;
                 the PNG source of truth lives in assets/, re-encoded by
                 scripts/gen-portrait.mjs. fetchpriority is lowercase because
@@ -163,7 +168,11 @@ export function Hero() {
             className={styles.hero__title}
             initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
             animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
-            transition={{ delay: ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
+            transition={{
+              delay: ANIMATION_DELAY.SHORT,
+              duration: ANIMATION_DURATION.MEDIUM,
+              ease: EASING.DEFAULT,
+            }}
           >
             <span className={styles.hero__titleMain}>{PERSONAL_INFO.FIRST_NAME}</span>
             <span className={styles.hero__titleAccent}>{PERSONAL_INFO.LAST_NAME}</span>
@@ -174,7 +183,11 @@ export function Hero() {
             className={styles.hero__tagline}
             initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
             animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
-            transition={{ delay: ANIMATION_DELAY.LONG, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
+            transition={{
+              delay: ANIMATION_DELAY.LONG,
+              duration: ANIMATION_DURATION.MEDIUM,
+              ease: EASING.DEFAULT,
+            }}
           >
             {TAGLINES.HERO}
           </motion.p>
@@ -184,16 +197,28 @@ export function Hero() {
             className={styles.hero__actions}
             initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
             animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
-            transition={{ delay: ANIMATION_DELAY.VERY_LONG, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
+            transition={{
+              delay: ANIMATION_DELAY.VERY_LONG,
+              duration: ANIMATION_DURATION.MEDIUM,
+              ease: EASING.DEFAULT,
+            }}
           >
             <button
-              onClick={() => document.getElementById(NAV_SECTIONS.CONTACT)?.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH })}
+              onClick={() =>
+                document
+                  .getElementById(NAV_SECTIONS.CONTACT)
+                  ?.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH })
+              }
               className={`${styles.button} ${styles['button--primary']}`}
             >
               {BUTTON_LABELS.GET_IN_TOUCH}
             </button>
             <button
-              onClick={() => document.getElementById(NAV_SECTIONS.ABOUT)?.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH })}
+              onClick={() =>
+                document
+                  .getElementById(NAV_SECTIONS.ABOUT)
+                  ?.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH })
+              }
               className={`${styles.button} ${styles['button--outline']}`}
             >
               {BUTTON_LABELS.LEARN_MORE}
@@ -207,7 +232,11 @@ export function Hero() {
         <motion.button
           type="button"
           aria-label="Scroll to About section"
-          onClick={() => document.getElementById(NAV_SECTIONS.ABOUT)?.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH })}
+          onClick={() =>
+            document
+              .getElementById(NAV_SECTIONS.ABOUT)
+              ?.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH })
+          }
           className={styles.hero__scrollButton}
           animate={reduce ? undefined : { y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: EASING.EASE_IN_OUT }}

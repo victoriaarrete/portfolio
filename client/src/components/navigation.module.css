@@ -81,8 +81,9 @@
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 0.2s ease-in-out,
-              transform 0.2s var(--ease-spring);
+  transition:
+    color 0.2s ease-in-out,
+    transform 0.2s var(--ease-spring);
   will-change: transform;
 }
 
@@ -178,9 +179,10 @@
   text-transform: uppercase;
   padding: var(--spacing-3) var(--spacing-4);
   cursor: pointer;
-  transition: color 0.2s ease-in-out,
-              background 0.2s ease-in-out,
-              transform 0.25s var(--ease-spring);
+  transition:
+    color 0.2s ease-in-out,
+    background 0.2s ease-in-out,
+    transform 0.25s var(--ease-spring);
   border-radius: var(--radius-md);
   position: relative;
   will-change: transform;
@@ -215,8 +217,9 @@
   max-height: 400px; /* Fallback for animation */
   opacity: 1;
   visibility: visible;
-  transition: max-height var(--transition-base) var(--transition-curve),
-              opacity var(--transition-base);
+  transition:
+    max-height var(--transition-base) var(--transition-curve),
+    opacity var(--transition-base);
 }
 
 /* Modifier: navigation__mobile-menu--closed
@@ -227,9 +230,10 @@
   max-height: 0;
   opacity: 0;
   visibility: hidden;
-  transition: max-height var(--transition-base) var(--transition-curve),
-              opacity var(--transition-base),
-              visibility 0s linear var(--transition-base);
+  transition:
+    max-height var(--transition-base) var(--transition-curve),
+    opacity var(--transition-base),
+    visibility 0s linear var(--transition-base);
 }
 
 /* Animation for menu items */
@@ -262,4 +266,3 @@
 .navigation__mobile-item--animate {
   animation: slideInFromLeft 0.3s var(--transition-curve) forwards;
 }
-

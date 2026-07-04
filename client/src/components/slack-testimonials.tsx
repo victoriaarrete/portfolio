@@ -58,6 +58,8 @@ export function SlackTestimonials() {
   useEffect(() => {
     if (!isVisible) return;
     if (reduce) {
+      // Reduced motion: land every ping instantly instead of staggering them.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setArrivedPings(new Set(TESTIMONIALS.map((_, i) => i)));
       return;
     }
@@ -70,9 +72,12 @@ export function SlackTestimonials() {
       [order[i], order[j]] = [order[j], order[i]];
     }
     const timers = order.map((index, slot) =>
-      window.setTimeout(() => {
-        setArrivedPings((prev) => new Set(prev).add(index));
-      }, 1400 + slot * 320),
+      window.setTimeout(
+        () => {
+          setArrivedPings((prev) => new Set(prev).add(index));
+        },
+        1400 + slot * 320,
+      ),
     );
     return () => timers.forEach((t) => clearTimeout(t));
   }, [isVisible, reduce]);
@@ -122,7 +127,7 @@ export function SlackTestimonials() {
   // Home/End jump. Activation (Enter/Space) is the button's native click.
   const onTablistKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const count = TESTIMONIALS.length;
-    let next: number | null = null;
+    let next: number;
     switch (e.key) {
       case 'ArrowDown':
       case 'ArrowRight':
@@ -173,7 +178,9 @@ export function SlackTestimonials() {
               return (
                 <button
                   key={t.initials}
-                  ref={(el) => { tabRefs.current[index] = el; }}
+                  ref={(el) => {
+                    tabRefs.current[index] = el;
+                  }}
                   type="button"
                   role="tab"
                   id={`testimonial-tab-${index}`}
@@ -195,7 +202,11 @@ export function SlackTestimonials() {
                     {/* Last-message preview — shown only on the mobile list */}
                     <span className={styles.dmPreview}>{t.quote}</span>
                   </span>
-                  {isUnread && <span className={styles.unreadBadge} aria-hidden="true">1</span>}
+                  {isUnread && (
+                    <span className={styles.unreadBadge} aria-hidden="true">
+                      1
+                    </span>
+                  )}
                 </button>
               );
             })}

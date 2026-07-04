@@ -55,10 +55,16 @@ function styledTable(rows: readonly Record<string, unknown>[], columns: TableCol
       styles.push(rowStyles[ci]);
     });
   };
-  pushRow(columns.map((c) => c.header), columns.map(() => STYLE.tableHead));
+  pushRow(
+    columns.map((c) => c.header),
+    columns.map(() => STYLE.tableHead),
+  );
   rows.forEach((r) => {
     fmt += '\n';
-    pushRow(columns.map((c) => cell(r, c.key)), columns.map((c) => c.style));
+    pushRow(
+      columns.map((c) => cell(r, c.key)),
+      columns.map((c) => c.style),
+    );
   });
   console.log(fmt, ...styles);
 }
@@ -71,10 +77,22 @@ const MAZE_ROWS = 9;
 // Box-drawing glyph for a wall cell, keyed by which of its up/down/left/right
 // neighbours are also walls (1 = connected). Correct junctions = no floating stubs.
 const MAZE_BOX: Record<string, string> = {
-  '0000': ' ', '0001': '╶', '0010': '╴', '0011': '─',
-  '0100': '╷', '0101': '┌', '0110': '┐', '0111': '┬',
-  '1000': '╵', '1001': '└', '1010': '┘', '1011': '┴',
-  '1100': '│', '1101': '├', '1110': '┤', '1111': '┼',
+  '0000': ' ',
+  '0001': '╶',
+  '0010': '╴',
+  '0011': '─',
+  '0100': '╷',
+  '0101': '┌',
+  '0110': '┐',
+  '0111': '┬',
+  '1000': '╵',
+  '1001': '└',
+  '1010': '┘',
+  '1011': '┴',
+  '1100': '│',
+  '1101': '├',
+  '1110': '┤',
+  '1111': '┼',
 };
 
 /**
@@ -91,7 +109,12 @@ function generateMaze(cols: number, rows: number): string[] {
   const carve = (cx: number, cy: number): void => {
     visited[cy][cx] = true;
     g[2 * cy + 1][2 * cx + 1] = ' ';
-    const dirs = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+    const dirs = [
+      [0, -1],
+      [1, 0],
+      [0, 1],
+      [-1, 0],
+    ];
     for (let i = dirs.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [dirs[i], dirs[j]] = [dirs[j], dirs[i]];
@@ -118,7 +141,12 @@ function generateMaze(cols: number, rows: number): string[] {
   while (queue.length) {
     const [r, c] = queue.shift() as [number, number];
     if (key(r, c) === end) break;
-    for (const [dr, dc] of [[0, 1], [1, 0], [0, -1], [-1, 0]]) {
+    for (const [dr, dc] of [
+      [0, 1],
+      [1, 0],
+      [0, -1],
+      [-1, 0],
+    ]) {
       const nr = r + dr;
       const nc = c + dc;
       if (nr < 0 || nc < 0 || nr >= H || nc >= W) continue;

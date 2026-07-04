@@ -51,9 +51,7 @@ export function Contact() {
           <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>
             <div className={styles.contact__split}>
               <div className={styles.contact__lede}>
-                <p className={styles.contact__intro}>
-                  {CONTACT_CONTENT.INTRO}
-                </p>
+                <p className={styles.contact__intro}>{CONTACT_CONTENT.INTRO}</p>
               </div>
 
               <div className={styles.contact__methods}>

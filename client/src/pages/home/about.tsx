@@ -27,11 +27,17 @@ export function About() {
             initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
             whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ delay: ANIMATION_DELAY.MEDIUM, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
+            transition={{
+              delay: ANIMATION_DELAY.MEDIUM,
+              duration: ANIMATION_DURATION.SLOW,
+              ease: EASING.DEFAULT,
+            }}
           >
             <h2 className={styles.about__sectionLabel}>{SECTION_TITLES.ABOUT}</h2>
             <h3 className={styles.about__manifestoTitle}>
-              <span className={styles.about__manifestoSentence}>Strong code needs strong culture.</span>{' '}
+              <span className={styles.about__manifestoSentence}>
+                Strong code needs strong culture.
+              </span>{' '}
               <span className={styles.about__manifestoNoWrap}>I build both.</span>
             </h3>
             <div className={styles.about__manifestoProse}>
@@ -46,7 +52,11 @@ export function About() {
             initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
             whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ delay: ANIMATION_DELAY.LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
+            transition={{
+              delay: ANIMATION_DELAY.LONG,
+              duration: ANIMATION_DURATION.SLOW,
+              ease: EASING.DEFAULT,
+            }}
           >
             <span className={styles.about__kicker}>{ABOUT_CONTENT.IMPACT_TITLE}</span>
             <ul className={styles.about__impactList}>
@@ -57,7 +67,11 @@ export function About() {
                   initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
                   whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
-                  transition={{ delay: index * ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
+                  transition={{
+                    delay: index * ANIMATION_DELAY.SHORT,
+                    duration: ANIMATION_DURATION.MEDIUM,
+                    ease: EASING.DEFAULT,
+                  }}
                 >
                   <span className={styles.about__impactMetric}>{item.metric}</span>
                   <span className={styles.about__impactLabel}>{item.label}</span>
@@ -72,14 +86,20 @@ export function About() {
             initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
             whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ delay: ANIMATION_DELAY.LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
+            transition={{
+              delay: ANIMATION_DELAY.LONG,
+              duration: ANIMATION_DURATION.SLOW,
+              ease: EASING.DEFAULT,
+            }}
           >
             <div className={styles.about__termBar} aria-hidden="true">
               <span className={styles.about__termFile}>approach.sh</span>
               <span className={styles.about__termTag}>bash</span>
             </div>
             <div className={styles.about__termBody}>
-              <p className={styles.about__termComment} aria-hidden="true"># my approach is simple</p>
+              <p className={styles.about__termComment} aria-hidden="true">
+                # my approach is simple
+              </p>
               <ol className={styles.about__script}>
                 {ABOUT_APPROACH.map((item, index) => (
                   <motion.li
@@ -88,17 +108,28 @@ export function About() {
                     initial={{ opacity: OPACITY.HIDDEN, x: INITIAL_OFFSET.X_SMALL }}
                     whileInView={{ opacity: OPACITY.VISIBLE, x: 0 }}
                     viewport={{ once: true, margin: '-60px' }}
-                    transition={{ delay: index * ANIMATION_DELAY.SHORT, duration: ANIMATION_DURATION.MEDIUM, ease: EASING.DEFAULT }}
+                    transition={{
+                      delay: index * ANIMATION_DELAY.SHORT,
+                      duration: ANIMATION_DURATION.MEDIUM,
+                      ease: EASING.DEFAULT,
+                    }}
                   >
-                    <span className={styles.about__lineNum} aria-hidden="true">{index + 1}</span>
+                    <span className={styles.about__lineNum} aria-hidden="true">
+                      {index + 1}
+                    </span>
                     <span className={styles.about__code}>
                       <span className={styles.about__cmd}>{item.cmd}</span>
                       {'flag' in item && item.flag ? (
                         <span className={styles.about__flag}> {item.flag}</span>
                       ) : null}
-                      <span className={styles.about__quote} aria-hidden="true"> "</span>
+                      <span className={styles.about__quote} aria-hidden="true">
+                        {' '}
+                        "
+                      </span>
                       <span className={styles.about__args}>{item.arg}</span>
-                      <span className={styles.about__quote} aria-hidden="true">"</span>
+                      <span className={styles.about__quote} aria-hidden="true">
+                        "
+                      </span>
                     </span>
                   </motion.li>
                 ))}
@@ -112,7 +143,11 @@ export function About() {
             initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
             whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ delay: ANIMATION_DELAY.VERY_LONG, duration: ANIMATION_DURATION.SLOW, ease: EASING.DEFAULT }}
+            transition={{
+              delay: ANIMATION_DELAY.VERY_LONG,
+              duration: ANIMATION_DURATION.SLOW,
+              ease: EASING.DEFAULT,
+            }}
           >
             <GeometricWireframe className={styles.about__figure} />
             <div className={styles.about__signatureBody}>

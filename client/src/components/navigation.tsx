@@ -1,8 +1,22 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
-import { SCROLL, TRANSFORM, ANIMATION_DELAY, OPACITY, INITIAL_OFFSET, ANIMATION_DURATION, MOBILE_MENU } from '@/constants/layout';
-import { NAV_ITEMS, NAV_SECTIONS, PERSONAL_INFO, SCROLL_BEHAVIOR, ARIA_LABELS } from '@/constants/strings';
+import {
+  SCROLL,
+  TRANSFORM,
+  ANIMATION_DELAY,
+  OPACITY,
+  INITIAL_OFFSET,
+  ANIMATION_DURATION,
+  MOBILE_MENU,
+} from '@/constants/layout';
+import {
+  NAV_ITEMS,
+  NAV_SECTIONS,
+  PERSONAL_INFO,
+  SCROLL_BEHAVIOR,
+  ARIA_LABELS,
+} from '@/constants/strings';
 import styles from './navigation.module.css';
 
 export function Navigation() {
@@ -48,12 +62,15 @@ export function Navigation() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH, block: SCROLL_BEHAVIOR.BLOCK_START });
+      element.scrollIntoView({
+        behavior: SCROLL_BEHAVIOR.SMOOTH,
+        block: SCROLL_BEHAVIOR.BLOCK_START,
+      });
       setIsMobileMenuOpen(false);
     }
   };
 
-  const navigationClass = isScrolled 
+  const navigationClass = isScrolled
     ? `${styles.navigation} ${styles['navigation--scrolled']}`
     : `${styles.navigation} ${styles['navigation--transparent']}`;
 
@@ -62,11 +79,7 @@ export function Navigation() {
     : `${styles['navigation__mobile-menu']} ${styles['navigation__mobile-menu--closed']}`;
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={navigationClass}
-    >
+    <motion.nav initial={{ y: -100 }} animate={{ y: 0 }} className={navigationClass}>
       <div className={styles['navigation__container']}>
         <motion.button
           className={styles['navigation__logo']}

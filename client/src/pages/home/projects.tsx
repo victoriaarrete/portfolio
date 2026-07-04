@@ -43,7 +43,9 @@ export function Projects() {
                           <span className={styles.projects__acquiredChip}>
                             Acquired by Perion <kbd aria-hidden="true">&#8629;</kbd>
                           </span>
-                          <span className={styles.projects__outcomeLabel}>outcome of the rebuild</span>
+                          <span className={styles.projects__outcomeLabel}>
+                            outcome of the rebuild
+                          </span>
                         </div>
                       ) : (
                         <span className={styles.projects__enterHint} aria-hidden="true">

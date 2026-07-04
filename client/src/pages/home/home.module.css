@@ -154,8 +154,12 @@
 }
 
 @keyframes heroPortraitDrift {
-  0% { transform: scale(1.1) translateX(1.6%); }
-  100% { transform: scale(1.1) translateX(-1.6%); }
+  0% {
+    transform: scale(1.1) translateX(1.6%);
+  }
+  100% {
+    transform: scale(1.1) translateX(-1.6%);
+  }
 }
 
 /* ── Scanner reveal ───────────────────────────────────────────── */
@@ -180,11 +184,21 @@
      e.g. stacked mobile) - intersected with a soft left/right edge fade so
      there's no hard rectangle. */
   -webkit-mask-image:
-    linear-gradient(180deg, #000 0%, #000 calc(var(--portrait-code-stop, 100%) - 12%), transparent var(--portrait-code-stop, 100%)),
+    linear-gradient(
+      180deg,
+      #000 0%,
+      #000 calc(var(--portrait-code-stop, 100%) - 12%),
+      transparent var(--portrait-code-stop, 100%)
+    ),
     linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(180deg, #000 0%, #000 calc(var(--portrait-code-stop, 100%) - 12%), transparent var(--portrait-code-stop, 100%)),
+    linear-gradient(
+      180deg,
+      #000 0%,
+      #000 calc(var(--portrait-code-stop, 100%) - 12%),
+      transparent var(--portrait-code-stop, 100%)
+    ),
     linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
   mask-composite: intersect;
 }
@@ -243,8 +257,12 @@
 }
 
 @keyframes heroScanStream {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .hero__title {
@@ -254,7 +272,6 @@
   margin-bottom: var(--spacing-6);
   line-height: 1.05;
   letter-spacing: 0.06em;
-  word-wrap: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
   display: flex;
@@ -578,11 +595,11 @@
    taupe and titles/metrics read as bright cream (not the duller gradient). */
 .about {
   composes: section;
-  --about-bright: hsl(42, 31%, 92%);  /* manifesto title, metrics, cmd */
-  --about-lead: hsl(42, 20%, 76%);    /* lead prose, focus statement */
-  --about-quote: hsl(42, 22%, 80%);   /* serif pull-quote */
-  --about-muted: var(--color-label-muted);   /* kickers, labels, term chrome, aside */
-  --about-dim: hsl(42, 12%, 41%);     /* line numbers, comments */
+  --about-bright: hsl(42, 31%, 92%); /* manifesto title, metrics, cmd */
+  --about-lead: hsl(42, 20%, 76%); /* lead prose, focus statement */
+  --about-quote: hsl(42, 22%, 80%); /* serif pull-quote */
+  --about-muted: var(--color-label-muted); /* kickers, labels, term chrome, aside */
+  --about-dim: hsl(42, 12%, 41%); /* line numbers, comments */
 }
 
 /* Single editorial column: one narrow measure, blocks stacked with rhythm.
@@ -683,13 +700,10 @@
   gap: var(--spacing-1);
 }
 
-.about__impactMetric {
-  white-space: nowrap;
-}
-
 /* Unified mono treatment for every metric - one face, no accidental slab
    swaps - so the proof block reads as deliberate, not broken. */
 .about__impactMetric {
+  white-space: nowrap;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
@@ -815,7 +829,6 @@
 .about__args {
   color: var(--about-muted);
 }
-
 
 /* Tile: Signature - the personal sign-off that closes the About section.
    Reads as a signed statement: an oversized quote-mark watermark, the origin
@@ -957,8 +970,9 @@
   border: var(--border-width-thin) solid var(--color-border);
   border-radius: var(--radius-xl);
   padding: var(--spacing-8);
-  transition: transform 0.3s var(--transition-curve),
-              box-shadow 0.3s var(--transition-curve);
+  transition:
+    transform 0.3s var(--transition-curve),
+    box-shadow 0.3s var(--transition-curve);
   will-change: transform;
 }
 
@@ -1256,7 +1270,8 @@
 }
 
 @keyframes experienceNodeGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0 3px hsla(42, 30%, 88%, 0.1);
   }
   50% {
@@ -1459,12 +1474,20 @@
 }
 
 @keyframes projectsCaret {
-  0%, 50% { opacity: 1; }
-  50.01%, 100% { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .projects__paletteCaret { animation: none; }
+  .projects__paletteCaret {
+    animation: none;
+  }
 }
 
 .projects__paletteResults {
@@ -1854,10 +1877,11 @@
   background: transparent;
   color: var(--color-foreground);
   cursor: pointer;
-  transition: transform 0.2s var(--transition-curve),
-              box-shadow 0.2s var(--transition-curve),
-              background 0.2s ease-in-out,
-              border-color 0.2s ease-in-out;
+  transition:
+    transform 0.2s var(--transition-curve),
+    box-shadow 0.2s var(--transition-curve),
+    background 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1902,5 +1926,3 @@
     min-width: 8rem;
   }
 }
-
-

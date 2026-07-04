@@ -324,7 +324,8 @@ export function GeometricWireframe({ shape = 'icosahedron', className }: Geometr
       mouseDampRef.current.y += (mouseRef.current.y - mouseDampRef.current.y) * 8 * dt;
 
       gl.clear(gl.COLOR_BUFFER_BIT);
-      if (uniforms.u_mouse) gl.uniform2f(uniforms.u_mouse, mouseDampRef.current.x, mouseDampRef.current.y);
+      if (uniforms.u_mouse)
+        gl.uniform2f(uniforms.u_mouse, mouseDampRef.current.x, mouseDampRef.current.y);
       if (uniforms.u_resolution) gl.uniform2f(uniforms.u_resolution, canvas.width, canvas.height);
       if (uniforms.u_pixelRatio) gl.uniform1f(uniforms.u_pixelRatio, dpr);
       if (uniforms.u_time) gl.uniform1f(uniforms.u_time, elapsed);
@@ -363,9 +364,7 @@ export function GeometricWireframe({ shape = 'icosahedron', className }: Geometr
         raf = 0;
       };
 
-      io = new IntersectionObserver(([entry]) =>
-        entry.isIntersecting ? startLoop() : stopLoop(),
-      );
+      io = new IntersectionObserver(([entry]) => (entry.isIntersecting ? startLoop() : stopLoop()));
       io.observe(container);
     }
 

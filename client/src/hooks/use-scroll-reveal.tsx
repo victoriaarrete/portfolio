@@ -12,30 +12,28 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Capture the node once so cleanup unobserves the same element it observed
+    const node = ref.current;
+    if (!node) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
           // Once revealed, stop observing
-          if (ref.current) {
-            observer.unobserve(ref.current);
-          }
+          observer.unobserve(node);
         }
       },
       {
         threshold,
         rootMargin,
-      }
+      },
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(node);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      observer.unobserve(node);
     };
   }, [threshold, rootMargin]);
 

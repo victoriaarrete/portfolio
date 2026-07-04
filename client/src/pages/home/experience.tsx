@@ -25,7 +25,9 @@ export function Experience() {
             <div className={styles.experience__prompt} aria-hidden="true">
               <span className={styles.experience__promptSign}>victoria@career</span>
               <span className={styles.experience__promptPath}> ~ </span>
-              <span className={styles.experience__promptCmd}>git log --author=victoria --graph</span>
+              <span className={styles.experience__promptCmd}>
+                git log --author=victoria --graph
+              </span>
             </div>
 
             <ol className={styles.experience__log}>

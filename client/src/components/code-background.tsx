@@ -45,7 +45,9 @@ export function CodeBackground({ variant = 'radial' }: { variant?: 'radial' | 'b
     styles.codeBg,
     variant === 'band' ? styles['codeBg--band'] : '',
     offscreen ? styles['codeBg--paused'] : '',
-  ].filter(Boolean).join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
   return (
     <div ref={ref} className={cls} aria-hidden="true">
       <div className={styles.codeBg__stream}>

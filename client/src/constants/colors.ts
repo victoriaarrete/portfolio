@@ -23,15 +23,15 @@ export const HSL_COLORS = {
   NEUTRAL_950: 'hsl(240, 10%, 3.9%)',
   NEUTRAL_900: 'hsl(240, 12%, 6%)',
   NEUTRAL_800: 'hsl(240, 3.7%, 15.9%)',
-  
+
   // Primary (Blue)
   PRIMARY_500: 'hsl(207, 90%, 54%)',
   PRIMARY_400: 'hsl(207, 91%, 60%)',
-  
+
   // Accent (Cyan)
   ACCENT_400: 'hsl(188, 86%, 53%)',
   ACCENT_500: 'hsl(188, 94%, 43%)',
-  
+
   // With alpha
   PRIMARY_ALPHA_20: 'hsla(207, 90%, 54%, 0.2)',
   PRIMARY_ALPHA_30: 'hsla(207, 90%, 54%, 0.3)',

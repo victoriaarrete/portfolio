@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
+import { useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { AlertCircle } from 'lucide-react';
 
 export default function NotFound() {
   useEffect(() => {
     const previous = document.title;
-    document.title = "404 Page Not Found | Victoria Kirichenko";
+    document.title = '404 Page Not Found | Victoria Kirichenko';
     return () => {
       document.title = previous;
     };

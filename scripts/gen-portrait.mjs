@@ -10,8 +10,6 @@ import sharp from 'sharp';
 const SRC = new URL('../assets/victoria_pic.png', import.meta.url).pathname;
 const OUT = new URL('../client/public/victoria-portrait.webp', import.meta.url).pathname;
 
-const info = await sharp(SRC)
-  .webp({ quality: 82 })
-  .toFile(OUT);
+const info = await sharp(SRC).webp({ quality: 82 }).toFile(OUT);
 
 console.log(`wrote ${OUT}: ${info.width}x${info.height}, ${(info.size / 1024).toFixed(0)} kB`);

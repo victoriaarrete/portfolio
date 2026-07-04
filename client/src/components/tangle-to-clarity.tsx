@@ -32,7 +32,16 @@ type Variant = 'vertical' | 'horizontal';
 interface VariantConfig {
   viewW: number;
   viewH: number;
-  tangle: { cx: number; cy: number; spreadX: number; spreadY: number; rxBase: number; rxRange: number; ryBase: number; ryRange: number };
+  tangle: {
+    cx: number;
+    cy: number;
+    spreadX: number;
+    spreadY: number;
+    rxBase: number;
+    rxRange: number;
+    ryBase: number;
+    ryRange: number;
+  };
   connector: string;
   circle: { cx: number; cy: number; r: number };
 }
@@ -41,14 +50,32 @@ const VARIANTS: Record<Variant, VariantConfig> = {
   vertical: {
     viewW: 400,
     viewH: 820,
-    tangle: { cx: 200, cy: 195, spreadX: 150, spreadY: 195, rxBase: 48, rxRange: 95, ryBase: 18, ryRange: 58 },
+    tangle: {
+      cx: 200,
+      cy: 195,
+      spreadX: 150,
+      spreadY: 195,
+      rxBase: 48,
+      rxRange: 95,
+      ryBase: 18,
+      ryRange: 58,
+    },
     connector: 'M236 320 C296 378 150 410 200 470',
     circle: { cx: 200, cy: 610, r: 140 },
   },
   horizontal: {
     viewW: 760,
     viewH: 360,
-    tangle: { cx: 195, cy: 180, spreadX: 150, spreadY: 200, rxBase: 48, rxRange: 92, ryBase: 18, ryRange: 55 },
+    tangle: {
+      cx: 195,
+      cy: 180,
+      spreadX: 150,
+      spreadY: 200,
+      rxBase: 48,
+      rxRange: 92,
+      ryBase: 18,
+      ryRange: 55,
+    },
     connector: 'M306 230 C396 300 360 150 440 178',
     circle: { cx: 580, cy: 180, r: 150 },
   },
@@ -74,7 +101,16 @@ function buildFigure(variant: Variant) {
     const ry = t.ryBase + rnd() * t.ryRange;
     const rot = Math.round(rnd() * 180);
     const op = round(0.4 + rnd() * 0.4, 2);
-    tangle.push({ cx: round(ex), cy: round(ey), rx: round(rx), ry: round(ry), rot, op, dur: 0.6, delay: round(i * 0.035, 3) });
+    tangle.push({
+      cx: round(ex),
+      cy: round(ey),
+      rx: round(rx),
+      ry: round(ry),
+      rot,
+      op,
+      dur: 0.6,
+      delay: round(i * 0.035, 3),
+    });
   }
 
   // Clean circle: a few near-overlapping passes for a hand-drawn ring.
@@ -105,15 +141,20 @@ interface TangleToClarityProps {
 
 export function TangleToClarity({ variant = 'vertical', className }: TangleToClarityProps) {
   const { ref, isVisible } = useScrollReveal();
-  const { tangle, circles, connector, viewW, viewH } = useMemo(() => buildFigure(variant), [variant]);
+  const { tangle, circles, connector, viewW, viewH } = useMemo(
+    () => buildFigure(variant),
+    [variant],
+  );
 
   const lineStyle = (e: Stroke): CSSProperties =>
-    ({ '--dur': `${e.dur}s`, '--delay': `${e.delay}s` } as CSSProperties);
+    ({ '--dur': `${e.dur}s`, '--delay': `${e.delay}s` }) as CSSProperties;
 
   return (
     <div
       ref={ref}
-      className={[styles.visual, isVisible ? styles.isVisible : '', className].filter(Boolean).join(' ')}
+      className={[styles.visual, isVisible ? styles.isVisible : '', className]
+        .filter(Boolean)
+        .join(' ')}
       aria-hidden="true"
     >
       <svg className={styles.svg} viewBox={`0 0 ${viewW} ${viewH}`} fill="none">

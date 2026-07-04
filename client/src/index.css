@@ -1,5 +1,5 @@
 /* Fonts load from index.html <link>s (earlier discovery, no blocking @import) */
-@import './styles/tokens.css';
+@import url('./styles/tokens.css');
 
 @tailwind base;
 @tailwind components;
@@ -31,6 +31,9 @@
 @layer base {
   * {
     @apply border-border;
+    /* Optimize animations performance */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   body {
@@ -49,16 +52,10 @@
     background-color: var(--color-neutral-950);
   }
 
-  /* Optimize animations performance */
-  * {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
   /* Improve hardware acceleration for transforms */
-  [class*="__portrait"],
-  [class*="__icon"],
-  [class*="card"],
+  [class*='__portrait'],
+  [class*='__icon'],
+  [class*='card'],
   button,
   a {
     transform: translateZ(0);

@@ -8,7 +8,25 @@
     "build": "vite build",
     "build:static": "vite build",
     "preview:static": "npm run build:static && npx serve public -p 3000",
-    "check": "tsc"
+    "check": "tsc",
+    "lint": "eslint client/src scripts eslint.config.js",
+    "lint:css": "stylelint \"client/src/**/*.css\"",
+    "format": "prettier --write client/src scripts eslint.config.js \"*.{json,ts,md}\"",
+    "format:check": "prettier --check client/src scripts eslint.config.js \"*.{json,ts,md}\"",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,mjs,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.css": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,html}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -20,17 +38,26 @@
     "wouter": "^3.3.5"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "20.16.11",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
+    "eslint": "^10.6.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "png-to-ico": "^3.0.1",
     "postcss": "^8.4.47",
+    "prettier": "^3.9.4",
     "sharp": "^0.35.1",
+    "stylelint": "^17.14.0",
+    "stylelint-config-standard": "^40.0.0",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.6.3",
+    "typescript-eslint": "^8.62.1",
     "vite": "^5.4.19"
   }
 }
