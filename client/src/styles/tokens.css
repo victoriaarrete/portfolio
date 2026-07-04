@@ -25,10 +25,6 @@
   --color-accent-500: hsl(44, 21%, 77%);
   --color-accent-600: hsl(42, 16%, 69%);
 
-  /* Named Colors (aliases) */
-  --electric-blue: hsl(42, 36%, 89%);
-  --cyan-bright: hsl(46, 30%, 85%);
-
   /* Colors - Semantic */
   --color-background: var(--color-neutral-950);
   --color-foreground: var(--color-neutral-50);
