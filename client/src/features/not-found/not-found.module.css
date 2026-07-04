@@ -1,0 +1,277 @@
+/* ==========================================================================
+   404 Page - BEM Methodology
+   The broken URL seeds a maze ("tangle to clarity", applied to the error
+   state); the solution trail draws itself toward the exit that leads home.
+   ========================================================================== */
+
+/* Block: not-found */
+.not-found {
+  min-height: 100vh;
+  background-color: var(--color-neutral-950);
+  color: var(--color-neutral-100);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft radial bloom behind the content, echoing the hero's figure-ground depth */
+.not-found::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(900px, 92%);
+  height: 620px;
+  background: radial-gradient(ellipse at center, hsla(42, 30%, 88%, 0.06) 0%, transparent 62%);
+  pointer-events: none;
+  z-index: var(--z-index-base);
+}
+
+/* The VK mark: the one piece of site chrome, and the quiet second exit */
+.not-found__home-mark {
+  position: absolute;
+  top: var(--spacing-6);
+  left: var(--spacing-6);
+  z-index: 2;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  color: var(--color-foreground);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.not-found__home-mark:hover {
+  color: var(--color-primary-400);
+}
+
+.not-found__home-mark:focus-visible {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
+}
+
+.not-found__main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-20) var(--spacing-6);
+  position: relative;
+  z-index: 1;
+}
+
+.not-found__content {
+  max-width: var(--content-max-width-md);
+  width: 100%;
+}
+
+/* Desktop: copy column left, maze right - the hero's split, restated */
+@media (min-width: 1024px) {
+  .not-found__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'kicker maze'
+      'title  maze'
+      'lead   maze'
+      'notes  maze'
+      'exits  maze';
+    column-gap: var(--spacing-16);
+    align-items: start;
+  }
+
+  .not-found__kicker {
+    grid-area: kicker;
+  }
+
+  .not-found__title {
+    grid-area: title;
+  }
+
+  .not-found__lead {
+    grid-area: lead;
+  }
+
+  .not-found__notes {
+    grid-area: notes;
+  }
+
+  .not-found__maze {
+    grid-area: maze;
+    place-self: center;
+    margin: 0;
+  }
+
+  .not-found__exits {
+    grid-area: exits;
+    align-self: end;
+  }
+}
+
+/* Same register as the section titles: small, tracked, warm muted mono */
+.not-found__kicker {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--color-label-muted);
+  margin: 0 0 var(--spacing-10);
+}
+
+/* Display title, echoing the hero: solid line + stroke-outlined counterpart */
+.not-found__title {
+  font-family: var(--font-family-mono);
+  font-size: clamp(var(--font-size-3xl), 6vw, var(--font-size-5xl));
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.05;
+  margin: 0 0 var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+}
+
+.not-found__title-main {
+  color: var(--color-foreground);
+}
+
+.not-found__title-accent {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-neutral-300);
+}
+
+.not-found__lead {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-neutral-300);
+  max-width: 52ch;
+  margin: 0 0 var(--spacing-10);
+}
+
+/* The broken path, set like the palette's kbd chip */
+.not-found__path {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-400);
+  background: hsla(42, 30%, 88%, 0.06);
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-1) var(--spacing-2);
+  overflow-wrap: anywhere;
+}
+
+/* The maze: dim walls; the solution trail draws itself in cream.
+   Uses the platform monospace (NOT Space Mono): system mono ships full-cell
+   box-drawing glyphs that tile into continuous walls, whereas Space Mono's are
+   short and centred, so they render as broken, disconnected line segments.
+   line-height:1 + zero letter-spacing keep the grid seamless in both axes. */
+.not-found__maze {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: clamp(0.8rem, 2.4vw, 1.05rem);
+  line-height: 1;
+  letter-spacing: 0;
+  color: hsla(42, 14%, 42%, 0.85);
+  margin: 0 0 var(--spacing-4);
+  user-select: none;
+}
+
+.not-found__maze-step {
+  color: var(--color-primary-400);
+  font-weight: var(--font-weight-bold);
+  text-shadow: 0 0 12px hsla(42, 36%, 89%, 0.45);
+  opacity: 0;
+  animation: notFoundTrace 0.3s ease forwards;
+  /* Wait out the page entrance, then trace entrance→exit step by step */
+  animation-delay: calc(0.6s + var(--step) * 0.03s);
+}
+
+@keyframes notFoundTrace {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .not-found__maze-step {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Seed note + AI note: comment-register mono, like approach.sh's comments */
+.not-found__note {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-relaxed);
+  color: hsl(42, 12%, 41%);
+  margin: 0 0 var(--spacing-2);
+  overflow-wrap: anywhere;
+}
+
+.not-found__exits {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-10);
+}
+
+.not-found__exits-label {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-label-muted);
+  margin-right: var(--spacing-2);
+}
+
+/* Same recipe as the site's buttons: mono, uppercase, flat corners */
+.not-found__action {
+  padding: 0.875rem 1.75rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-radius: 0;
+  border: var(--border-width-thin) solid var(--color-border);
+  background: transparent;
+  color: var(--color-foreground);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  transition:
+    transform 0.2s var(--transition-curve),
+    box-shadow 0.2s var(--transition-curve),
+    background 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+}
+
+.not-found__action:hover {
+  background: hsla(42, 30%, 88%, 0.06);
+  border-color: hsla(42, 30%, 88%, 0.5);
+}
+
+.not-found__action:focus-visible {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
+}
+
+.not-found__action--primary {
+  background: var(--gradient-primary);
+  color: var(--color-primary-foreground);
+  border-color: transparent;
+}
+
+.not-found__action--primary:hover {
+  background: var(--gradient-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow-blue-lg);
+}
