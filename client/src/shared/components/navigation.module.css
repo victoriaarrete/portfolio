@@ -1,0 +1,268 @@
+/* ==========================================================================
+   Navigation Component - BEM Methodology
+   ========================================================================== */
+
+/* Block: navigation */
+.navigation {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: var(--z-index-fixed);
+  transition: all var(--transition-base) var(--transition-curve);
+}
+
+.navigation--transparent {
+  background: transparent;
+}
+
+.navigation--scrolled {
+  background: var(--color-surface);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border-bottom: var(--border-width-thin) solid var(--color-border);
+}
+
+/* Element: navigation__container */
+.navigation__container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-4) var(--spacing-6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Element: navigation__logo
+   A <button> for keyboard access; reset so it paints exactly like the div it replaced */
+.navigation__logo {
+  border: none;
+  padding: 0;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-spring);
+  will-change: transform;
+  display: inline-block;
+}
+
+.navigation__logo:hover {
+  transform: scale(1.05);
+}
+
+.navigation__logo:focus-visible {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
+}
+
+/* Element: navigation__menu */
+.navigation__menu {
+  display: none;
+  gap: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+  .navigation__menu {
+    display: flex;
+  }
+}
+
+/* Element: navigation__item */
+.navigation__item {
+  color: var(--color-neutral-300);
+  background: none;
+  border: none;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.2s ease-in-out,
+    transform 0.2s var(--ease-spring);
+  will-change: transform;
+}
+
+.navigation__item:hover {
+  color: var(--color-primary-400);
+  transform: scale(1.05);
+}
+
+.navigation__item:focus {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
+}
+
+/* Modifier: navigation__item--active */
+.navigation__item--active {
+  color: var(--color-primary-400);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Element: navigation__mobile-toggle */
+.navigation__mobile-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-foreground);
+  cursor: pointer;
+  padding: var(--spacing-2);
+  position: relative;
+  z-index: 10;
+  transition: color 0.2s ease-in-out;
+}
+
+.navigation__mobile-toggle:hover {
+  color: var(--color-primary-400);
+}
+
+.navigation__mobile-toggle:focus {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
+}
+
+@media (min-width: 768px) {
+  .navigation__mobile-toggle {
+    display: none;
+  }
+}
+
+/* Element: navigation__mobile-icon */
+.navigation__mobile-icon {
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+}
+
+/* Element: navigation__mobile-menu */
+.navigation__mobile-menu {
+  display: block;
+  overflow: hidden;
+  background: var(--color-surface);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border-top: var(--border-width-thin) solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .navigation__mobile-menu {
+    display: none;
+  }
+}
+
+/* Element: navigation__mobile-items */
+.navigation__mobile-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-4) var(--spacing-6);
+}
+
+/* Element: navigation__mobile-item */
+.navigation__mobile-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  color: var(--color-neutral-300);
+  background: none;
+  border: none;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  padding: var(--spacing-3) var(--spacing-4);
+  cursor: pointer;
+  transition:
+    color 0.2s ease-in-out,
+    background 0.2s ease-in-out,
+    transform 0.25s var(--ease-spring);
+  border-radius: var(--radius-md);
+  position: relative;
+  will-change: transform;
+}
+
+.navigation__mobile-item:hover {
+  color: var(--color-primary-400);
+  background: hsla(42, 30%, 88%, 0.08);
+  transform: translateX(4px);
+}
+
+.navigation__mobile-item:active {
+  background: hsla(42, 30%, 88%, 0.12);
+}
+
+.navigation__mobile-item:focus {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
+  color: var(--color-primary-400);
+}
+
+/* Modifier: navigation__mobile-item--active */
+.navigation__mobile-item--active {
+  color: var(--color-primary-400);
+  font-weight: var(--font-weight-semibold);
+  background: hsla(42, 30%, 88%, 0.08);
+}
+
+/* Modifier: navigation__mobile-menu--open */
+.navigation__mobile-menu--open {
+  max-height: var(--spacing-32);
+  max-height: 400px; /* Fallback for animation */
+  opacity: 1;
+  visibility: visible;
+  transition:
+    max-height var(--transition-base) var(--transition-curve),
+    opacity var(--transition-base);
+}
+
+/* Modifier: navigation__mobile-menu--closed
+   visibility flips after the 0.3s fade so the closed menu's buttons leave the
+   tab order (they were invisible but still focusable) without changing the
+   close animation */
+.navigation__mobile-menu--closed {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    max-height var(--transition-base) var(--transition-curve),
+    opacity var(--transition-base),
+    visibility 0s linear var(--transition-base);
+}
+
+/* Animation for menu items */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navigation__item--animate {
+  animation: slideInFromTop 0.3s var(--transition-curve) forwards;
+}
+
+.navigation__mobile-item--animate {
+  animation: slideInFromLeft 0.3s var(--transition-curve) forwards;
+}

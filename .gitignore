@@ -1,2 +1,13 @@
 /node_modules
-package-lock.json
+
+# Local Claude Code tooling
+/.claude/
+/.agents/
+skills-lock.json
+
+# Build outputs & refactor artifacts
+/refactor-baseline/
+
+# Build outputs (CI builds from source)
+/dist/
+/public/

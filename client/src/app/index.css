@@ -1,0 +1,106 @@
+/* Fonts load from index.html <link>s (earlier discovery, no blocking @import) */
+@import url('../shared/styles/tokens.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(42, 36%, 89%);
+  --primary-foreground: hsl(28, 12%, 6%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    /* Optimize animations performance */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  body {
+    @apply antialiased text-foreground overflow-x-hidden;
+    /* Transparent so the fixed code-stream background (z-index -1) shows through */
+    background-color: transparent;
+    font-family: var(--font-family-mono);
+    /* Enable smooth rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Base page color lives on the canvas so it always paints behind everything */
+    background-color: var(--color-neutral-950);
+  }
+
+  /* Improve hardware acceleration for transforms */
+  [class*='__portrait'],
+  [class*='__icon'],
+  [class*='card'],
+  button,
+  a {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+}
+
+@layer utilities {
+  .particle {
+    position: absolute;
+    background: radial-gradient(circle, hsla(42, 30%, 88%, 0.55) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particle linear infinite;
+  }
+}
+
+@keyframes particle {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   Accessibility - respect reduced motion (global kill-switch)
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

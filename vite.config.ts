@@ -1,37 +1,36 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+/// <reference types="vitest/config" />
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
+import { copyFile } from 'fs/promises';
+
+function copy404() {
+  return {
+    name: 'copy-404',
+    closeBundle: async () => {
+      const outDir = resolve(__dirname, 'public');
+      await copyFile(resolve(outDir, 'index.html'), resolve(outDir, '404.html'));
+    },
+  };
+}
 
 export default defineConfig({
-  plugins: [
-    react(),
-    runtimeErrorOverlay(),
-    ...(process.env.NODE_ENV !== "production" &&
-    process.env.REPL_ID !== undefined
-      ? [
-          await import("@replit/vite-plugin-cartographer").then((m) =>
-            m.cartographer(),
-          ),
-        ]
-      : []),
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(import.meta.dirname, "client", "src"),
-      "@shared": path.resolve(import.meta.dirname, "shared"),
-      "@assets": path.resolve(import.meta.dirname, "assets"),
-    },
-  },
-  root: path.resolve(import.meta.dirname, "client"),
+  base: '/',
+  plugins: [react(), copy404()],
+  root: 'client',
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    outDir: '../public',
     emptyOutDir: true,
   },
-  server: {
-    fs: {
-      strict: true,
-      deny: ["**/.*"],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'client/src'),
+      '@assets': resolve(__dirname, 'assets'),
     },
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    css: false,
   },
 });
