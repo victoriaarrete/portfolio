@@ -159,7 +159,7 @@ export default function Home() {
               <img
                 src={victoriaPortrait}
                 alt={PERSONAL_INFO.NAME}
-                className={styles['hero__portrait-image']}
+                className={styles.hero__portraitImage}
               />
               {/* Scanner reveal: encrypted chars stream past a fixed central beam + cursor glow */}
               <div className={styles['hero__scan']} aria-hidden="true">

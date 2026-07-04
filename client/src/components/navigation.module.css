@@ -42,7 +42,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.2s var(--ease-spring);
   will-change: transform;
   display: inline-block;
 }
@@ -74,7 +74,7 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: color 0.2s ease-in-out,
-              transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+              transform 0.2s var(--ease-spring);
   will-change: transform;
 }
 
@@ -172,7 +172,7 @@
   cursor: pointer;
   transition: color 0.2s ease-in-out,
               background 0.2s ease-in-out,
-              transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+              transform 0.25s var(--ease-spring);
   border-radius: var(--radius-md);
   position: relative;
   will-change: transform;
