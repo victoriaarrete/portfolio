@@ -1,0 +1,246 @@
+/* ==========================================================================
+   /cat - BEM Methodology
+   The site's one unserious page. Same monochrome mono language as the 404 maze
+   and the console SDK; a character-art cat wanders a floor and does cat things.
+   ========================================================================== */
+
+/* Block: cat */
+.cat {
+  min-height: 100vh;
+  background-color: var(--color-neutral-950);
+  color: var(--color-neutral-100);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* The same soft radial bloom the 404 and hero use, for figure-ground depth. */
+.cat::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(900px, 92%);
+  height: 620px;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--color-primary-400) 6%, transparent) 0%,
+    transparent 62%
+  );
+  pointer-events: none;
+  z-index: var(--z-index-base);
+}
+
+/* The VK mark: the one bit of site chrome, and the quiet way home. */
+.cat__home-mark {
+  position: absolute;
+  top: var(--spacing-6);
+  left: var(--spacing-6);
+  z-index: 2;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  color: var(--color-foreground);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.cat__home-mark:hover {
+  color: var(--color-primary-400);
+}
+
+.cat__home-mark:focus-visible {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
+}
+
+.cat__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  padding: var(--spacing-20) var(--spacing-6);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--content-max-width-md);
+  margin: 0 auto;
+}
+
+.cat__intro {
+  text-align: center;
+  max-width: 46ch;
+}
+
+.cat__kicker {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--color-label-muted);
+  margin: 0 0 var(--spacing-4);
+}
+
+.cat__title {
+  font-family: var(--font-family-mono);
+  font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-4xl));
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-foreground);
+  margin: 0 0 var(--spacing-4);
+}
+
+.cat__lead {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-neutral-300);
+  margin: 0;
+}
+
+/* The stage the cat walks on. Its children are all absolutely positioned, so
+   it has no content width; align-self:stretch fills the centred column's cross
+   axis (align-items:center on the parent would otherwise collapse it to 0). */
+.cat__floor {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 440px;
+  cursor: pointer;
+}
+
+/* The cat itself: a glyph-noise silhouette (24 rows of dense character art),
+   anchored by its haunches to the floor line. The platform monospace keeps the
+   texture grid tight (same reasoning as the maze). */
+.cat__sprite {
+  position: absolute;
+  left: 0;
+  /* Paw row rests directly on the floor line (line sits at bottom: 24px) */
+  bottom: 25px;
+  margin: 0;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: clamp(0.44rem, 1.5vw, 0.82rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+  white-space: pre;
+  color: var(--color-neutral-100);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--color-primary-400) 18%, transparent);
+  user-select: none;
+  will-change: transform;
+  transition: opacity 0.8s ease;
+}
+
+/* Asleep: the whole texture dims, like fur in shadow. */
+.cat__sprite--sleeping {
+  opacity: 0.7;
+}
+
+/* Facing wrapper: the loop flips this (scaleX) when she walks right, so the
+   zzz above never renders mirrored. */
+.cat__art {
+  display: block;
+  transform-origin: center;
+}
+
+/* Floating "z z z" for the sleeping pose, drifting up from the head. Lives
+   inside the facing wrapper so it stays over the head whichever way she faces;
+   the scaleX(var) counter-flips the glyphs so the z's never mirror. The drift
+   uses the standalone `translate` property so it can't fight the transform. */
+.cat__zzz {
+  position: absolute;
+  top: -1.4em;
+  left: 8%;
+  font-size: 1.6em;
+  letter-spacing: 0.1em;
+  color: var(--color-primary-400);
+  opacity: 0.85;
+  transform: scaleX(var(--cat-facing, 1));
+  animation: catDrift 2.4s ease-in-out infinite;
+}
+
+@keyframes catDrift {
+  0%,
+  100% {
+    translate: 0 0;
+    opacity: 0.4;
+  }
+  50% {
+    translate: 0 -6px;
+    opacity: 0.9;
+  }
+}
+
+/* The ground: a single dim rule, like a terminal baseline. */
+.cat__floor-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  height: var(--border-width-thin);
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--color-neutral-300) 28%, transparent) 15%,
+    color-mix(in srgb, var(--color-neutral-300) 28%, transparent) 85%,
+    transparent
+  );
+}
+
+/* Comment-register hint, matching approach.sh / the maze notes. */
+.cat__hint {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: hsl(42, 12%, 41%);
+  margin: 0;
+  text-align: center;
+}
+
+.cat__back {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-foreground);
+  text-decoration: none;
+  padding: 0.875rem 1.75rem;
+  border: var(--border-width-thin) solid var(--color-border);
+  border-radius: 0;
+  transition:
+    background 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+}
+
+.cat__back:hover {
+  background: color-mix(in srgb, var(--color-primary-400) 6%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary-400) 50%, transparent);
+}
+
+.cat__back:focus-visible {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
+}
+
+/* Reduced motion: the cat just sits, centred and still. No wandering, no bob,
+   no drifting Zzz. The rAF loop is skipped entirely in the component. */
+@media (prefers-reduced-motion: reduce) {
+  .cat__sprite {
+    left: 50%;
+    transform: translateX(-50%) !important;
+  }
+
+  .cat__zzz {
+    animation: none;
+  }
+
+  .cat__floor {
+    cursor: default;
+  }
+}

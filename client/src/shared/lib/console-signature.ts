@@ -204,6 +204,15 @@ function buildApi() {
       line(`  Location  ${PERSONAL_INFO.LOCATION}`, STYLE.body);
       close(CONSOLE_SDK.CONTACT_RETURN);
     },
+    // The way out. Client-side nav to /cat: push the URL, then let wouter's
+    // popstate listener pick it up - no full reload, no lost console.
+    cat() {
+      if (typeof window !== 'undefined') {
+        window.history.pushState({}, '', '/cat');
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      }
+      close(CONSOLE_SDK.CAT_RETURN);
+    },
   };
 
   // Stringify to a clean one-liner (e.g. `${victoria}`) instead of "[object Object]".
