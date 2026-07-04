@@ -25,7 +25,7 @@ function Avatar({ index, className }: { index: number; className: string }) {
   const m = META[index];
   return (
     <span
-      className={`${styles.avatar} ${className}`}
+      className={`${styles['slack-testimonials__avatar']} ${className}`}
       style={{ background: m.tint, color: m.ink }}
       aria-hidden="true"
     >
@@ -157,14 +157,14 @@ export function SlackTestimonials() {
   return (
     <div
       ref={ref}
-      className={`${styles.window} ${mobileView === 'conversation' ? styles.showConversation : ''}`}
+      className={`${styles['slack-testimonials']} ${mobileView === 'conversation' ? styles['slack-testimonials--show-conversation'] : ''}`}
     >
-      <div className={styles.body}>
+      <div className={styles['slack-testimonials__body']}>
         {/* Sidebar / mobile "DMs" screen — the direct-message list */}
-        <div className={styles.sidebar}>
-          <div className={styles.sectionLabel}>Direct messages</div>
+        <div className={styles['slack-testimonials__sidebar']}>
+          <div className={styles['slack-testimonials__section-label']}>Direct messages</div>
           <div
-            className={styles.dmList}
+            className={styles['slack-testimonials__dm-list']}
             role="tablist"
             aria-label="Colleague testimonials"
             aria-orientation="vertical"
@@ -189,21 +189,21 @@ export function SlackTestimonials() {
                   tabIndex={isActive ? 0 : -1}
                   aria-label={`${t.name}, ${t.title}${isUnread ? ' (1 unread message)' : ''}`}
                   className={[
-                    styles.dm,
-                    isActive ? styles.dmActive : '',
-                    isUnread ? styles.dmUnread : '',
+                    styles['slack-testimonials__dm'],
+                    isActive ? styles['slack-testimonials__dm--active'] : '',
+                    isUnread ? styles['slack-testimonials__dm-unread'] : '',
                   ].join(' ')}
                   style={arrive(index)}
                   onClick={() => open(index)}
                 >
-                  <Avatar index={index} className={styles.avatarSm} />
-                  <span className={styles.dmText}>
-                    <span className={styles.dmName}>{t.name}</span>
+                  <Avatar index={index} className={styles['slack-testimonials__avatar--sm']} />
+                  <span className={styles['slack-testimonials__dm-text']}>
+                    <span className={styles['slack-testimonials__dm-name']}>{t.name}</span>
                     {/* Last-message preview — shown only on the mobile list */}
-                    <span className={styles.dmPreview}>{t.quote}</span>
+                    <span className={styles['slack-testimonials__dm-preview']}>{t.quote}</span>
                   </span>
                   {isUnread && (
-                    <span className={styles.unreadBadge} aria-hidden="true">
+                    <span className={styles['slack-testimonials__unread-badge']} aria-hidden="true">
                       1
                     </span>
                   )}
@@ -215,38 +215,41 @@ export function SlackTestimonials() {
 
         {/* Conversation pane — desktop: always visible; mobile: the drilled-in screen */}
         <div
-          className={styles.main}
+          className={styles['slack-testimonials__main']}
           role="tabpanel"
           id="testimonial-panel"
           aria-labelledby={`testimonial-tab-${activeIndex}`}
         >
           {/* Mobile-only back bar (the drill-down header) */}
-          <div className={styles.backBar}>
+          <div className={styles['slack-testimonials__back-bar']}>
             <button
               type="button"
               ref={backBtnRef}
-              className={styles.backBtn}
+              className={styles['slack-testimonials__back-btn']}
               onClick={back}
               aria-label="Back to direct messages"
             >
               ‹
             </button>
-            <Avatar index={activeIndex} className={styles.avatarXs} />
-            <div className={styles.backHead}>
-              <span className={styles.backName}>{active.name}</span>
-              <span className={styles.backRole}>{active.title}</span>
+            <Avatar index={activeIndex} className={styles['slack-testimonials__avatar--xs']} />
+            <div className={styles['slack-testimonials__back-head']}>
+              <span className={styles['slack-testimonials__back-name']}>{active.name}</span>
+              <span className={styles['slack-testimonials__back-role']}>{active.title}</span>
             </div>
           </div>
 
-          <div className={styles.message} style={arrive(TESTIMONIALS.length)}>
-            <Avatar index={activeIndex} className={styles.avatarMd} />
-            <div className={styles.msgBody}>
-              <div className={styles.msgMeta}>
-                <span className={styles.msgAuthor}>{active.name}</span>
-                <span className={styles.msgTime}>{activeMeta.time}</span>
+          <div
+            className={styles['slack-testimonials__message']}
+            style={arrive(TESTIMONIALS.length)}
+          >
+            <Avatar index={activeIndex} className={styles['slack-testimonials__avatar--md']} />
+            <div className={styles['slack-testimonials__msg-body']}>
+              <div className={styles['slack-testimonials__msg-meta']}>
+                <span className={styles['slack-testimonials__msg-author']}>{active.name}</span>
+                <span className={styles['slack-testimonials__msg-time']}>{activeMeta.time}</span>
               </div>
-              <div className={styles.msgTitle}>{active.title}</div>
-              <div className={styles.msgText}>{active.quote}</div>
+              <div className={styles['slack-testimonials__msg-title']}>{active.title}</div>
+              <div className={styles['slack-testimonials__msg-text']}>{active.quote}</div>
             </div>
           </div>
         </div>

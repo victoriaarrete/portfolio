@@ -152,16 +152,24 @@ export function TangleToClarity({ variant = 'vertical', className }: TangleToCla
   return (
     <div
       ref={ref}
-      className={[styles.visual, isVisible ? styles.isVisible : '', className]
+      className={[
+        styles['tangle-to-clarity'],
+        isVisible ? styles['tangle-to-clarity--is-visible'] : '',
+        className,
+      ]
         .filter(Boolean)
         .join(' ')}
       aria-hidden="true"
     >
-      <svg className={styles.svg} viewBox={`0 0 ${viewW} ${viewH}`} fill="none">
+      <svg
+        className={styles['tangle-to-clarity__svg']}
+        viewBox={`0 0 ${viewW} ${viewH}`}
+        fill="none"
+      >
         {tangle.map((e, i) => (
           <ellipse
             key={`t${i}`}
-            className={styles.line}
+            className={styles['tangle-to-clarity__line']}
             cx={e.cx}
             cy={e.cy}
             rx={e.rx}
@@ -175,7 +183,7 @@ export function TangleToClarity({ variant = 'vertical', className }: TangleToCla
         ))}
 
         <path
-          className={styles.line}
+          className={styles['tangle-to-clarity__line']}
           d={connector}
           strokeWidth={1.7}
           opacity={0.97}
@@ -186,7 +194,7 @@ export function TangleToClarity({ variant = 'vertical', className }: TangleToCla
         {circles.map((e, i) => (
           <ellipse
             key={`c${i}`}
-            className={styles.line}
+            className={styles['tangle-to-clarity__line']}
             cx={e.cx}
             cy={e.cy}
             rx={e.rx}

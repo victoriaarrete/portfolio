@@ -7,7 +7,7 @@
    (Slack's typeface) to keep it recognisably Slack.
    ========================================================================== */
 
-.window {
+.slack-testimonials {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   /* Fill the section's content column (same as the title above and the
      Experience `git log` terminal) so the left edge lines up with the title. */
@@ -21,33 +21,33 @@
   box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.55);
 }
 
-.body {
+.slack-testimonials__body {
   display: flex;
   min-height: 15rem;
 }
 
 /* --- sidebar ----------------------------------------------------------- */
-.sidebar {
+.slack-testimonials__sidebar {
   width: 220px;
   flex-shrink: 0;
   border-right: var(--border-width-thin) solid var(--color-border-light);
   padding: 14px 10px;
 }
 
-.sectionLabel {
+.slack-testimonials__section-label {
   font-size: 11px;
   letter-spacing: 0.04em;
   color: var(--color-neutral-400);
   padding: 0 8px 10px;
 }
 
-.dmList {
+.slack-testimonials__dm-list {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.dm {
+.slack-testimonials__dm {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -61,27 +61,27 @@
   transition: background 0.1s ease;
 }
 
-.dm:hover {
+.slack-testimonials__dm:hover {
   background: hsla(42, 30%, 88%, 0.06);
 }
 
-.dm:focus-visible {
+.slack-testimonials__dm:focus-visible {
   outline: var(--outline-width) solid var(--color-primary-400);
   outline-offset: calc(-1 * var(--outline-width)); /* inside the row so it doesn't clip */
 }
 
-.dmActive {
+.slack-testimonials__dm--active {
   background: hsla(42, 30%, 88%, 0.1);
 }
 
-.dmText {
+.slack-testimonials__dm-text {
   display: flex;
   flex-direction: column;
   min-width: 0;
   flex: 1;
 }
 
-.dmName {
+.slack-testimonials__dm-name {
   font-size: 14px;
   color: var(--color-neutral-300);
   white-space: nowrap;
@@ -90,7 +90,7 @@
 }
 
 /* Last-message preview under the name — only shown on the mobile DM list. */
-.dmPreview {
+.slack-testimonials__dm-preview {
   display: none;
   font-size: 12px;
   color: var(--color-neutral-400);
@@ -100,8 +100,8 @@
 }
 
 /* unread DM: bright, bold name (Slack convention) */
-.dmUnread .dmName,
-.dmActive .dmName {
+.slack-testimonials__dm-unread .slack-testimonials__dm-name,
+.slack-testimonials__dm--active .slack-testimonials__dm-name {
   color: var(--color-foreground);
   font-weight: 700;
 }
@@ -109,7 +109,7 @@
 /* Unread count in the site's warm palette (not Slack pink): cream gradient
    fill with dark glyphs. Pops in with a soft overshoot when its "ping" lands
    after the panel scrolls into view. */
-.unreadBadge {
+.slack-testimonials__unread-badge {
   margin-left: auto;
   background: var(--gradient-primary);
   color: var(--color-primary-foreground);
@@ -134,53 +134,53 @@
 }
 
 /* --- message pane ------------------------------------------------------ */
-.main {
+.slack-testimonials__main {
   flex: 1;
   min-width: 0;
   padding: 18px 20px;
 }
 
-.message {
+.slack-testimonials__message {
   display: flex;
   gap: 11px;
   align-items: flex-start;
 }
 
-.msgBody {
+.slack-testimonials__msg-body {
   min-width: 0;
 }
 
-.msgMeta {
+.slack-testimonials__msg-meta {
   display: flex;
   align-items: baseline;
   gap: 8px;
 }
 
-.msgAuthor {
+.slack-testimonials__msg-author {
   font-weight: 900;
   color: var(--color-foreground);
   font-size: 15px;
 }
 
-.msgTime {
+.slack-testimonials__msg-time {
   font-size: 12px;
   color: var(--color-neutral-400);
 }
 
-.msgTitle {
+.slack-testimonials__msg-title {
   font-size: 11.5px;
   color: var(--color-neutral-400);
   margin: 1px 0 4px;
 }
 
-.msgText {
+.slack-testimonials__msg-text {
   color: var(--color-neutral-200);
   font-size: 15px;
   line-height: 1.55;
 }
 
 /* --- avatar ------------------------------------------------------------ */
-.avatar {
+.slack-testimonials__avatar {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -189,27 +189,27 @@
   flex-shrink: 0;
 }
 
-.avatarSm {
+.slack-testimonials__avatar--sm {
   width: 20px;
   height: 20px;
   font-size: 8px;
   border-radius: 5px;
 }
 
-.avatarMd {
+.slack-testimonials__avatar--md {
   width: 36px;
   height: 36px;
   font-size: 13px;
 }
 
-.avatarXs {
+.slack-testimonials__avatar--xs {
   width: 28px;
   height: 28px;
   font-size: 11px;
 }
 
 /* --- mobile-only back bar (drill-down conversation header) ------------- */
-.backBar {
+.slack-testimonials__back-bar {
   display: none;
   align-items: center;
   gap: 10px;
@@ -218,7 +218,7 @@
   margin: -18px -20px 14px;
 }
 
-.backBtn {
+.slack-testimonials__back-btn {
   border: none;
   background: transparent;
   color: var(--color-neutral-200);
@@ -229,18 +229,18 @@
   flex-shrink: 0;
 }
 
-.backBtn:focus-visible {
+.slack-testimonials__back-btn:focus-visible {
   outline: var(--outline-width) solid var(--color-primary-400);
   outline-offset: var(--outline-offset);
 }
 
-.backHead {
+.slack-testimonials__back-head {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-.backName {
+.slack-testimonials__back-name {
   font-weight: 900;
   color: var(--color-foreground);
   font-size: 14px;
@@ -250,7 +250,7 @@
   text-overflow: ellipsis;
 }
 
-.backRole {
+.slack-testimonials__back-role {
   font-size: 11px;
   color: var(--color-neutral-400);
 }
@@ -258,19 +258,19 @@
 /* --- responsive: Slack-mobile drill-down (list ↔ conversation) --------- */
 @media (max-width: 767px) {
   /* One screen at a time, stacked. The list shows by default; tapping a row
-     adds .showConversation, which swaps to the conversation screen. */
-  .body {
+     adds .slack-testimonials--show-conversation, which swaps to the conversation screen. */
+  .slack-testimonials__body {
     flex-direction: column;
     min-height: 0;
   }
 
-  .sidebar {
+  .slack-testimonials__sidebar {
     width: 100%;
     border-right: none;
     padding: 8px 6px 10px;
   }
 
-  .sectionLabel {
+  .slack-testimonials__section-label {
     font-size: 15px;
     font-weight: 900;
     color: var(--color-foreground);
@@ -281,17 +281,17 @@
   /* Full-width DM rows. The avatar carries the identity (initials), so the
      name is dropped and the quote preview gets two full lines. The full name,
      role and untruncated quote appear on tap, in the conversation. */
-  .dm {
+  .slack-testimonials__dm {
     gap: 11px;
     padding: 10px 10px;
     border-radius: 8px;
   }
 
-  .dmName {
+  .slack-testimonials__dm-name {
     display: none;
   }
 
-  .dmPreview {
+  .slack-testimonials__dm-preview {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -301,51 +301,51 @@
 
   /* Unread emphasis moves to the preview text (the name is gone): brighter
      and slightly heavier for unread, muted for read. */
-  .dmUnread .dmPreview {
+  .slack-testimonials__dm-unread .slack-testimonials__dm-preview {
     color: var(--color-foreground);
     font-weight: 500;
   }
 
-  .avatarSm {
+  .slack-testimonials__avatar--sm {
     width: 40px;
     height: 40px;
     font-size: 14px;
     border-radius: 8px;
   }
 
-  .unreadBadge {
+  .slack-testimonials__unread-badge {
     align-self: center;
   }
 
   /* Conversation screen hidden until a row is tapped. */
-  .main {
+  .slack-testimonials__main {
     display: none;
     padding: 18px 20px;
     min-height: 13rem;
   }
 
-  .showConversation .sidebar {
+  .slack-testimonials--show-conversation .slack-testimonials__sidebar {
     display: none;
   }
 
-  .showConversation .main {
+  .slack-testimonials--show-conversation .slack-testimonials__main {
     display: block;
   }
 
-  .backBar {
+  .slack-testimonials__back-bar {
     display: flex;
   }
 
   /* No persistent "selected" row on the mobile list — Slack's DM list doesn't
      pre-highlight a conversation. An opened row just reads as a normal (read)
      DM: no highlight block. Unread rows stay emphasized (brighter preview). */
-  .dmActive {
+  .slack-testimonials__dm--active {
     background: transparent;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .unreadBadge {
+  .slack-testimonials__unread-badge {
     animation: none;
   }
 }
