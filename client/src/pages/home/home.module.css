@@ -1463,8 +1463,10 @@
   animation: projectsCaret 1.1s steps(1) infinite;
 }
 
+/* Hide without display:none so the caret keeps its box — otherwise the flex
+   gap collapses and the input jumps sideways on focus */
 .projects__palette-search:focus-within .projects__palette-caret {
-  display: none;
+  visibility: hidden;
 }
 
 @keyframes projectsCaret {
