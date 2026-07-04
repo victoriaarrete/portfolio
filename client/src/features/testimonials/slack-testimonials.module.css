@@ -8,7 +8,8 @@
    ========================================================================== */
 
 .slack-testimonials {
-  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 'Lato Fallback' = metric-adjusted Arial (fonts.css) for the pre-swap frame */
+  font-family: 'Lato', 'Lato Fallback', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   /* Fill the section's content column (same as the title above and the
      Experience `git log` terminal) so the left edge lines up with the title. */
   width: 100%;
@@ -62,7 +63,7 @@
 }
 
 .slack-testimonials__dm:hover {
-  background: hsla(42, 30%, 88%, 0.06);
+  background: color-mix(in srgb, var(--color-primary-400) 6%, transparent);
 }
 
 .slack-testimonials__dm:focus-visible {
@@ -71,7 +72,7 @@
 }
 
 .slack-testimonials__dm--active {
-  background: hsla(42, 30%, 88%, 0.1);
+  background: color-mix(in srgb, var(--color-primary-400) 10%, transparent);
 }
 
 .slack-testimonials__dm-text {

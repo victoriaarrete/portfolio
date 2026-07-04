@@ -42,22 +42,22 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v=3" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3" />
     <meta name="msapplication-TileImage" content="apple-touch-icon.png?v=3" />
-    <!-- LCP image: preload so the download starts with the HTML, not after the JS bundle executes -->
-    <link rel="preload" as="image" href="/victoria-portrait.webp" fetchpriority="high" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- LCP image: preload so the download starts with the HTML, not after the
+         JS bundle executes. Keep imagesrcset/imagesizes in sync with the
+         <picture> in hero.tsx. type=image/avif makes non-AVIF browsers skip
+         the preload (they still get WebP from the <picture> fallback). -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="image"
+      type="image/avif"
+      imagesrcset="/victoria-portrait-480.avif 480w, /victoria-portrait-768.avif 768w, /victoria-portrait-1024.avif 1024w"
+      imagesizes="(min-width: 1024px) 420px, 100vw"
+      fetchpriority="high"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts are self-hosted (scripts/gen-fonts.mjs -> fonts.css). Preload only
+         the Inter variable file: it covers all above-the-fold text; the other
+         families render below the fold and can load with the CSS. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-300_700.woff2" crossorigin />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

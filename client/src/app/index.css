@@ -1,4 +1,6 @@
-/* Fonts load from index.html <link>s (earlier discovery, no blocking @import) */
+/* Self-hosted @font-face rules (vendored by scripts/gen-fonts.mjs); the woff2
+   for above-the-fold text is preloaded from index.html for early discovery */
+@import url('../shared/styles/fonts.css');
 @import url('../shared/styles/tokens.css');
 
 @tailwind base;
@@ -66,7 +68,11 @@
 @layer utilities {
   .particle {
     position: absolute;
-    background: radial-gradient(circle, hsla(42, 30%, 88%, 0.55) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-primary-400) 55%, transparent) 0%,
+      transparent 70%
+    );
     border-radius: 50%;
     pointer-events: none;
     animation: particle linear infinite;

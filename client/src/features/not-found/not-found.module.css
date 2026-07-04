@@ -24,7 +24,11 @@
   transform: translate(-50%, -50%);
   width: min(900px, 92%);
   height: 620px;
-  background: radial-gradient(ellipse at center, hsla(42, 30%, 88%, 0.06) 0%, transparent 62%);
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--color-primary-400) 6%, transparent) 0%,
+    transparent 62%
+  );
   pointer-events: none;
   z-index: var(--z-index-base);
 }
@@ -158,7 +162,7 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
   color: var(--color-primary-400);
-  background: hsla(42, 30%, 88%, 0.06);
+  background: color-mix(in srgb, var(--color-primary-400) 6%, transparent);
   border: var(--border-width-thin) solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: var(--spacing-1) var(--spacing-2);
@@ -183,7 +187,7 @@
 .not-found__maze-step {
   color: var(--color-primary-400);
   font-weight: var(--font-weight-bold);
-  text-shadow: 0 0 12px hsla(42, 36%, 89%, 0.45);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--color-primary-400) 45%, transparent);
   opacity: 0;
   animation: notFoundTrace 0.3s ease forwards;
   /* Wait out the page entrance, then trace entrance→exit step by step */
@@ -255,8 +259,8 @@
 }
 
 .not-found__action:hover {
-  background: hsla(42, 30%, 88%, 0.06);
-  border-color: hsla(42, 30%, 88%, 0.5);
+  background: color-mix(in srgb, var(--color-primary-400) 6%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary-400) 50%, transparent);
 }
 
 .not-found__action:focus-visible {

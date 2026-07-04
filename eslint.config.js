@@ -23,6 +23,8 @@ export default tseslint.config(
         console: 'readonly',
         process: 'readonly',
         URL: 'readonly',
+        fetch: 'readonly',
+        Buffer: 'readonly',
         // page.evaluate() callbacks execute in the browser
         window: 'readonly',
         document: 'readonly',

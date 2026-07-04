@@ -1,7 +1,7 @@
 import { useEffect, useMemo, type CSSProperties } from 'react';
 import { useLocation } from 'wouter';
 import { motion } from 'motion/react';
-import { ParticleSystem } from '@/shared/components/particle-system';
+import { ParticleSystem } from '@/shared/components/particle-system/particle-system';
 import { generateMaze, hashString, seededRandom, MAZE_COLS, MAZE_ROWS } from '@/shared/lib/maze';
 import { logWrongTurn } from '@/shared/lib/console-signature';
 import { NOT_FOUND, PERSONAL_INFO } from '@/shared/constants/strings';

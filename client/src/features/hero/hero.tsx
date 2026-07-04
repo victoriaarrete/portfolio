@@ -1,7 +1,7 @@
 import { useEffect, useRef, useMemo, type MouseEvent } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
-import { CodeBackground, buildField } from '@/shared/components/code-background';
+import { CodeBackground, buildField } from '@/shared/components/code-background/code-background';
 import {
   ANIMATION_DURATION,
   ANIMATION_DELAY,
@@ -18,6 +18,10 @@ import {
   SCROLL_BEHAVIOR,
 } from '@/shared/constants/strings';
 import styles from '@/pages/home/home.module.css';
+
+// Desktop pins the portrait to a <=420px left column (--hero-portrait-w);
+// below 1024 it's a full-bleed banner, so the browser needs ~100vw of pixels.
+const PORTRAIT_SIZES = '(min-width: 1024px) 420px, 100vw';
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -96,7 +100,12 @@ export function Hero() {
   };
 
   return (
-    <section ref={heroRef} id={NAV_SECTIONS.HERO} className={styles.hero}>
+    <section
+      ref={heroRef}
+      id={NAV_SECTIONS.HERO}
+      aria-labelledby={`${NAV_SECTIONS.HERO}-title`}
+      className={styles.hero}
+    >
       <CodeBackground variant="band" />
 
       <div className={styles.hero__container}>
@@ -136,18 +145,33 @@ export function Hero() {
           {/* Portrait: mobile = centred card in flow; desktop = pinned full-bleed
               to the left edge with the name overlapping its faded right edge. */}
           <motion.div className={styles['hero__portrait']} onMouseMove={handlePortraitMove}>
-            {/* Stable public path (not a hashed import) so index.html preloads it;
+            {/* Stable public paths (not hashed imports) so index.html preloads them;
                 the PNG source of truth lives in assets/, re-encoded by
-                scripts/gen-portrait.mjs. fetchpriority is lowercase because
-                React 18 only forwards it as a raw DOM attribute. */}
-            <img
-              src="/victoria-portrait.webp"
-              alt={PERSONAL_INFO.NAME}
-              width={1024}
-              height={1536}
-              className={styles['hero__portrait-image']}
-              {...({ fetchpriority: 'high' } as Record<string, string>)}
-            />
+                scripts/gen-portrait.mjs. sizes mirrors the two layouts: desktop
+                left column (<=420px) vs. mobile full-bleed banner. fetchpriority
+                is lowercase because React 18 only forwards it as a raw DOM
+                attribute. Keep the srcset/sizes here in sync with the preload
+                in index.html. */}
+            <picture>
+              <source
+                type="image/avif"
+                srcSet="/victoria-portrait-480.avif 480w, /victoria-portrait-768.avif 768w, /victoria-portrait-1024.avif 1024w"
+                sizes={PORTRAIT_SIZES}
+              />
+              <source
+                type="image/webp"
+                srcSet="/victoria-portrait-480.webp 480w, /victoria-portrait-768.webp 768w, /victoria-portrait-1024.webp 1024w"
+                sizes={PORTRAIT_SIZES}
+              />
+              <img
+                src="/victoria-portrait.webp"
+                alt={PERSONAL_INFO.NAME}
+                width={1024}
+                height={1536}
+                className={styles['hero__portrait-image']}
+                {...({ fetchpriority: 'high' } as Record<string, string>)}
+              />
+            </picture>
             {/* Scanner reveal: encrypted chars stream past a fixed central beam + cursor glow */}
             <div className={styles['hero__scan']} aria-hidden="true">
               <div className={styles['hero__scan-stream-mask']}>
@@ -165,6 +189,7 @@ export function Hero() {
 
           {/* Name - the only block that overlaps the portrait edge on desktop */}
           <motion.h1
+            id={`${NAV_SECTIONS.HERO}-title`}
             className={styles.hero__title}
             initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_MEDIUM }}
             animate={{ opacity: OPACITY.VISIBLE, y: 0 }}

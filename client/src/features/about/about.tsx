@@ -18,7 +18,11 @@ import styles from '@/pages/home/home.module.css';
 
 export function About() {
   return (
-    <section id={NAV_SECTIONS.ABOUT} className={styles.about}>
+    <section
+      id={NAV_SECTIONS.ABOUT}
+      aria-labelledby={`${NAV_SECTIONS.ABOUT}-title`}
+      className={styles.about}
+    >
       <div className={styles.section__container}>
         <div className={styles.about__content}>
           {/* Manifesto - editorial band: ABOUT kicker, display headline, prose */}
@@ -33,7 +37,9 @@ export function About() {
               ease: EASING.DEFAULT,
             }}
           >
-            <h2 className={styles['about__section-label']}>{SECTION_TITLES.ABOUT}</h2>
+            <h2 id={`${NAV_SECTIONS.ABOUT}-title`} className={styles['about__section-label']}>
+              {SECTION_TITLES.ABOUT}
+            </h2>
             <h3 className={styles['about__manifesto-title']}>
               <span className={styles['about__manifesto-sentence']}>
                 Strong code needs strong culture.

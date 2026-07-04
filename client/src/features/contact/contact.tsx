@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Mail, MapPin, Linkedin } from 'lucide-react';
-import { ScrollReveal } from '@/shared/components/scroll-reveal';
-import { CodeBackground } from '@/shared/components/code-background';
+import { ScrollReveal } from '@/shared/components/scroll-reveal/scroll-reveal';
+import { CodeBackground } from '@/shared/components/code-background/code-background';
 import { ANIMATION_DURATION, ANIMATION_DELAY, TRANSFORM } from '@/shared/constants/layout';
 import {
   SECTION_TITLES,
@@ -9,7 +9,7 @@ import {
   CONTACT_CONTENT,
   PERSONAL_INFO,
 } from '@/shared/constants/strings';
-import { SectionTitle } from '@/shared/components/section-title';
+import { SectionTitle } from '@/shared/components/section-title/section-title';
 import styles from '@/pages/home/home.module.css';
 
 // The three contact cards share identical chrome (icon tile, title, hover
@@ -47,10 +47,18 @@ const CONTACT_METHODS = [
 
 export function Contact() {
   return (
-    <section id={NAV_SECTIONS.CONTACT} className={styles.contact}>
+    <section
+      id={NAV_SECTIONS.CONTACT}
+      aria-labelledby={`${NAV_SECTIONS.CONTACT}-title`}
+      className={styles.contact}
+    >
       <CodeBackground />
       <div className={styles.section__container}>
-        <SectionTitle title={SECTION_TITLES.CONTACT} accent={SECTION_TITLES.CONTACT_ACCENT} />
+        <SectionTitle
+          id={`${NAV_SECTIONS.CONTACT}-title`}
+          title={SECTION_TITLES.CONTACT}
+          accent={SECTION_TITLES.CONTACT_ACCENT}
+        />
 
         <div className={styles.contact__content}>
           <ScrollReveal delay={ANIMATION_DELAY.MEDIUM}>

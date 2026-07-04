@@ -1,0 +1,27 @@
+/* Shared section header: a small, left-aligned, letter-spaced mono label in
+   warm muted taupe (matches .about__section-label). */
+.section__title {
+  font-family: var(--font-family-mono);
+  text-transform: uppercase;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  letter-spacing: 0.32em;
+  color: var(--color-label-muted);
+  /* Align every section title to the same centered column as the ABOUT title
+     (about__content, content-max-width-md) so all titles share one left edge. */
+  max-width: var(--content-max-width-md);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--spacing-10);
+  /* Promote the title to its own compositor layer so the ScrollReveal entrance
+     translate composites the letter-spaced glyphs crisply instead of leaving a
+     subpixel ghost mid-animation. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Uniform with the rest of the label - no gradient accent. */
+.section__title-accent {
+  color: inherit;
+}
