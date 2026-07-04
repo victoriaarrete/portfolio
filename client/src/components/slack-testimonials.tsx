@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import { useReducedMotion } from 'motion/react';
 import { TESTIMONIALS } from '@/constants/strings';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
@@ -91,7 +91,10 @@ export function SlackTestimonials() {
           transitionDelay: `${order < TESTIMONIALS.length ? order * 170 : TESTIMONIALS.length * 170 + 250}ms`,
         };
 
-  const open = (index: number) => {
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const backBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  const select = (index: number) => {
     setActiveIndex(index);
     setReadIndices((prev) => {
       if (prev.has(index)) return prev;
@@ -99,7 +102,48 @@ export function SlackTestimonials() {
       next.add(index);
       return next;
     });
+  };
+
+  const open = (index: number) => {
+    select(index);
     setMobileView('conversation');
+    // Mobile drill-down: hand focus to the back button once the conversation
+    // screen is visible. On desktop the back bar is display:none, so the
+    // focus() call no-ops and focus stays on the clicked tab.
+    requestAnimationFrame(() => backBtnRef.current?.focus());
+  };
+
+  const back = () => {
+    setMobileView('list');
+    requestAnimationFrame(() => tabRefs.current[activeIndex]?.focus());
+  };
+
+  // Standard tabs keyboard pattern: arrows move selection (roving tabindex),
+  // Home/End jump. Activation (Enter/Space) is the button's native click.
+  const onTablistKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    const count = TESTIMONIALS.length;
+    let next: number | null = null;
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+        next = (activeIndex + 1) % count;
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+        next = (activeIndex - 1 + count) % count;
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = count - 1;
+        break;
+      default:
+        return;
+    }
+    e.preventDefault();
+    select(next);
+    tabRefs.current[next]?.focus();
   };
 
   const active = TESTIMONIALS[activeIndex];
@@ -114,7 +158,13 @@ export function SlackTestimonials() {
         {/* Sidebar / mobile "DMs" screen — the direct-message list */}
         <div className={styles.sidebar}>
           <div className={styles.sectionLabel}>Direct messages</div>
-          <div className={styles.dmList} role="tablist" aria-label="Colleague testimonials">
+          <div
+            className={styles.dmList}
+            role="tablist"
+            aria-label="Colleague testimonials"
+            aria-orientation="vertical"
+            onKeyDown={onTablistKeyDown}
+          >
             {TESTIMONIALS.map((t, index) => {
               const isActive = index === activeIndex;
               // A row reads as "unread" only once its ping has landed (and it
@@ -123,9 +173,13 @@ export function SlackTestimonials() {
               return (
                 <button
                   key={t.initials}
+                  ref={(el) => { tabRefs.current[index] = el; }}
                   type="button"
                   role="tab"
+                  id={`testimonial-tab-${index}`}
+                  aria-controls="testimonial-panel"
                   aria-selected={isActive}
+                  tabIndex={isActive ? 0 : -1}
                   aria-label={`${t.name}, ${t.title}${isUnread ? ' (1 unread message)' : ''}`}
                   className={[
                     styles.dm,
@@ -149,13 +203,19 @@ export function SlackTestimonials() {
         </div>
 
         {/* Conversation pane — desktop: always visible; mobile: the drilled-in screen */}
-        <div className={styles.main}>
+        <div
+          className={styles.main}
+          role="tabpanel"
+          id="testimonial-panel"
+          aria-labelledby={`testimonial-tab-${activeIndex}`}
+        >
           {/* Mobile-only back bar (the drill-down header) */}
           <div className={styles.backBar}>
             <button
               type="button"
+              ref={backBtnRef}
               className={styles.backBtn}
-              onClick={() => setMobileView('list')}
+              onClick={back}
               aria-label="Back to direct messages"
             >
               ‹
