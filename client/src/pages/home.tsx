@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef, useMemo, type MouseEvent } from 'react';
+import { useEffect, useRef, useMemo, type MouseEvent } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { Mail, MapPin, Linkedin, User, ChevronDown } from 'lucide-react';
+import { Mail, MapPin, Linkedin, ChevronDown } from 'lucide-react';
 import victoriaPortrait from '@assets/victoria_pic.png';
 import { ParticleSystem } from '@/components/particle-system';
 import { Navigation } from '@/components/navigation';
@@ -9,7 +9,6 @@ import { SlackTestimonials } from '@/components/slack-testimonials';
 import { CodeBackground, buildField } from '@/components/code-background';
 import { GeometricWireframe } from '@/components/geometric-wireframe';
 import { TangleToClarity } from '@/components/tangle-to-clarity';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   ANIMATION_DURATION, 
   ANIMATION_DELAY, 
