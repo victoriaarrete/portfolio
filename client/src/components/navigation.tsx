@@ -11,7 +11,7 @@ export function Navigation() {
   const [activeSection, setActiveSection] = useState<string>('');
 
   useEffect(() => {
-    const handleScroll = () => {
+    const update = () => {
       setIsScrolled(window.scrollY > SCROLL.TRIGGER_OFFSET);
 
       // Active section = the last one whose top has scrolled past the activation line
@@ -26,9 +26,23 @@ export function Navigation() {
       setActiveSection(current);
     };
 
-    handleScroll();
+    // Coalesce to one layout read per frame - scroll can fire several times
+    // per frame and each pass forces layout via getBoundingClientRect.
+    let rafId = 0;
+    const handleScroll = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        update();
+      });
+    };
+
+    update();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const scrollToSection = (sectionId: string) => {
