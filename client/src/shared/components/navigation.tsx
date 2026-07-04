@@ -9,14 +9,14 @@ import {
   INITIAL_OFFSET,
   ANIMATION_DURATION,
   MOBILE_MENU,
-} from '@/constants/layout';
+} from '@/shared/constants/layout';
 import {
   NAV_ITEMS,
   NAV_SECTIONS,
   PERSONAL_INFO,
   SCROLL_BEHAVIOR,
   ARIA_LABELS,
-} from '@/constants/strings';
+} from '@/shared/constants/strings';
 import styles from './navigation.module.css';
 
 export function Navigation() {

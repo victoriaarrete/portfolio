@@ -1,7 +1,7 @@
-import { ScrollReveal } from '@/components/scroll-reveal';
-import { ANIMATION_DELAY } from '@/constants/layout';
-import { SECTION_TITLES, NAV_SECTIONS, PROJECTS } from '@/constants/strings';
-import { SectionTitle } from './section-title';
+import { ScrollReveal } from '@/shared/components/scroll-reveal';
+import { ANIMATION_DELAY } from '@/shared/constants/layout';
+import { SECTION_TITLES, NAV_SECTIONS, PROJECTS } from '@/shared/constants/strings';
+import { SectionTitle } from '@/shared/components/section-title';
 import styles from './home.module.css';
 
 export function Projects() {

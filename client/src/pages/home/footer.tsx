@@ -1,4 +1,4 @@
-import { TAGLINES, COPYRIGHT } from '@/constants/strings';
+import { TAGLINES, COPYRIGHT } from '@/shared/constants/strings';
 import styles from './home.module.css';
 
 export function Footer() {

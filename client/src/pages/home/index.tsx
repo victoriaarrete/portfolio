@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { ParticleSystem } from '@/components/particle-system';
-import { Navigation } from '@/components/navigation';
-import { mountConsoleSignature } from '@/lib/console-signature';
+import { ParticleSystem } from '@/shared/components/particle-system';
+import { Navigation } from '@/shared/components/navigation';
+import { mountConsoleSignature } from '@/shared/lib/console-signature';
 import { Hero } from './hero';
 import { About } from './about';
 import { Experience } from './experience';

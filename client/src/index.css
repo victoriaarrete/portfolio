@@ -1,5 +1,5 @@
 /* Fonts load from index.html <link>s (earlier discovery, no blocking @import) */
-@import url('./styles/tokens.css');
+@import url('./shared/styles/tokens.css');
 
 @tailwind base;
 @tailwind components;

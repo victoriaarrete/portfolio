@@ -1,6 +1,6 @@
 import { SlackTestimonials } from '@/components/slack-testimonials';
-import { SECTION_TITLES, NAV_SECTIONS } from '@/constants/strings';
-import { SectionTitle } from './section-title';
+import { SECTION_TITLES, NAV_SECTIONS } from '@/shared/constants/strings';
+import { SectionTitle } from '@/shared/components/section-title';
 import styles from './home.module.css';
 
 export function Testimonials() {
