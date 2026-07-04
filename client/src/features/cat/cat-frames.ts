@@ -61,48 +61,52 @@ const GLYPH_EDGE = '(/^~-t%s(',
 const DROPOUT = 0.08;
 
 /**
- * Mid-stride walking profile, facing left. A walking cat is LOW - about
- * two-thirds of her sitting height - and long: level back, head carried at
- * back height, deep belly, bushy tail curving up behind. Head width matches
- * the sitting art's head, so the get-up reads as the same animal changing
- * posture, not changing size. Two stride frames (legs extended / gathering)
- * share this body, so only the legs move.
+ * Mid-stride walking profile, facing left, modelled on the prowling reference:
+ * a walking cat is LOW - about two-thirds of her sitting height - and LONG,
+ * with a level back, head carried at back height, tall tufted ears, whisker
+ * wisps off the muzzle, a deep shaggy belly, and the signature Maine Coon tail:
+ * a fat plume raised behind her, nearly ear-high. Head width matches the
+ * sitting art's head, so the get-up reads as the same animal changing posture,
+ * not changing size. Two stride frames (legs extended / gathering) share this
+ * body, so only the legs move. The lone cells ahead of the muzzle render as
+ * light isolated glyphs - the whiskers.
  */
 const WALK_BODY: readonly string[] = [
-  '    ##   ##                                       ####',
-  '   ###########                                   #####',
-  '   ###########                                  #####',
-  '  ############                                 #####',
-  ' ##############                               ######',
-  ' ##############                              #####',
-  '  #############                             #####',
-  '   ##############                          #####',
-  '    #########################################',
-  '    ############################################',
-  '     ###########################################',
-  '     ##########################################',
+  '    ##   ##                                         #####',
+  '   ###   ###                                      ########',
+  '   ##########                                    #########',
+  '  ############                                  #########',
+  '  ############                                 ########',
+  '# #############                               ########',
+  ' ###############                              #######',
+  '# ###############                            #######',
+  '   ################                         #######',
+  '    ####################################### ######',
+  '    ##############################################',
+  '     #############################################',
+  '     ############################################',
+  '      ##########################################',
   '      ########################################',
-  '       ######################################',
 ];
 
 export const CAT_MASK_WALK_A: readonly string[] = [
   ...WALK_BODY,
-  '      ######   #######      #######   ######',
-  '     ######     ######      ######     #####',
-  '     #####       #####      #####       #####',
-  '    #####        ####       ####         ####',
-  '    ####         ####       ####          ####',
-  '   #####         ####       ####          #####',
+  '      ######   #######        #######   ######',
+  '     ######     ######        ######     #####',
+  '     #####       #####        #####       #####',
+  '    #####        ####         ####         ####',
+  '    ####         ####         ####          ####',
+  '   #####         ####         ####          #####',
 ];
 
 export const CAT_MASK_WALK_B: readonly string[] = [
   ...WALK_BODY,
-  '        ##### #######        ####### ######',
-  '        ####   ######        ######   #####',
-  '        ####    #####        #####    ####',
-  '        ####    #####        #####    ####',
-  '        ####    ####         ####     ####',
-  '       #####    ####         ####    #####',
+  '        ##### #######          ####### ######',
+  '        ####   ######          ######   #####',
+  '        ####    #####          #####    ####',
+  '        ####    #####          #####    ####',
+  '        ####    ####           ####     ####',
+  '       #####    ####           ####    #####',
 ];
 
 /**
@@ -112,12 +116,12 @@ export const CAT_MASK_WALK_B: readonly string[] = [
  */
 export const CAT_MASK_STAND: readonly string[] = [
   ...WALK_BODY,
-  '       ######  #######      #######  ######',
-  '       #####    ######      ######    #####',
-  '       #####     #####      #####     #####',
-  '       ####      #####      #####      ####',
-  '       ####      ####       ####       ####',
-  '      #####      ####       ####      #####',
+  '       ######  #######        #######  ######',
+  '       #####    ######        ######    #####',
+  '       #####     #####        #####     #####',
+  '       ####      #####        #####      ####',
+  '       ####      ####         ####       ####',
+  '      #####      ####         ####      #####',
 ];
 
 /**

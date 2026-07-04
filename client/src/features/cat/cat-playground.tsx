@@ -49,6 +49,9 @@ export default function CatPlayground() {
   // She enters (and, under reduced motion, stays) as the reference: sitting.
   const [art, setArt] = useState<readonly string[]>(CAT_SIT_ART);
   const [sleeping, setSleeping] = useState(false);
+  // The seated reference renders a notch smaller than the walk frames, so the
+  // get-up reads as a posture change rather than a size drop.
+  const seated = art === CAT_SIT_ART || art === CAT_SIT_ART_FLICK;
 
   const floorRef = useRef<HTMLDivElement>(null);
   const catRef = useRef<HTMLPreElement>(null);
@@ -99,6 +102,7 @@ export default function CatPlayground() {
     let facing = 1; // 1 = the art's native left-facing; -1 = mirrored
     let currentSleeping = false;
     let artKey = 'sit'; // which frame is currently committed to React
+    let widestPx = 0; // widest sprite seen so far, across all poses
     const start = performance.now();
 
     // Commit a frame only when it actually changes. Sitting frames are the
@@ -144,10 +148,11 @@ export default function CatPlayground() {
       const cat = stateRef.current;
       const width = floorWidth();
 
-      // While the sit art (the widest frame) is showing, refresh the range it
-      // defines. Survives resizes: she sits often, so the measure stays fresh.
-      if (artKey === 'sit' && catRef.current && width > 0) {
-        maxFracRef.current = Math.max(0.05, (width - catRef.current.offsetWidth) / width);
+      // Track the widest frame we've seen (poses render at different sizes)
+      // so the roaming range always fits her fully, whichever pose she's in.
+      if (catRef.current && width > 0) {
+        widestPx = Math.max(widestPx, catRef.current.offsetWidth);
+        maxFracRef.current = Math.max(0.05, (width - widestPx) / width);
       }
 
       // --- advance the state machine ---
@@ -289,7 +294,13 @@ export default function CatPlayground() {
         >
           <pre
             ref={catRef}
-            className={`${styles['cat__sprite']}${sleeping ? ` ${styles['cat__sprite--sleeping']}` : ''}`}
+            className={[
+              styles['cat__sprite'],
+              seated ? styles['cat__sprite--seated'] : '',
+              sleeping ? styles['cat__sprite--sleeping'] : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
             aria-hidden="true"
           >
             <span ref={artRef} className={styles['cat__art']}>

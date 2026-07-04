@@ -112,13 +112,14 @@
   position: relative;
   align-self: stretch;
   width: 100%;
-  height: 440px;
+  height: 300px;
   cursor: pointer;
 }
 
-/* The cat itself: a glyph-noise silhouette (24 rows of dense character art),
-   anchored by its haunches to the floor line. The platform monospace keeps the
-   texture grid tight (same reasoning as the maze). */
+/* The cat itself: the sitting reference is 30 rows of glyph art; walking is a
+   lower 20-row prowl. Kept small so she reads as a real pet on the floor - and
+   so the ~1/3 height drop from sit to walk is a gentle settle, not a lurch.
+   The platform monospace keeps the texture grid tight (same as the maze). */
 .cat__sprite {
   position: absolute;
   left: 0;
@@ -126,7 +127,7 @@
   bottom: 25px;
   margin: 0;
   font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
-  font-size: clamp(0.44rem, 1.5vw, 0.82rem);
+  font-size: clamp(0.28rem, 0.95vw, 0.52rem);
   line-height: 1.05;
   letter-spacing: 0;
   white-space: pre;
@@ -135,6 +136,14 @@
   user-select: none;
   will-change: transform;
   transition: opacity 0.8s ease;
+}
+
+/* Seated: the reference art is 30 rows to the walk's 21, so at equal font
+   sizes she'd tower over her own prowl and every get-up would read as a
+   collapse. A smaller seated glyph brings her sitting height to just a touch
+   above her walking height - the transition becomes a posture change. */
+.cat__sprite--seated {
+  font-size: clamp(0.21rem, 0.72vw, 0.4rem);
 }
 
 /* Asleep: the whole texture dims, like fur in shadow. */
