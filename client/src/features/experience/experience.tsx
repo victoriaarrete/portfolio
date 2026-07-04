@@ -1,8 +1,8 @@
-import { ScrollReveal } from '@/components/scroll-reveal';
-import { ANIMATION_DELAY } from '@/constants/layout';
-import { SECTION_TITLES, NAV_SECTIONS, EXPERIENCE_LOG } from '@/constants/strings';
-import { SectionTitle } from './section-title';
-import styles from './home.module.css';
+import { ScrollReveal } from '@/shared/components/scroll-reveal';
+import { ANIMATION_DELAY } from '@/shared/constants/layout';
+import { SECTION_TITLES, NAV_SECTIONS, EXPERIENCE_LOG } from '@/shared/constants/strings';
+import { SectionTitle } from '@/shared/components/section-title';
+import styles from '@/pages/home/home.module.css';
 
 export function Experience() {
   return (

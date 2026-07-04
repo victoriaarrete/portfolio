@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { PARTICLES, TIMING_MS, PERCENTAGE } from '@/constants/layout';
+import { PARTICLES, TIMING_MS, PERCENTAGE } from '@/shared/constants/layout';
 
 export function ParticleSystem() {
   const containerRef = useRef<HTMLDivElement>(null);

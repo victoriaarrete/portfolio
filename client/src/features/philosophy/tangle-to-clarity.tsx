@@ -1,5 +1,5 @@
 import { useMemo, type CSSProperties } from 'react';
-import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+import { useScrollReveal } from '@/shared/hooks/use-scroll-reveal';
 import styles from './tangle-to-clarity.module.css';
 
 /**

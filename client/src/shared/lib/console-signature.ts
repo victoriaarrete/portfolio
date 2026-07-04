@@ -5,14 +5,14 @@
  * The medium is the message: a clean, documented, namespaced object that rewards the
  * curious developer or recruiter who opens the console.
  */
-import { CONSOLE_PALETTE, CONSOLE_FONT_SIZE } from '@/constants/colors';
+import { CONSOLE_PALETTE, CONSOLE_FONT_SIZE } from '@/shared/constants/colors';
 import {
   PERSONAL_INFO,
   TAGLINES,
   LEADERSHIP_PRINCIPLES,
   CONSOLE_MESSAGES,
   CONSOLE_SDK,
-} from '@/constants/strings';
+} from '@/shared/constants/strings';
 
 const STYLE = {
   title: `color:${CONSOLE_PALETTE.TITLE};font-size:${CONSOLE_FONT_SIZE.LARGE};font-weight:bold;`,

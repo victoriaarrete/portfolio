@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { SCROLL } from '@/constants/layout';
+import { SCROLL } from '@/shared/constants/layout';
 
 interface UseScrollRevealOptions {
   threshold?: number;

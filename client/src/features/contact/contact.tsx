@@ -1,11 +1,16 @@
 import { motion } from 'motion/react';
 import { Mail, MapPin, Linkedin } from 'lucide-react';
-import { ScrollReveal } from '@/components/scroll-reveal';
-import { CodeBackground } from '@/components/code-background';
-import { ANIMATION_DURATION, ANIMATION_DELAY, TRANSFORM } from '@/constants/layout';
-import { SECTION_TITLES, NAV_SECTIONS, CONTACT_CONTENT, PERSONAL_INFO } from '@/constants/strings';
-import { SectionTitle } from './section-title';
-import styles from './home.module.css';
+import { ScrollReveal } from '@/shared/components/scroll-reveal';
+import { CodeBackground } from '@/shared/components/code-background';
+import { ANIMATION_DURATION, ANIMATION_DELAY, TRANSFORM } from '@/shared/constants/layout';
+import {
+  SECTION_TITLES,
+  NAV_SECTIONS,
+  CONTACT_CONTENT,
+  PERSONAL_INFO,
+} from '@/shared/constants/strings';
+import { SectionTitle } from '@/shared/components/section-title';
+import styles from '@/pages/home/home.module.css';
 
 // The three contact cards share identical chrome (icon tile, title, hover
 // nudge); only the icon and body differ.

@@ -1,14 +1,14 @@
 import { useEffect, useRef, useMemo, type MouseEvent } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
-import { CodeBackground, buildField } from '@/components/code-background';
+import { CodeBackground, buildField } from '@/shared/components/code-background';
 import {
   ANIMATION_DURATION,
   ANIMATION_DELAY,
   EASING,
   OPACITY,
   INITIAL_OFFSET,
-} from '@/constants/layout';
+} from '@/shared/constants/layout';
 import {
   PERSONAL_INFO,
   ROLES,
@@ -16,8 +16,8 @@ import {
   NAV_SECTIONS,
   BUTTON_LABELS,
   SCROLL_BEHAVIOR,
-} from '@/constants/strings';
-import styles from './home.module.css';
+} from '@/shared/constants/strings';
+import styles from '@/pages/home/home.module.css';
 
 export function Hero() {
   const reduce = useReducedMotion();

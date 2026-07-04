@@ -1,12 +1,12 @@
 import { motion } from 'motion/react';
-import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+import { useScrollReveal } from '@/shared/hooks/use-scroll-reveal';
 import {
   ANIMATION_DURATION,
   ANIMATION_DELAY,
   EASING,
   OPACITY,
   INITIAL_OFFSET,
-} from '@/constants/layout';
+} from '@/shared/constants/layout';
 
 interface ScrollRevealProps {
   children: React.ReactNode;

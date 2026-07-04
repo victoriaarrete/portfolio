@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import { useReducedMotion } from 'motion/react';
-import { TESTIMONIALS } from '@/constants/strings';
-import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+import { TESTIMONIALS } from '@/shared/constants/strings';
+import { useScrollReveal } from '@/shared/hooks/use-scroll-reveal';
 import styles from './slack-testimonials.module.css';
 
 // Per-colleague avatar tint + a plausible message time. Index-aligned with
