@@ -27,6 +27,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3">
     <meta name="msapplication-TileImage" content="apple-touch-icon.png?v=3">
+    <!-- LCP image: preload so the download starts with the HTML, not after the JS bundle executes -->
+    <link rel="preload" as="image" href="/victoria-portrait.webp" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">

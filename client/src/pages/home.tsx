@@ -1,7 +1,6 @@
 import { useEffect, useRef, useMemo, type MouseEvent } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Mail, MapPin, Linkedin, ChevronDown } from 'lucide-react';
-import victoriaPortrait from '@assets/victoria_pic.png';
 import { ParticleSystem } from '@/components/particle-system';
 import { Navigation } from '@/components/navigation';
 import { ScrollReveal } from '@/components/scroll-reveal';
@@ -159,10 +158,17 @@ export default function Home() {
               className={styles['hero__portrait']}
               onMouseMove={handlePortraitMove}
             >
+              {/* Stable public path (not a hashed import) so index.html preloads it;
+                  the PNG source of truth lives in assets/, re-encoded by
+                  scripts/gen-portrait.mjs. fetchpriority is lowercase because
+                  React 18 only forwards it as a raw DOM attribute. */}
               <img
-                src={victoriaPortrait}
+                src="/victoria-portrait.webp"
                 alt={PERSONAL_INFO.NAME}
+                width={1024}
+                height={1536}
                 className={styles.hero__portraitImage}
+                {...({ fetchpriority: 'high' } as Record<string, string>)}
               />
               {/* Scanner reveal: encrypted chars stream past a fixed central beam + cursor glow */}
               <div className={styles['hero__scan']} aria-hidden="true">
