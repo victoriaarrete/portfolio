@@ -1895,7 +1895,7 @@
   box-shadow: var(--shadow-glow-blue);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .button {
     padding: 0.875rem 2rem;
     font-size: var(--font-size-base);
