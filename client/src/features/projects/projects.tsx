@@ -12,43 +12,43 @@ export function Projects() {
 
         <div className={styles.projects__palette}>
           {/* Palette chrome: a focused search field framing the work as ⌘K results */}
-          <div className={styles.projects__paletteSearch} aria-hidden="true">
-            <span className={styles.projects__paletteKbd}>&#8984;K</span>
-            <span className={styles.projects__palettePlaceholder}>search projects</span>
-            <span className={styles.projects__paletteCaret} />
+          <div className={styles['projects__palette-search']} aria-hidden="true">
+            <span className={styles['projects__palette-kbd']}>&#8984;K</span>
+            <span className={styles['projects__palette-placeholder']}>search projects</span>
+            <span className={styles['projects__palette-caret']} />
           </div>
 
-          <div className={styles.projects__paletteResults}>
+          <div className={styles['projects__palette-results']}>
             {PROJECTS.map((project, index) => (
               <ScrollReveal key={project.title} delay={index * ANIMATION_DELAY.MEDIUM}>
                 {project.group && (
-                  <p className={styles.projects__paletteGroup} aria-hidden="true">
+                  <p className={styles['projects__palette-group']} aria-hidden="true">
                     {project.group}
                   </p>
                 )}
                 <div
                   className={`${styles.projects__result} ${project.featured ? styles['projects__result--active'] : ''}`}
                 >
-                  <span className={styles.projects__resultCaret} aria-hidden="true">
+                  <span className={styles['projects__result-caret']} aria-hidden="true">
                     {project.featured ? '❯' : '›'}
                   </span>
-                  <div className={styles.projects__resultBody}>
-                    <div className={styles.projects__resultHead}>
-                      <div className={styles.projects__resultIdent}>
+                  <div className={styles['projects__result-body']}>
+                    <div className={styles['projects__result-head']}>
+                      <div className={styles['projects__result-ident']}>
                         <h3 className={styles.projects__title}>{project.title}</h3>
                         <p className={styles.projects__company}>{project.company}</p>
                       </div>
                       {project.featured ? (
-                        <div className={styles.projects__resultAction}>
-                          <span className={styles.projects__acquiredChip}>
+                        <div className={styles['projects__result-action']}>
+                          <span className={styles['projects__acquired-chip']}>
                             Acquired by Perion <kbd aria-hidden="true">&#8629;</kbd>
                           </span>
-                          <span className={styles.projects__outcomeLabel}>
+                          <span className={styles['projects__outcome-label']}>
                             outcome of the rebuild
                           </span>
                         </div>
                       ) : (
-                        <span className={styles.projects__enterHint} aria-hidden="true">
+                        <span className={styles['projects__enter-hint']} aria-hidden="true">
                           &#8629;
                         </span>
                       )}
@@ -67,7 +67,7 @@ export function Projects() {
             ))}
           </div>
 
-          <div className={styles.projects__paletteFooter} aria-hidden="true">
+          <div className={styles['projects__palette-footer']} aria-hidden="true">
             <span>&#8593;&#8595; navigate</span>
             <span>&#8629; open</span>
           </div>

@@ -6,7 +6,7 @@ export function SectionTitle({ title, accent }: { title: string; accent: string 
   return (
     <ScrollReveal>
       <h2 className={styles.section__title}>
-        {title} <span className={styles.section__titleAccent}>{accent}</span>
+        {title} <span className={styles['section__title-accent']}>{accent}</span>
       </h2>
     </ScrollReveal>
   );

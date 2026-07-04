@@ -24,7 +24,7 @@ export function Philosophy() {
 
                 <blockquote className={styles.philosophy__quote}>
                   {TAGLINES.PHILOSOPHY_QUOTE_LEAD}
-                  <span className={styles.philosophy__quoteEmphasis}>
+                  <span className={styles['philosophy__quote-emphasis']}>
                     {TAGLINES.PHILOSOPHY_QUOTE_EMPHASIS}
                   </span>
                   {TAGLINES.PHILOSOPHY_QUOTE_REST}
@@ -40,13 +40,13 @@ export function Philosophy() {
                       delay={ANIMATION_DELAY.LONG + index * ANIMATION_DELAY.MEDIUM}
                     >
                       <div className={styles.philosophy__principle}>
-                        <span className={styles.philosophy__principleNumber}>
-                          <span className={styles.philosophy__principleNumberBracket}>[</span>
+                        <span className={styles['philosophy__principle-number']}>
+                          <span className={styles['philosophy__principle-number-bracket']}>[</span>
                           {index}
-                          <span className={styles.philosophy__principleNumberBracket}>]</span>
+                          <span className={styles['philosophy__principle-number-bracket']}>]</span>
                         </span>
-                        <h3 className={styles.philosophy__principleTitle}>{item.title}</h3>
-                        <p className={styles.philosophy__principleDescription}>
+                        <h3 className={styles['philosophy__principle-title']}>{item.title}</h3>
+                        <p className={styles['philosophy__principle-description']}>
                           {item.description}
                         </p>
                       </div>

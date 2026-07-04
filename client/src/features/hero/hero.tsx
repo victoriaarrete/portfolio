@@ -127,7 +127,7 @@ export function Hero() {
             }}
           >
             {ROLES.LIST.map((role) => (
-              <span key={role} className={styles.hero__roleChip}>
+              <span key={role} className={styles['hero__role-chip']}>
                 {role}
               </span>
             ))}
@@ -145,22 +145,22 @@ export function Hero() {
               alt={PERSONAL_INFO.NAME}
               width={1024}
               height={1536}
-              className={styles.hero__portraitImage}
+              className={styles['hero__portrait-image']}
               {...({ fetchpriority: 'high' } as Record<string, string>)}
             />
             {/* Scanner reveal: encrypted chars stream past a fixed central beam + cursor glow */}
             <div className={styles['hero__scan']} aria-hidden="true">
-              <div className={styles['hero__scanStreamMask']}>
-                <div className={styles['hero__scanStream']}>
-                  <pre className={styles['hero__scanChars']}>{scanField}</pre>
-                  <pre className={styles['hero__scanChars']}>{scanField}</pre>
+              <div className={styles['hero__scan-stream-mask']}>
+                <div className={styles['hero__scan-stream']}>
+                  <pre className={styles['hero__scan-chars']}>{scanField}</pre>
+                  <pre className={styles['hero__scan-chars']}>{scanField}</pre>
                 </div>
               </div>
-              <div className={styles['hero__scanGlow']} />
+              <div className={styles['hero__scan-glow']} />
             </div>
             {/* Right-edge scrim: fades the portrait into the page so the name keeps
                 contrast where it overlaps (desktop only). */}
-            <div className={styles['hero__portraitScrim']} aria-hidden="true" />
+            <div className={styles['hero__portrait-scrim']} aria-hidden="true" />
           </motion.div>
 
           {/* Name - the only block that overlaps the portrait edge on desktop */}
@@ -174,8 +174,8 @@ export function Hero() {
               ease: EASING.DEFAULT,
             }}
           >
-            <span className={styles.hero__titleMain}>{PERSONAL_INFO.FIRST_NAME}</span>
-            <span className={styles.hero__titleAccent}>{PERSONAL_INFO.LAST_NAME}</span>
+            <span className={styles['hero__title-main']}>{PERSONAL_INFO.FIRST_NAME}</span>
+            <span className={styles['hero__title-accent']}>{PERSONAL_INFO.LAST_NAME}</span>
           </motion.h1>
 
           {/* Tagline */}
@@ -228,7 +228,7 @@ export function Hero() {
       </div>
 
       {/* Scroll cue */}
-      <div className={styles.hero__scrollCue}>
+      <div className={styles['hero__scroll-cue']}>
         <motion.button
           type="button"
           aria-label="Scroll to About section"
@@ -237,11 +237,11 @@ export function Hero() {
               .getElementById(NAV_SECTIONS.ABOUT)
               ?.scrollIntoView({ behavior: SCROLL_BEHAVIOR.SMOOTH })
           }
-          className={styles.hero__scrollButton}
+          className={styles['hero__scroll-button']}
           animate={reduce ? undefined : { y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
         >
-          <ChevronDown className={styles.hero__scrollIcon} aria-hidden="true" />
+          <ChevronDown className={styles['hero__scroll-icon']} aria-hidden="true" />
         </motion.button>
       </div>
     </section>
