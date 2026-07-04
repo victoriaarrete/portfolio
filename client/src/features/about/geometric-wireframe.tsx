@@ -7,7 +7,15 @@ import { useEffect, useRef } from 'react';
  *
  * Adapted from a public 21st.dev shader. Stripped of the original demo's
  * click/keyboard shape-switching and on-screen labels: here it's a single
- * fixed shape that reacts subtly to the cursor (lines soften near the mouse).
+ * fixed shape. Edges fade and thin with depth so the solid reads as a volume,
+ * and the cursor acts as a focusing field - nearby lines sharpen and brighten
+ * while the geometry bends away and springs back as the damped pointer
+ * settles (resilient, next to the "What shaped me" story, not dissolving).
+ * On first entering the viewport the vertices assemble from a scattered
+ * cloud into the solid over ~2.4s (staggered per vertex, edges knitting to
+ * full strength as their endpoints arrive) and stay built from then on -
+ * built from scratch, holding its shape. Reduced motion skips straight to
+ * the formed state.
  * Fills its positioned parent; pointer-events stay off so it never blocks
  * text selection. Honors prefers-reduced-motion by holding a still frame.
  */
@@ -62,16 +70,66 @@ vec2 project(vec3 p) {
     return p.xy * perspective;
 }
 
-float distToSegment(vec2 p, vec2 a, vec2 b) {
-    vec2 pa = p - a;
-    vec2 ba = b - a;
-    float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
-    return length(pa - ba * h);
+// Cursor field, set once per fragment in render(). Projected vertices bend
+// away from the pointer; because the mouse uniform is damped on the JS side,
+// releasing the cursor lets the geometry ease back into true form.
+vec2 g_mouse;
+
+// Formation progress (0 = scattered cloud, 1 = true solid), derived from
+// u_time in render(). Elapsed time only accumulates while the canvas is on
+// screen and starts at 0 on first visibility, so the figure assembles itself
+// the first time the reader reaches it and stays built from then on.
+float g_form;
+
+float hash(float n) {
+    return fract(sin(n * 127.1 + 311.7) * 43758.5453);
 }
 
-float drawLine(vec2 p, vec2 a, vec2 b, float thickness, float blur) {
-    float d = distToSegment(p, a, b);
-    return smoothstep(thickness + blur, thickness - blur, d);
+// Where vertex i waits before the figure forms: a loose shell just outside
+// the finished solid, a different direction and radius per vertex. The
+// canvas only shows ~1.43 units at the figure's scale, so the shell must
+// stay inside that or the forming cloud plays out off screen.
+vec3 scatterPos(float i) {
+    vec3 dir = vec3(hash(i) * 2.0 - 1.0, hash(i + 19.0) * 2.0 - 1.0, hash(i + 47.0) * 2.0 - 1.0);
+    return normalize(dir + 0.001) * (0.9 + hash(i + 73.0) * 0.4);
+}
+
+// Per-vertex arrival, staggered so the solid knits together piece by piece
+// instead of snapping in as one move.
+float formProgress(float i) {
+    float stagger = 0.5;
+    float t = clamp(g_form * (1.0 + stagger) - hash(i + 5.0) * stagger, 0.0, 1.0);
+    return t * t * (3.0 - 2.0 * t);
+}
+
+vec2 repel(vec2 q) {
+    vec2 d = q - g_mouse;
+    float dist = length(d);
+    // Kept subtle: it layers on the per-fragment rotation drift in render(),
+    // and together they overwhelm the figure if the push is any stronger.
+    float push = (1.0 - smoothstep(0.0, 0.35, dist)) * 0.02;
+    return q + d / max(dist, 0.001) * push;
+}
+
+// One 3D edge: project the endpoints, bend them in the cursor field, then
+// shade by depth along the segment - far edges thin and fade, near edges
+// read full strength - so the solid keeps its volume instead of flattening
+// into a tangle of equal lines.
+float drawEdge(vec2 p, vec3 a, vec3 b, float fa, float fb, float scale, float thickness, float blur) {
+    vec2 a2 = repel(project(a));
+    vec2 b2 = repel(project(b));
+    vec2 pa = p - a2;
+    vec2 ba = b2 - a2;
+    float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+    float d = length(pa - ba * h);
+    float z = mix(a.z, b.z, h);
+    float persp = 2.0 / (2.0 - z);
+    float line = smoothstep(thickness * persp + blur, thickness * persp - blur, d);
+    float depth = clamp(z / scale, -1.0, 1.0) * 0.5 + 0.5;
+    // While forming, edges run faint between the drifting endpoints and only
+    // reach full strength once both have arrived.
+    float knit = mix(0.25, 1.0, fa * fb);
+    return line * mix(0.3, 1.0, depth) * knit;
 }
 
 void getCubeVertices(out vec3 v[8]) {
@@ -104,69 +162,81 @@ float drawWireframe(vec2 p, int shape, mat3 rotation, float scale, float thickne
 
     if (shape == 0) {
         vec3 v[8];
+        float f[8];
         getCubeVertices(v);
-        for (int i = 0; i < 8; i++) { v[i] = rotation * (v[i] * scale); }
-        result += drawLine(p, project(v[0]), project(v[1]), thickness, blur);
-        result += drawLine(p, project(v[1]), project(v[2]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[3]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[0]), thickness, blur);
-        result += drawLine(p, project(v[4]), project(v[5]), thickness, blur);
-        result += drawLine(p, project(v[5]), project(v[6]), thickness, blur);
-        result += drawLine(p, project(v[6]), project(v[7]), thickness, blur);
-        result += drawLine(p, project(v[7]), project(v[4]), thickness, blur);
-        result += drawLine(p, project(v[0]), project(v[4]), thickness, blur);
-        result += drawLine(p, project(v[1]), project(v[5]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[6]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[7]), thickness, blur);
+        for (int i = 0; i < 8; i++) {
+            f[i] = formProgress(float(i));
+            v[i] = rotation * (mix(scatterPos(float(i)), v[i], f[i]) * scale);
+        }
+        result += drawEdge(p, v[0], v[1], f[0], f[1], scale, thickness, blur);
+        result += drawEdge(p, v[1], v[2], f[1], f[2], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[3], f[2], f[3], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[0], f[3], f[0], scale, thickness, blur);
+        result += drawEdge(p, v[4], v[5], f[4], f[5], scale, thickness, blur);
+        result += drawEdge(p, v[5], v[6], f[5], f[6], scale, thickness, blur);
+        result += drawEdge(p, v[6], v[7], f[6], f[7], scale, thickness, blur);
+        result += drawEdge(p, v[7], v[4], f[7], f[4], scale, thickness, blur);
+        result += drawEdge(p, v[0], v[4], f[0], f[4], scale, thickness, blur);
+        result += drawEdge(p, v[1], v[5], f[1], f[5], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[6], f[2], f[6], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[7], f[3], f[7], scale, thickness, blur);
     } else if (shape == 2) {
         vec3 v[6];
+        float f[6];
         getOctahedronVertices(v);
-        for (int i = 0; i < 6; i++) { v[i] = rotation * (v[i] * scale); }
-        result += drawLine(p, project(v[2]), project(v[0]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[1]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[4]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[5]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[0]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[1]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[4]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[5]), thickness, blur);
-        result += drawLine(p, project(v[0]), project(v[4]), thickness, blur);
-        result += drawLine(p, project(v[4]), project(v[1]), thickness, blur);
-        result += drawLine(p, project(v[1]), project(v[5]), thickness, blur);
-        result += drawLine(p, project(v[5]), project(v[0]), thickness, blur);
+        for (int i = 0; i < 6; i++) {
+            f[i] = formProgress(float(i));
+            v[i] = rotation * (mix(scatterPos(float(i)), v[i], f[i]) * scale);
+        }
+        result += drawEdge(p, v[2], v[0], f[2], f[0], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[1], f[2], f[1], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[4], f[2], f[4], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[5], f[2], f[5], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[0], f[3], f[0], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[1], f[3], f[1], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[4], f[3], f[4], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[5], f[3], f[5], scale, thickness, blur);
+        result += drawEdge(p, v[0], v[4], f[0], f[4], scale, thickness, blur);
+        result += drawEdge(p, v[4], v[1], f[4], f[1], scale, thickness, blur);
+        result += drawEdge(p, v[1], v[5], f[1], f[5], scale, thickness, blur);
+        result += drawEdge(p, v[5], v[0], f[5], f[0], scale, thickness, blur);
     } else {
         // Icosahedron - 30 edges (default)
         vec3 v[12];
+        float f[12];
         getIcosahedronVertices(v);
-        for (int i = 0; i < 12; i++) { v[i] = rotation * (v[i] * scale); }
-        result += drawLine(p, project(v[0]), project(v[1]), thickness, blur);
-        result += drawLine(p, project(v[0]), project(v[5]), thickness, blur);
-        result += drawLine(p, project(v[0]), project(v[7]), thickness, blur);
-        result += drawLine(p, project(v[0]), project(v[10]), thickness, blur);
-        result += drawLine(p, project(v[0]), project(v[11]), thickness, blur);
-        result += drawLine(p, project(v[1]), project(v[5]), thickness, blur);
-        result += drawLine(p, project(v[1]), project(v[7]), thickness, blur);
-        result += drawLine(p, project(v[1]), project(v[8]), thickness, blur);
-        result += drawLine(p, project(v[1]), project(v[9]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[3]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[4]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[6]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[10]), thickness, blur);
-        result += drawLine(p, project(v[2]), project(v[11]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[4]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[6]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[8]), thickness, blur);
-        result += drawLine(p, project(v[3]), project(v[9]), thickness, blur);
-        result += drawLine(p, project(v[4]), project(v[5]), thickness, blur);
-        result += drawLine(p, project(v[4]), project(v[11]), thickness, blur);
-        result += drawLine(p, project(v[5]), project(v[11]), thickness, blur);
-        result += drawLine(p, project(v[6]), project(v[7]), thickness, blur);
-        result += drawLine(p, project(v[6]), project(v[8]), thickness, blur);
-        result += drawLine(p, project(v[6]), project(v[10]), thickness, blur);
-        result += drawLine(p, project(v[7]), project(v[10]), thickness, blur);
-        result += drawLine(p, project(v[8]), project(v[9]), thickness, blur);
-        result += drawLine(p, project(v[9]), project(v[11]), thickness, blur);
-        result += drawLine(p, project(v[10]), project(v[11]), thickness, blur);
+        for (int i = 0; i < 12; i++) {
+            f[i] = formProgress(float(i));
+            v[i] = rotation * (mix(scatterPos(float(i)), v[i], f[i]) * scale);
+        }
+        result += drawEdge(p, v[0], v[1], f[0], f[1], scale, thickness, blur);
+        result += drawEdge(p, v[0], v[5], f[0], f[5], scale, thickness, blur);
+        result += drawEdge(p, v[0], v[7], f[0], f[7], scale, thickness, blur);
+        result += drawEdge(p, v[0], v[10], f[0], f[10], scale, thickness, blur);
+        result += drawEdge(p, v[0], v[11], f[0], f[11], scale, thickness, blur);
+        result += drawEdge(p, v[1], v[5], f[1], f[5], scale, thickness, blur);
+        result += drawEdge(p, v[1], v[7], f[1], f[7], scale, thickness, blur);
+        result += drawEdge(p, v[1], v[8], f[1], f[8], scale, thickness, blur);
+        result += drawEdge(p, v[1], v[9], f[1], f[9], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[3], f[2], f[3], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[4], f[2], f[4], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[6], f[2], f[6], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[10], f[2], f[10], scale, thickness, blur);
+        result += drawEdge(p, v[2], v[11], f[2], f[11], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[4], f[3], f[4], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[6], f[3], f[6], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[8], f[3], f[8], scale, thickness, blur);
+        result += drawEdge(p, v[3], v[9], f[3], f[9], scale, thickness, blur);
+        result += drawEdge(p, v[4], v[5], f[4], f[5], scale, thickness, blur);
+        result += drawEdge(p, v[4], v[11], f[4], f[11], scale, thickness, blur);
+        result += drawEdge(p, v[5], v[11], f[5], f[11], scale, thickness, blur);
+        result += drawEdge(p, v[6], v[7], f[6], f[7], scale, thickness, blur);
+        result += drawEdge(p, v[6], v[8], f[6], f[8], scale, thickness, blur);
+        result += drawEdge(p, v[6], v[10], f[6], f[10], scale, thickness, blur);
+        result += drawEdge(p, v[7], v[10], f[7], f[10], scale, thickness, blur);
+        result += drawEdge(p, v[8], v[9], f[8], f[9], scale, thickness, blur);
+        result += drawEdge(p, v[9], v[11], f[9], f[11], scale, thickness, blur);
+        result += drawEdge(p, v[10], v[11], f[10], f[11], scale, thickness, blur);
     }
 
     return clamp(result, 0.0, 1.0);
@@ -181,8 +251,20 @@ vec4 render(vec2 st, vec2 mouse) {
                     rotateX(time * 0.7 + (mouse.y - 0.5) * mouseInfluence) *
                     rotateZ(time * 0.1);
 
+    g_mouse = mouse;
+
+    // First ~2.4s on screen: scattered cloud converges into the true solid.
+    // Smoothstep pacing (not ease-out) so the cloud lingers long enough to
+    // read before it gathers. u_time never rewinds (it accumulates only
+    // while visible), so the figure builds once and stays built.
+    float ft = clamp(u_time / 2.4, 0.0, 1.0);
+    g_form = ft * ft * (3.0 - 2.0 * ft);
+
+    // Attention focuses the figure: at rest the lines carry a faint softness,
+    // and near the cursor they sharpen, thicken and brighten instead of
+    // dissolving - pressure resolves the shape rather than unmaking it.
     float scale = 0.35;
-    float blur = mix(0.0001, 0.05, mouseInfluence);
+    float blur = mix(0.003, 0.0006, mouseInfluence);
     float thickness = mix(0.0022, 0.0032, mouseInfluence);
 
     float shape = drawWireframe(st, u_shape, rotation, scale, thickness, blur);
@@ -191,13 +273,15 @@ vec4 render(vec2 st, vec2 mouse) {
     vec3 color = vec3(0.94, 0.89, 0.79);
     color = pow(color, vec3(0.9));
 
-    // Soften near the cursor; gentle vignette for depth
-    float dimming = 1.0 - mouseInfluence * 0.3;
+    float focus = 1.0 + mouseInfluence * 0.25;
     float vignette = 1.0 - length(st) * 0.25;
 
-    // Transparent gaps: alpha follows the line intensity
-    float alpha = shape * dimming * vignette;
-    return vec4(color, clamp(alpha, 0.0, 1.0));
+    // Transparent gaps: alpha follows the line intensity. Premultiplied
+    // output (color * alpha) so the browser composites intermediate alphas
+    // linearly - with a straight-alpha buffer it multiplies by alpha twice,
+    // crushing the depth fades and the faint formation web to ~alpha^2.
+    float alpha = clamp(shape * focus * vignette, 0.0, 1.0);
+    return vec4(color * alpha, alpha);
 }
 
 void main() {
@@ -241,12 +325,13 @@ export function GeometricWireframe({ shape = 'icosahedron', className }: Geometr
     const gl = canvas.getContext('webgl', {
       antialias: true,
       alpha: true,
-      premultipliedAlpha: false,
+      premultipliedAlpha: true,
     });
     if (!gl) return;
 
     gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    // Shader outputs premultiplied color, so source blends at ONE
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
 
     const createShader = (type: number, source: string) => {
