@@ -1,153 +1,73 @@
-# Portfolio
+# victoriakirichenko.com
 
-This project powers the personal portfolio for **Victoria Kirichenko**. It's a modern, full-stack web application featuring a React client with an extensive UI component library, Express backend, and database integration.
+Personal portfolio for **Victoria Kirichenko** — a static single-page React site
+deployed to GitHub Pages behind a custom domain.
 
-## Tech Stack
+## Tech stack
 
-### Frontend
-- **React 18** + **TypeScript** (strict mode)
-- **Vite** – Fast build tool and dev server
-- **Tailwind CSS 4** – Utility-first CSS framework
-- **Radix UI** – Accessible component primitives
-- **Wouter** – Lightweight routing
-- **TanStack Query** – Server state management
-- **React Hook Form** + **Zod** – Type-safe form handling
-- **Framer Motion** – Animation library
-- **CSS Modules** – Scoped styles with BEM methodology
+- **React 18** + **TypeScript** (strict) on **Vite 5**
+- **CSS Modules** with a design-token layer (`client/src/styles/tokens.css`)
+- **Tailwind CSS 3** (preflight + the few utilities the 404 page uses)
+- **motion** (framer-motion) for entrance/hover animation, with full
+  `prefers-reduced-motion` support
+- **wouter** for the two routes: `/` and the 404 catch-all
 
-### Backend
-- **Express** – Web server and API
-- **Drizzle ORM** – Type-safe database toolkit
-- **Neon** – Serverless PostgreSQL
-- **Passport.js** – Authentication middleware
+There is no backend: the contact section is `mailto:`/LinkedIn links, and the
+site builds to plain static files.
 
-### UI Components
-Comprehensive component library based on shadcn/ui including:
-- Form components (TextInput, TextArea, SelectInput)
-- Navigation with smooth scroll
-- Particle system animation
-- Scroll reveal effects
-- 30+ Radix UI-based components (dialogs, dropdowns, tooltips, etc.)
-
-## Project Structure
-
-- **client/** – React application source code
-  - **src/components/** – Reusable components (forms, navigation, UI library)
-  - **src/pages/** – Route pages
-  - **src/hooks/** – Custom React hooks
-  - **src/constants/** – Design tokens and centralized values
-  - **src/styles/** – CSS Modules and design tokens
-  - **src/lib/** – Utilities and configurations
-- **server/** – Express application and API routes
-- **shared/** – Shared schemas and types
-- **dist/** – Production build output
-- **public/** – Static assets for GitHub Pages deployment
-
-## Requirements
-
-- Node.js 18 or later
-- npm (comes with Node)
-
-### Environment Variables
-- `PORT` – Server port (defaults to `5000`)
-- Database connection variables for Drizzle ORM (see `drizzle.config.ts`)
-
-## Getting Started
-
-Install dependencies:
+## Getting started
 
 ```bash
-npm install
+npm ci          # install (uses the tracked lockfile)
+npm run dev     # vite dev server on :5173
 ```
 
-### Development
+| Script                   | What it does                                 |
+| ------------------------ | -------------------------------------------- |
+| `npm run dev`            | Dev server with HMR                          |
+| `npm run build`          | Production build into `public/` (gitignored) |
+| `npm run preview:static` | Build + serve `public/` on :3000             |
+| `npm run check`          | TypeScript                                   |
+| `npm run lint`           | ESLint (typescript-eslint + react-hooks)     |
+| `npm run lint:css`       | Stylelint                                    |
+| `npm run format`         | Prettier                                     |
 
-Run the server in development mode with Vite HMR:
+Pre-commit (husky + lint-staged) runs ESLint/Stylelint/Prettier on staged files
+plus a full `tsc` pass.
+
+## Conventions
+
+- **CSS Modules, camelCase class names** for dot access
+  (`styles.dmName`); older files use BEM-style `block__element--modifier`
+  names accessed with brackets — both are fine, new classes should be
+  camelCase. See [ARCHITECTURE.md](ARCHITECTURE.md).
+- **Design tokens first**: colors, spacing, type, radii, shadows, easings live
+  in `client/src/styles/tokens.css`. Don't hardcode a value that has a token.
+- **Content lives in `client/src/constants/strings.ts`** (copy, nav, experience
+  log, testimonials, projects), layout numbers in `constants/layout.ts`.
+- **Animation values** go through `constants/layout.ts`
+  (durations/delays/offsets) and respect reduced motion — `MotionConfig
+reducedMotion="user"` covers framer, a global CSS kill-switch covers the rest.
+
+## Images
+
+The hero portrait's source of truth is `assets/victoria_pic.png`. The shipped
+WebP is generated with:
 
 ```bash
-npm run dev
+node scripts/gen-portrait.mjs   # -> client/public/victoria-portrait.webp
 ```
 
-This starts the Express server with Vite middleware. The React client is served with hot module reloading at the same port.
+Favicons regenerate with `node scripts/gen-icons.mjs`.
 
-### Production Build
+## Deployment
 
-Create a production build of the client and bundle the server:
+Pushing to `main` triggers `.github/workflows/deploy.yml`: `npm ci` → lint →
+type check → `npm run build:static` → GitHub Pages artifact deploy. Build
+output (`public/`) is not committed. The custom-domain CNAME lives in
+`client/public/` and is copied into every build.
 
-```bash
-npm run build
-```
+## Console easter egg
 
-The compiled files are written to `dist/`.
-
-### Start in Production
-
-After building, start the bundled Express server:
-
-```bash
-npm start
-```
-
-The server serves the static assets from `dist/public` and exposes the `/api/contact` endpoint.
-
-### Type Checking
-
-Run TypeScript type checking:
-
-```bash
-npm run check
-```
-
-### Database
-
-Push schema changes to the database:
-
-```bash
-npm run db:push
-```
-
-### GitHub Pages Deployment
-
-To deploy the client as a static site under `/portfolio/`, run:
-
-```bash
-npx vite build --config vite.config.static.ts
-```
-
-This outputs the production files to `public/` and generates a `404.html` file so that unknown routes load `index.html` on GitHub Pages. Upload the contents of `public/` to the `gh-pages` branch.
-
-## Architecture & Design Patterns
-
-### Component Organization
-- **Presentational components** – Pure UI rendering without business logic
-- **Form components** – Reusable, accessible form inputs with validation
-- **UI components** – Radix UI-based primitives with consistent styling
-- **Feature-based structure** – Code organized by functionality
-
-### Styling Approach
-- **CSS Modules** with BEM naming convention for component styles
-- **Tailwind CSS** for utility classes and rapid prototyping
-- **Design tokens** (`styles/tokens.css`) for colors, spacing, and typography
-- **Constants** (`src/constants/`) for centralized values
-
-### State Management
-- **TanStack Query** for server state and API calls
-- **React Hook Form** for form state
-- Local state with hooks for UI interactions
-
-## Documentation
-
-Additional documentation is available in the repository:
-
-- **BEM-METHODOLOGY.md** – CSS naming conventions and guidelines
-- **FORM-COMPONENTS-GUIDE.md** – Comprehensive guide to form components
-- **FORM-QUICK-START.md** – Quick reference for forms
-- **CONSTANTS-USAGE-GUIDE.md** – Guide to design tokens and constants
-- **BEM-REFACTORING-SUMMARY.md** – History of BEM implementation
-- **FORM-REFACTORING-SUMMARY.md** – Form system evolution
-- **CONSTANTS-REFACTORING-SUMMARY.md** – Constants refactoring details
-
-## License
-
-MIT
-
+Open the browser console on the live site and follow the prompts
+(`victoria.help()`, `victoria.maze()`).
