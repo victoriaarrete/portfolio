@@ -1433,7 +1433,7 @@
 }
 
 .projects__paletteKbd {
-  font-family: var(--font-mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   letter-spacing: 0.04em;
   color: hsl(42, 17%, 56%);
@@ -1472,7 +1472,7 @@
 }
 
 .projects__paletteGroup {
-  font-family: var(--font-mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -1500,7 +1500,7 @@
 }
 
 .projects__resultCaret {
-  font-family: var(--font-mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
   color: hsl(42, 17%, 56%);
   padding-top: 0.15em;
@@ -1539,7 +1539,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
-  font-family: var(--font-mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   color: var(--color-primary-foreground);
@@ -1550,7 +1550,7 @@
 }
 
 .projects__acquiredChip kbd {
-  font-family: var(--font-mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   opacity: 0.65;
 }
@@ -1562,7 +1562,7 @@
 
 /* Quiet enter-hint stands in for the action on non-selected rows */
 .projects__enterHint {
-  font-family: var(--font-mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
   color: hsl(42, 17%, 56%);
   opacity: 0.45;
@@ -1609,7 +1609,7 @@
   gap: var(--spacing-5);
   padding: var(--spacing-4) var(--spacing-6);
   border-top: var(--border-width-thin) solid var(--color-border-light);
-  font-family: var(--font-mono);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   color: hsl(42, 17%, 56%);
 }
