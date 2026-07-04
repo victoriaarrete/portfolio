@@ -1431,6 +1431,17 @@
   padding: var(--spacing-1) var(--spacing-2);
 }
 
+/* The field wraps the input and its idle caret so the caret can overlay the
+   input's text-start instead of living in the flex flow (which shifted the
+   text and made the caret hop on focus) */
+.projects__palette-field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
 .projects__palette-input {
   flex: 1;
   min-width: 0;
@@ -1448,23 +1459,28 @@
   color: var(--color-neutral-400);
 }
 
+/* While the field is empty the decorative caret stands in for the cursor, so
+   suppress the native one to avoid two carets (and any jump on focus) */
+.projects__palette-input:placeholder-shown {
+  caret-color: transparent;
+}
+
 /* The input has no outline of its own; the search row signals focus instead */
 .projects__palette-search:focus-within {
   border-bottom-color: var(--color-border);
 }
 
-/* Blinking caret invites typing while the field is idle; the real caret
-   takes over on focus */
+/* Blinking caret invites typing while the field is idle; it overlays the
+   input's text-start so the native caret takes over on focus with no jump */
 .projects__palette-caret {
+  position: absolute;
+  left: calc(-1 * var(--spacing-2));
+  top: 50%;
+  transform: translateY(-50%);
   width: 1px;
   height: 1.1em;
   background: var(--color-primary-400);
-  margin-right: calc(-1 * var(--spacing-2));
   animation: projectsCaret 1.1s steps(1) infinite;
-}
-
-.projects__palette-search:focus-within .projects__palette-caret {
-  display: none;
 }
 
 @keyframes projectsCaret {

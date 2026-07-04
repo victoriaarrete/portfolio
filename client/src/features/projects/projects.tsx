@@ -124,17 +124,22 @@ export function Projects() {
             <span className={styles['projects__palette-kbd']} aria-hidden="true">
               &#8984;K
             </span>
-            <span className={styles['projects__palette-caret']} aria-hidden="true" />
-            <input
-              ref={inputRef}
-              type="text"
-              className={styles['projects__palette-input']}
-              placeholder={PROJECTS_PALETTE.PLACEHOLDER}
-              aria-label={PROJECTS_PALETTE.ARIA_LABEL}
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              onKeyDown={handleSearchKeyDown}
-            />
+            <div className={styles['projects__palette-field']}>
+              {/* Decorative caret stays put while the field is empty (blurred or
+                  focused); the native caret only appears once you type, so a
+                  click never moves the cursor or the text */}
+              {!query && <span className={styles['projects__palette-caret']} aria-hidden="true" />}
+              <input
+                ref={inputRef}
+                type="text"
+                className={styles['projects__palette-input']}
+                placeholder={PROJECTS_PALETTE.PLACEHOLDER}
+                aria-label={PROJECTS_PALETTE.ARIA_LABEL}
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                onKeyDown={handleSearchKeyDown}
+              />
+            </div>
           </div>
 
           <div className={styles['projects__palette-results']}>
