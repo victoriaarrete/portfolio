@@ -82,10 +82,10 @@ hashed classes and load-bearing rule order are untouched.
 
 **Tooling.** ESLint (flat, typescript-eslint + react-hooks), Prettier applied
 repo-wide, Stylelint tuned for CSS Modules, `.editorconfig`, husky + lint-staged
-pre-commit (lint + format + tsc), lockfile now tracked, CI runs `npm ci` + lint
-
-- type-check before building, stale branch trigger removed. README rewritten
-  (it documented the deleted stack); ARCHITECTURE.md records the decisions.
+pre-commit (lint + format + tsc), lockfile now tracked, CI runs `npm ci` then
+lint and type-check before building, stale branch trigger removed. README
+rewritten (it documented the deleted stack); ARCHITECTURE.md records the
+decisions.
 
 ## The one intentional rendering change
 
