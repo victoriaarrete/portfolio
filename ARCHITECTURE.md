@@ -10,15 +10,26 @@ client/
   public/             static assets copied verbatim into the build
                       (CNAME, favicons, og-preview.png, victoria-portrait.webp)
   src/
-    main.tsx          entry → App.tsx (MotionConfig, CursorGlow, router)
-    pages/home/       the page, one component per section + home.module.css
-    pages/not-found.tsx  lazy-loaded 404 chunk
-    components/       reusable pieces (navigation, code-background, wireframe,
-                      slack-testimonials, tangle-to-clarity, scroll-reveal,
-                      particle-system, cursor-glow) + components/ui/card (shadcn)
-    constants/        strings.ts (all copy/content) · layout.ts (animation numbers)
-    styles/tokens.css design tokens (single source for colors/spacing/type/etc.)
-    lib/              utils.ts (cn) · console-signature.ts (easter egg)
+    app/              main.tsx entry → App.tsx (MotionConfig, CursorGlow, router)
+                      + index.css (Tailwind layers, cascade order)
+    pages/home/       index.tsx (composition only) + home.module.css
+                      (single stylesheet shared by all section components)
+    features/         one folder per section: hero, about (+ geometric-
+                      wireframe), experience, philosophy (+ tangle-to-clarity),
+                      projects, testimonials (+ slack-testimonials), contact,
+                      footer, not-found (lazy-loaded 404 chunk) — components
+                      used by exactly one section live in that section's folder
+    shared/
+      components/     cross-feature pieces (navigation, code-background,
+                      scroll-reveal, section-title, particle-system,
+                      cursor-glow) + ui/card (shadcn)
+      hooks/          use-scroll-reveal
+      constants/      strings.ts (all copy/content) · layout.ts (animation
+                      numbers) · colors.ts (console palette)
+      styles/         tokens.css — design tokens (single source for
+                      colors/spacing/type/etc.)
+      lib/            utils.ts (cn) · console-signature.ts (easter egg)
+    test/             vitest setup + smoke tests
 assets/               image sources of truth (not shipped as-is)
 scripts/              sharp pipelines: gen-portrait.mjs, gen-icons.mjs
 ```
@@ -40,9 +51,9 @@ the same module, so hashed class names are shared and within-file rule order
 (which is load-bearing in a few places, e.g. `.card.about__method`) is
 preserved. Split it only with a visual-regression check in hand.
 
-**Tokens + constants split.** Visual values → `styles/tokens.css` (CSS custom
-properties). Copy/content → `constants/strings.ts`. Animation
-durations/delays/offsets → `constants/layout.ts`. If a value repeats twice,
+**Tokens + constants split.** Visual values → `shared/styles/tokens.css` (CSS
+custom properties). Copy/content → `shared/constants/strings.ts`. Animation
+durations/delays/offsets → `shared/constants/layout.ts`. If a value repeats twice,
 it gets a name.
 
 **Two scroll-reveal mechanisms, deliberately.** `ScrollReveal` (IO-based,

@@ -6,7 +6,7 @@ deployed to GitHub Pages behind a custom domain.
 ## Tech stack
 
 - **React 18** + **TypeScript** (strict) on **Vite 5**
-- **CSS Modules** with a design-token layer (`client/src/styles/tokens.css`)
+- **CSS Modules** with a design-token layer (`client/src/shared/styles/tokens.css`)
 - **Tailwind CSS 3** (preflight + the few utilities the 404 page uses)
 - **motion** (framer-motion) for entrance/hover animation, with full
   `prefers-reduced-motion` support
@@ -42,10 +42,10 @@ plus a full `tsc` pass.
   names accessed with brackets — both are fine, new classes should be
   camelCase. See [ARCHITECTURE.md](ARCHITECTURE.md).
 - **Design tokens first**: colors, spacing, type, radii, shadows, easings live
-  in `client/src/styles/tokens.css`. Don't hardcode a value that has a token.
-- **Content lives in `client/src/constants/strings.ts`** (copy, nav, experience
-  log, testimonials, projects), layout numbers in `constants/layout.ts`.
-- **Animation values** go through `constants/layout.ts`
+  in `client/src/shared/styles/tokens.css`. Don't hardcode a value that has a token.
+- **Content lives in `client/src/shared/constants/strings.ts`** (copy, nav, experience
+  log, testimonials, projects), layout numbers in `shared/constants/layout.ts`.
+- **Animation values** go through `shared/constants/layout.ts`
   (durations/delays/offsets) and respect reduced motion — `MotionConfig
 reducedMotion="user"` covers framer, a global CSS kill-switch covers the rest.
 
