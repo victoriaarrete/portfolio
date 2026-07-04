@@ -40,11 +40,15 @@ scripts/              sharp pipelines: gen-portrait.mjs, gen-icons.mjs
 was removed (2026-07): its one endpoint was never called by the client. CI
 builds `public/` from source on every push; build output is not committed.
 
-**CSS Modules over global BEM.** Modules already provide the isolation BEM
-encodes in names. Convention: camelCase class names, dot access. The older
-files (home.module.css, navigation.module.css) still carry BEM-ish
-`block__element--modifier` names — renaming them is churn with no payoff, so
-both styles coexist; write new classes camelCase.
+**CSS Modules with classic BEM names.** Modules provide the isolation, BEM
+provides the readability: every class is `block__element--modifier` with
+kebab-case words, so a name always says which component owns it — in source,
+in grep, and in devtools (the hash embeds it). This reverses the earlier
+"write new classes camelCase" convention (2026-07): by then ~85% of classes
+were already BEM and the blocks map 1:1 to the feature folders, so finishing
+the job beat keeping two dialects. Cost: hyphenated names need bracket access
+in JSX (`styles['about__impact-row']`); hyphen-free ones keep dot access
+(`styles.hero__tagline`). Enforced by stylelint `selector-class-pattern`.
 
 **One `home.module.css` for all sections.** The section components each import
 the same module, so hashed class names are shared and within-file rule order

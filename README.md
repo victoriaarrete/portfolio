@@ -37,10 +37,10 @@ plus a full `tsc` pass.
 
 ## Conventions
 
-- **CSS Modules, camelCase class names** for dot access
-  (`styles.dmName`); older files use BEM-style `block__element--modifier`
-  names accessed with brackets — both are fine, new classes should be
-  camelCase. See [ARCHITECTURE.md](ARCHITECTURE.md).
+- **CSS Modules, classic BEM class names**: `block__element--modifier` with
+  kebab-case words (`styles['slack-testimonials__dm-name']`), enforced by
+  stylelint's `selector-class-pattern`. Hyphen-free names can keep dot access
+  (`styles.hero__tagline`). See [ARCHITECTURE.md](ARCHITECTURE.md).
 - **Design tokens first**: colors, spacing, type, radii, shadows, easings live
   in `client/src/shared/styles/tokens.css`. Don't hardcode a value that has a token.
 - **Content lives in `client/src/shared/constants/strings.ts`** (copy, nav, experience
