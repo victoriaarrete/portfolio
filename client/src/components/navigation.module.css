@@ -32,8 +32,11 @@
   align-items: center;
 }
 
-/* Element: navigation__logo */
+/* Element: navigation__logo
+   A <button> for keyboard access; reset so it paints exactly like the div it replaced */
 .navigation__logo {
+  border: none;
+  padding: 0;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
@@ -49,6 +52,11 @@
 
 .navigation__logo:hover {
   transform: scale(1.05);
+}
+
+.navigation__logo:focus-visible {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
 }
 
 /* Element: navigation__menu */
@@ -206,16 +214,22 @@
   max-height: var(--spacing-32);
   max-height: 400px; /* Fallback for animation */
   opacity: 1;
+  visibility: visible;
   transition: max-height var(--transition-base) var(--transition-curve),
               opacity var(--transition-base);
 }
 
-/* Modifier: navigation__mobile-menu--closed */
+/* Modifier: navigation__mobile-menu--closed
+   visibility flips after the 0.3s fade so the closed menu's buttons leave the
+   tab order (they were invisible but still focusable) without changing the
+   close animation */
 .navigation__mobile-menu--closed {
   max-height: 0;
   opacity: 0;
+  visibility: hidden;
   transition: max-height var(--transition-base) var(--transition-curve),
-              opacity var(--transition-base);
+              opacity var(--transition-base),
+              visibility 0s linear var(--transition-base);
 }
 
 /* Animation for menu items */

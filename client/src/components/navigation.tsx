@@ -54,13 +54,14 @@ export function Navigation() {
       className={navigationClass}
     >
       <div className={styles['navigation__container']}>
-        <motion.div
+        <motion.button
           className={styles['navigation__logo']}
           whileHover={{ scale: TRANSFORM.HOVER_SCALE_SMALL }}
           onClick={() => scrollToSection(NAV_SECTIONS.HERO)}
+          aria-label="Scroll to top"
         >
           {PERSONAL_INFO.INITIALS}
-        </motion.div>
+        </motion.button>
 
         {/* Desktop Navigation */}
         <div className={styles['navigation__menu']}>
@@ -69,6 +70,7 @@ export function Navigation() {
               key={item.id}
               onClick={() => scrollToSection(item.id)}
               className={`${styles['navigation__item']} ${styles['navigation__item--animate']} ${activeSection === item.id ? styles['navigation__item--active'] : ''}`}
+              aria-current={activeSection === item.id ? 'true' : undefined}
               whileHover={{ scale: TRANSFORM.HOVER_SCALE_SMALL }}
               initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_NEGATIVE_SMALL }}
               animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
@@ -84,11 +86,13 @@ export function Navigation() {
           className={styles['navigation__mobile-toggle']}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={ARIA_LABELS.TOGGLE_MOBILE_MENU}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-menu"
         >
           {isMobileMenuOpen ? (
-            <X className={styles['navigation__mobile-icon']} />
+            <X className={styles['navigation__mobile-icon']} aria-hidden="true" />
           ) : (
-            <Menu className={styles['navigation__mobile-icon']} />
+            <Menu className={styles['navigation__mobile-icon']} aria-hidden="true" />
           )}
         </button>
       </div>
@@ -102,6 +106,7 @@ export function Navigation() {
         }}
         transition={{ duration: ANIMATION_DURATION.NORMAL }}
         className={mobileMenuClass}
+        id="mobile-menu"
       >
         <div className={styles['navigation__mobile-items']}>
           {NAV_ITEMS.map((item, index) => (
@@ -109,6 +114,7 @@ export function Navigation() {
               key={item.id}
               onClick={() => scrollToSection(item.id)}
               className={`${styles['navigation__mobile-item']} ${styles['navigation__mobile-item--animate']} ${activeSection === item.id ? styles['navigation__mobile-item--active'] : ''}`}
+              aria-current={activeSection === item.id ? 'true' : undefined}
               initial={{ opacity: OPACITY.HIDDEN, x: INITIAL_OFFSET.X_SMALL }}
               animate={{
                 opacity: isMobileMenuOpen ? OPACITY.VISIBLE : OPACITY.HIDDEN,
