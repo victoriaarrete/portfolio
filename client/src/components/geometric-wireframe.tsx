@@ -331,19 +331,47 @@ export function GeometricWireframe({ shape = 'icosahedron', className }: Geometr
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
+    let io: IntersectionObserver | undefined;
     if (reduceMotion) {
       // Hold a single, pleasant still frame
       renderFrame(start, 4.0);
     } else {
+      // Run the WebGL loop only while the canvas is in the viewport. The
+      // wireframe sits mid-page, so an ungated loop burns GPU/CPU for the
+      // whole scroll life of the page. Elapsed time accumulates only while
+      // running, so the shape resumes exactly where it paused.
+      let elapsedBase = 0;
+      let runStart = start;
+      let running = false;
+
       const loop = (now: number) => {
-        renderFrame(now, (now - start) / 1000);
+        renderFrame(now, elapsedBase + (now - runStart) / 1000);
         raf = requestAnimationFrame(loop);
       };
-      raf = requestAnimationFrame(loop);
+      const startLoop = () => {
+        if (running) return;
+        running = true;
+        runStart = performance.now();
+        lastTime = runStart;
+        raf = requestAnimationFrame(loop);
+      };
+      const stopLoop = () => {
+        if (!running) return;
+        running = false;
+        elapsedBase += (performance.now() - runStart) / 1000;
+        cancelAnimationFrame(raf);
+        raf = 0;
+      };
+
+      io = new IntersectionObserver(([entry]) =>
+        entry.isIntersecting ? startLoop() : stopLoop(),
+      );
+      io.observe(container);
     }
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
+      io?.disconnect();
       ro.disconnect();
       window.removeEventListener('pointermove', handlePointer);
       gl.deleteProgram(program);

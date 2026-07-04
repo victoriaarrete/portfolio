@@ -43,11 +43,25 @@ export function ParticleSystem() {
       setTimeout(createParticle, i * TIMING_MS.PARTICLE_STAGGER);
     }
 
-    // Continue creating particles
-    const interval = setInterval(createParticle, TIMING_MS.PARTICLE_CREATE_INTERVAL);
+    // Continue creating particles - but not while the tab is hidden, where
+    // the interval would keep churning DOM nodes nobody can see. (The CSS
+    // animations themselves are already throttled by the browser.)
+    let interval: ReturnType<typeof setInterval> | undefined =
+      setInterval(createParticle, TIMING_MS.PARTICLE_CREATE_INTERVAL);
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        clearInterval(interval);
+        interval = undefined;
+      } else if (!interval) {
+        interval = setInterval(createParticle, TIMING_MS.PARTICLE_CREATE_INTERVAL);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
       clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
       particles.forEach(particle => {
         if (particle.parentNode) {
           particle.parentNode.removeChild(particle);

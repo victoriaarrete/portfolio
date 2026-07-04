@@ -45,6 +45,11 @@
   user-select: none;
 }
 
+/* Set while the field is scrolled out of view (IntersectionObserver) */
+.codeBg--paused .codeBg__stream {
+  animation-play-state: paused;
+}
+
 @keyframes codeBgStream {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
