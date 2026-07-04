@@ -409,6 +409,44 @@ export const TESTIMONIALS: readonly Testimonial[] = [
   },
 ];
 
+// Projects (the ⌘K palette results). The featured entry gets the active row
+// treatment + the "Acquired by Perion" outcome chip.
+type Project = {
+  group?: string;
+  featured?: boolean;
+  title: string;
+  company: string;
+  description: string;
+  tags: readonly string[];
+};
+
+export const PROJECTS: readonly Project[] = [
+  {
+    group: 'Featured',
+    featured: true,
+    title: 'Content Arbitrage Platform',
+    company: 'CIQ/Perion',
+    description:
+      'Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily — work that led to the startup’s acquisition by Perion.',
+    tags: ['Microservices', 'AdTech', 'Scale'],
+  },
+  {
+    group: 'More',
+    title: 'AI Workflow Optimizer',
+    company: 'Swish.ai',
+    description:
+      'Led development of AI-driven automation platform that optimizes IT workflows, reducing manual tasks by 60% and improving team efficiency across multiple departments.',
+    tags: ['AI/ML', 'Automation', 'Workflow'],
+  },
+  {
+    title: 'Internal Productivity Tools',
+    company: 'Multiple Organizations',
+    description:
+      'Designed and implemented custom productivity tools that streamlined development workflows, improved team collaboration, and enhanced project management across R&D teams.',
+    tags: ['Tools', 'Productivity', 'Collaboration'],
+  },
+];
+
 // Contact Section Content
 export const CONTACT_CONTENT = {
   TITLE: 'Get In Touch',

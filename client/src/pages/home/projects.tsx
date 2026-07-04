@@ -1,6 +1,6 @@
 import { ScrollReveal } from '@/components/scroll-reveal';
 import { ANIMATION_DELAY } from '@/constants/layout';
-import { SECTION_TITLES, NAV_SECTIONS } from '@/constants/strings';
+import { SECTION_TITLES, NAV_SECTIONS, PROJECTS } from '@/constants/strings';
 import { SectionTitle } from './section-title';
 import styles from './home.module.css';
 
@@ -19,35 +19,7 @@ export function Projects() {
           </div>
 
           <div className={styles.projects__paletteResults}>
-            {[
-              {
-                group: 'Featured',
-                featured: true,
-                title: 'Content Arbitrage Platform',
-                company: 'CIQ/Perion',
-                description: (
-                  <>
-                    Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily &mdash; work that led to the startup&rsquo;s acquisition by Perion.
-                  </>
-                ),
-                tags: ['Microservices', 'AdTech', 'Scale'],
-              },
-              {
-                group: 'More',
-                title: 'AI Workflow Optimizer',
-                company: 'Swish.ai',
-                description:
-                  'Led development of AI-driven automation platform that optimizes IT workflows, reducing manual tasks by 60% and improving team efficiency across multiple departments.',
-                tags: ['AI/ML', 'Automation', 'Workflow'],
-              },
-              {
-                title: 'Internal Productivity Tools',
-                company: 'Multiple Organizations',
-                description:
-                  'Designed and implemented custom productivity tools that streamlined development workflows, improved team collaboration, and enhanced project management across R&D teams.',
-                tags: ['Tools', 'Productivity', 'Collaboration'],
-              },
-            ].map((project, index) => (
+            {PROJECTS.map((project, index) => (
               <ScrollReveal key={project.title} delay={index * ANIMATION_DELAY.MEDIUM}>
                 {project.group && (
                   <p className={styles.projects__paletteGroup} aria-hidden="true">

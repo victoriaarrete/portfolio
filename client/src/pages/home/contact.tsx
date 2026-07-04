@@ -7,6 +7,39 @@ import { SECTION_TITLES, NAV_SECTIONS, CONTACT_CONTENT, PERSONAL_INFO } from '@/
 import { SectionTitle } from './section-title';
 import styles from './home.module.css';
 
+// The three contact cards share identical chrome (icon tile, title, hover
+// nudge); only the icon and body differ.
+const CONTACT_METHODS = [
+  {
+    Icon: Mail,
+    title: CONTACT_CONTENT.EMAIL_LABEL,
+    body: (
+      <a href={`mailto:${PERSONAL_INFO.EMAIL}`} className={styles.contact__link}>
+        {PERSONAL_INFO.EMAIL}
+      </a>
+    ),
+  },
+  {
+    Icon: Linkedin,
+    title: CONTACT_CONTENT.LINKEDIN_LABEL,
+    body: (
+      <a
+        href={PERSONAL_INFO.LINKEDIN_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.contact__link}
+      >
+        {PERSONAL_INFO.LINKEDIN_DISPLAY}
+      </a>
+    ),
+  },
+  {
+    Icon: MapPin,
+    title: CONTACT_CONTENT.LOCATION_LABEL,
+    body: <p className={styles.contact__text}>{PERSONAL_INFO.LOCATION}</p>,
+  },
+];
+
 export function Contact() {
   return (
     <section id={NAV_SECTIONS.CONTACT} className={styles.contact}>
@@ -24,59 +57,22 @@ export function Contact() {
               </div>
 
               <div className={styles.contact__methods}>
-                <motion.div
-                  className={styles.contact__method}
-                  whileHover={{ x: TRANSFORM.ROTATE_RANGE }}
-                  transition={{ duration: ANIMATION_DURATION.FAST }}
-                >
-                  <div className={styles.contact__iconWrapper}>
-                    <Mail className={styles.contact__icon} aria-hidden="true" />
-                  </div>
-                  <div className={styles.contact__methodInfo}>
-                    <h3 className={styles.contact__methodTitle}>{CONTACT_CONTENT.EMAIL_LABEL}</h3>
-                    <a
-                      href={`mailto:${PERSONAL_INFO.EMAIL}`}
-                      className={styles.contact__link}
-                    >
-                      {PERSONAL_INFO.EMAIL}
-                    </a>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className={styles.contact__method}
-                  whileHover={{ x: TRANSFORM.ROTATE_RANGE }}
-                  transition={{ duration: ANIMATION_DURATION.FAST }}
-                >
-                  <div className={styles.contact__iconWrapper}>
-                    <Linkedin className={styles.contact__icon} aria-hidden="true" />
-                  </div>
-                  <div className={styles.contact__methodInfo}>
-                    <h3 className={styles.contact__methodTitle}>{CONTACT_CONTENT.LINKEDIN_LABEL}</h3>
-                    <a
-                      href={PERSONAL_INFO.LINKEDIN_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.contact__link}
-                    >
-                      {PERSONAL_INFO.LINKEDIN_DISPLAY}
-                    </a>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className={styles.contact__method}
-                  whileHover={{ x: TRANSFORM.ROTATE_RANGE }}
-                  transition={{ duration: ANIMATION_DURATION.FAST }}
-                >
-                  <div className={styles.contact__iconWrapper}>
-                    <MapPin className={styles.contact__icon} aria-hidden="true" />
-                  </div>
-                  <div className={styles.contact__methodInfo}>
-                    <h3 className={styles.contact__methodTitle}>{CONTACT_CONTENT.LOCATION_LABEL}</h3>
-                    <p className={styles.contact__text}>{PERSONAL_INFO.LOCATION}</p>
-                  </div>
-                </motion.div>
+                {CONTACT_METHODS.map(({ Icon, title, body }) => (
+                  <motion.div
+                    key={title}
+                    className={styles.contact__method}
+                    whileHover={{ x: TRANSFORM.ROTATE_RANGE }}
+                    transition={{ duration: ANIMATION_DURATION.FAST }}
+                  >
+                    <div className={styles.contact__iconWrapper}>
+                      <Icon className={styles.contact__icon} aria-hidden="true" />
+                    </div>
+                    <div className={styles.contact__methodInfo}>
+                      <h3 className={styles.contact__methodTitle}>{title}</h3>
+                      {body}
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </ScrollReveal>
