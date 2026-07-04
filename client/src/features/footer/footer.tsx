@@ -1,5 +1,5 @@
 import { TAGLINES, COPYRIGHT } from '@/shared/constants/strings';
-import styles from './home.module.css';
+import styles from '@/pages/home/home.module.css';
 
 export function Footer() {
   return (

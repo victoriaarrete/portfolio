@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { GeometricWireframe } from '@/components/geometric-wireframe';
+import { GeometricWireframe } from './geometric-wireframe';
 import {
   ANIMATION_DURATION,
   ANIMATION_DELAY,
@@ -14,7 +14,7 @@ import {
   ABOUT_APPROACH,
   ABOUT_IMPACT,
 } from '@/shared/constants/strings';
-import styles from './home.module.css';
+import styles from '@/pages/home/home.module.css';
 
 export function About() {
   return (

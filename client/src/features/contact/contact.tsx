@@ -10,7 +10,7 @@ import {
   PERSONAL_INFO,
 } from '@/shared/constants/strings';
 import { SectionTitle } from '@/shared/components/section-title';
-import styles from './home.module.css';
+import styles from '@/pages/home/home.module.css';
 
 // The three contact cards share identical chrome (icon tile, title, hover
 // nudge); only the icon and body differ.

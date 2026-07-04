@@ -1,5 +1,5 @@
 import { ScrollReveal } from '@/shared/components/scroll-reveal';
-import { TangleToClarity } from '@/components/tangle-to-clarity';
+import { TangleToClarity } from './tangle-to-clarity';
 import { ANIMATION_DELAY } from '@/shared/constants/layout';
 import {
   SECTION_TITLES,
@@ -8,7 +8,7 @@ import {
   LEADERSHIP_PRINCIPLES,
 } from '@/shared/constants/strings';
 import { SectionTitle } from '@/shared/components/section-title';
-import styles from './home.module.css';
+import styles from '@/pages/home/home.module.css';
 
 export function Philosophy() {
   return (
