@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from '@/App';
+import App from '@/app/App';
 
 // Critical-path smoke tests: the page renders, every section exists, the
 // interactive pieces respond. These guard future refactors, not pixels —
