@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
@@ -26,5 +27,10 @@ export default defineConfig({
       '@': resolve(__dirname, 'client/src'),
       '@assets': resolve(__dirname, 'assets'),
     },
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    css: false,
   },
 });
