@@ -4,8 +4,7 @@ import { MotionConfig } from 'motion/react';
 import Home from '@/pages/home';
 import { CursorGlow } from '@/shared/components/cursor-glow';
 
-// Separate chunk: the 404 page (and the shadcn card it drags in) stays out
-// of the main bundle's critical path.
+// Separate chunk: the 404 page stays out of the main bundle's critical path.
 const NotFound = lazy(() => import('@/features/not-found/not-found'));
 
 function AppRoutes() {

@@ -77,6 +77,23 @@ export const BUTTON_LABELS = {
   LEARN_MORE: 'Learn More',
 } as const;
 
+// 404 Page - the broken URL seeds a maze (the "tangle to clarity" motif, applied
+// to the error state): every wrong turn gets its own tangle, and its one way out.
+export const NOT_FOUND = {
+  DOC_TITLE: '404 Page Not Found | Victoria Kirichenko',
+  KICKER: 'ERROR 404 - PAGE NOT FOUND',
+  TITLE_MAIN: 'Wrong turn.',
+  TITLE_ACCENT: 'Not a wasted one.',
+  LEAD_SUFFIX: " isn't a page here. But every tangle has a way through - this one leads home.",
+  MAZE_NOTE_PREFIX: '// maze seeded from ',
+  MAZE_NOTE_SUFFIX: ' - every wrong turn gets its own',
+  AI_NOTE: '// if an AI sent you here, it invented this URL. The exits below are real.',
+  SUGGEST_LABEL: 'Did you mean',
+  HOME_ACTION: 'Take the exit',
+  CONSOLE_PREFIX: '// wrong turn: ',
+  CONSOLE_SUFFIX: ' - solvable, like everything else. try victoria.maze()',
+} as const;
+
 // Console Messages
 export const CONSOLE_MESSAGES = {
   WELCOME_TITLE: "🚀 Welcome to Victoria Kirichenko's Portfolio!",
