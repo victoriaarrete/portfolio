@@ -120,6 +120,7 @@ export default function Home() {
       <ParticleSystem />
       <Navigation />
 
+      <main>
       {/* Hero Section */}
       <section ref={heroRef} id={NAV_SECTIONS.HERO} className={styles.hero}>
         <CodeBackground variant="band" />
@@ -137,8 +138,10 @@ export default function Home() {
             animate={{ opacity: OPACITY.VISIBLE }}
             transition={{ duration: ANIMATION_DURATION.VERY_SLOW, ease: EASING.DEFAULT }}
           >
-            {/* Role kicker, above the portrait (mobile) / above the name (desktop) */}
-            <motion.h2
+            {/* Role kicker, above the portrait (mobile) / above the name (desktop).
+                A <p>, not a heading: it precedes the h1 in the DOM and is a label,
+                not a section break (heading styles all come from the class). */}
+            <motion.p
               className={styles.hero__roles}
               aria-label={ROLES.FULL_SUBTITLE}
               initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
@@ -148,7 +151,7 @@ export default function Home() {
               {ROLES.LIST.map((role) => (
                 <span key={role} className={styles.hero__roleChip}>{role}</span>
               ))}
-            </motion.h2>
+            </motion.p>
 
             {/* Portrait: mobile = centred card in flow; desktop = pinned full-bleed
                 to the left edge with the name overlapping its faded right edge. */}
@@ -230,7 +233,7 @@ export default function Home() {
             animate={reduce ? undefined : { y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: EASING.EASE_IN_OUT }}
           >
-            <ChevronDown className={styles.hero__scrollIcon} />
+            <ChevronDown className={styles.hero__scrollIcon} aria-hidden="true" />
           </motion.button>
         </div>
       </section>
@@ -481,7 +484,7 @@ export default function Home() {
                             {index}
                             <span className={styles.philosophy__principleNumberBracket}>]</span>
                           </span>
-                          <h4 className={styles.philosophy__principleTitle}>{item.title}</h4>
+                          <h3 className={styles.philosophy__principleTitle}>{item.title}</h3>
                           <p className={styles.philosophy__principleDescription}>{item.description}</p>
                         </div>
                       </ScrollReveal>
@@ -564,7 +567,7 @@ export default function Home() {
                         {project.featured ? (
                           <div className={styles.projects__resultAction}>
                             <span className={styles.projects__acquiredChip}>
-                              Acquired by Perion <kbd>&#8629;</kbd>
+                              Acquired by Perion <kbd aria-hidden="true">&#8629;</kbd>
                             </span>
                             <span className={styles.projects__outcomeLabel}>outcome of the rebuild</span>
                           </div>
@@ -637,10 +640,10 @@ export default function Home() {
                     transition={{ duration: ANIMATION_DURATION.FAST }}
                   >
                     <div className={styles.contact__iconWrapper}>
-                      <Mail className={styles.contact__icon} />
+                      <Mail className={styles.contact__icon} aria-hidden="true" />
                     </div>
                     <div className={styles.contact__methodInfo}>
-                      <h4 className={styles.contact__methodTitle}>{CONTACT_CONTENT.EMAIL_LABEL}</h4>
+                      <h3 className={styles.contact__methodTitle}>{CONTACT_CONTENT.EMAIL_LABEL}</h3>
                       <a
                         href={`mailto:${PERSONAL_INFO.EMAIL}`}
                         className={styles.contact__link}
@@ -656,10 +659,10 @@ export default function Home() {
                     transition={{ duration: ANIMATION_DURATION.FAST }}
                   >
                     <div className={styles.contact__iconWrapper}>
-                      <Linkedin className={styles.contact__icon} />
+                      <Linkedin className={styles.contact__icon} aria-hidden="true" />
                     </div>
                     <div className={styles.contact__methodInfo}>
-                      <h4 className={styles.contact__methodTitle}>{CONTACT_CONTENT.LINKEDIN_LABEL}</h4>
+                      <h3 className={styles.contact__methodTitle}>{CONTACT_CONTENT.LINKEDIN_LABEL}</h3>
                       <a
                         href={PERSONAL_INFO.LINKEDIN_URL}
                         target="_blank"
@@ -677,10 +680,10 @@ export default function Home() {
                     transition={{ duration: ANIMATION_DURATION.FAST }}
                   >
                     <div className={styles.contact__iconWrapper}>
-                      <MapPin className={styles.contact__icon} />
+                      <MapPin className={styles.contact__icon} aria-hidden="true" />
                     </div>
                     <div className={styles.contact__methodInfo}>
-                      <h4 className={styles.contact__methodTitle}>{CONTACT_CONTENT.LOCATION_LABEL}</h4>
+                      <h3 className={styles.contact__methodTitle}>{CONTACT_CONTENT.LOCATION_LABEL}</h3>
                       <p className={styles.contact__text}>{PERSONAL_INFO.LOCATION}</p>
                     </div>
                   </motion.div>
@@ -690,6 +693,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className={styles.footer}>

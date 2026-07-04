@@ -434,5 +434,4 @@ export const SCROLL_BEHAVIOR = {
 // Aria Labels
 export const ARIA_LABELS = {
   TOGGLE_MOBILE_MENU: 'Toggle mobile menu',
-  PARTICLE_SYSTEM: 'true',
 } as const;

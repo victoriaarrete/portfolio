@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { PARTICLES, TIMING_MS, PERCENTAGE } from '@/constants/layout';
-import { ARIA_LABELS } from '@/constants/strings';
 
 export function ParticleSystem() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -61,7 +60,7 @@ export function ParticleSystem() {
     <div
       ref={containerRef}
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
-      aria-hidden={ARIA_LABELS.PARTICLE_SYSTEM}
+      aria-hidden="true"
     />
   );
 }
