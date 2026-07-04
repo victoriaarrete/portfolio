@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './code-background.module.css';
 
 /**
@@ -28,9 +28,28 @@ export function CodeBackground({ variant = 'radial' }: { variant?: 'radial' | 'b
   // Enough glyphs to fill tall/wide viewports down past the content line; the
   // container clips the overflow and the mask fades it at the right level.
   const field = useMemo(() => buildField(40000), []);
-  const cls = variant === 'band' ? `${styles.codeBg} ${styles['codeBg--band']}` : styles.codeBg;
+  const ref = useRef<HTMLDivElement>(null);
+  // Freeze the stream while its section is scrolled out of view - the two
+  // 200%-wide glyph layers otherwise animate (and cost compositor work)
+  // from page load even when nobody can see them. Pausing off-screen is
+  // invisible by definition; the animation resumes where it left off.
+  const [offscreen, setOffscreen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setOffscreen(!entry.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  const cls = [
+    styles.codeBg,
+    variant === 'band' ? styles['codeBg--band'] : '',
+    offscreen ? styles['codeBg--paused'] : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
   return (
-    <div className={cls} aria-hidden="true">
+    <div ref={ref} className={cls} aria-hidden="true">
       <div className={styles.codeBg__stream}>
         <pre className={styles.codeBg__chars}>{field}</pre>
         <pre className={styles.codeBg__chars}>{field}</pre>

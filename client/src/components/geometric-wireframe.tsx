@@ -324,26 +324,53 @@ export function GeometricWireframe({ shape = 'icosahedron', className }: Geometr
       mouseDampRef.current.y += (mouseRef.current.y - mouseDampRef.current.y) * 8 * dt;
 
       gl.clear(gl.COLOR_BUFFER_BIT);
-      if (uniforms.u_mouse) gl.uniform2f(uniforms.u_mouse, mouseDampRef.current.x, mouseDampRef.current.y);
+      if (uniforms.u_mouse)
+        gl.uniform2f(uniforms.u_mouse, mouseDampRef.current.x, mouseDampRef.current.y);
       if (uniforms.u_resolution) gl.uniform2f(uniforms.u_resolution, canvas.width, canvas.height);
       if (uniforms.u_pixelRatio) gl.uniform1f(uniforms.u_pixelRatio, dpr);
       if (uniforms.u_time) gl.uniform1f(uniforms.u_time, elapsed);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
+    let io: IntersectionObserver | undefined;
     if (reduceMotion) {
       // Hold a single, pleasant still frame
       renderFrame(start, 4.0);
     } else {
+      // Run the WebGL loop only while the canvas is in the viewport. The
+      // wireframe sits mid-page, so an ungated loop burns GPU/CPU for the
+      // whole scroll life of the page. Elapsed time accumulates only while
+      // running, so the shape resumes exactly where it paused.
+      let elapsedBase = 0;
+      let runStart = start;
+      let running = false;
+
       const loop = (now: number) => {
-        renderFrame(now, (now - start) / 1000);
+        renderFrame(now, elapsedBase + (now - runStart) / 1000);
         raf = requestAnimationFrame(loop);
       };
-      raf = requestAnimationFrame(loop);
+      const startLoop = () => {
+        if (running) return;
+        running = true;
+        runStart = performance.now();
+        lastTime = runStart;
+        raf = requestAnimationFrame(loop);
+      };
+      const stopLoop = () => {
+        if (!running) return;
+        running = false;
+        elapsedBase += (performance.now() - runStart) / 1000;
+        cancelAnimationFrame(raf);
+        raf = 0;
+      };
+
+      io = new IntersectionObserver(([entry]) => (entry.isIntersecting ? startLoop() : stopLoop()));
+      io.observe(container);
     }
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
+      io?.disconnect();
       ro.disconnect();
       window.removeEventListener('pointermove', handlePointer);
       gl.deleteProgram(program);

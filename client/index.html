@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Victoria Kirichenko | R&D Leader</title>
     <meta name="description" content="R&D Team Leader who treats the system and the people as one problem. I build systems that scale — and teams that want to. Strong code needs strong culture; I build both." />
     <meta property="og:title" content="Victoria Kirichenko | R&D Leader" />
@@ -14,6 +14,7 @@
     <meta property="og:image:alt" content="Victoria Kirichenko — R&D Leader. Systems that scale, teams that want to." />
     <meta property="og:url" content="https://victoriakirichenko.com/" />
     <meta property="og:site_name" content="Victoria Kirichenko Portfolio" />
+    <link rel="canonical" href="https://victoriakirichenko.com/" />
 
     <!-- Twitter Card tags -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -26,15 +27,27 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3">
     <meta name="msapplication-TileImage" content="apple-touch-icon.png?v=3">
+    <!-- LCP image: preload so the download starts with the HTML, not after the JS bundle executes -->
+    <link rel="preload" as="image" href="/victoria-portrait.webp" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Victoria Kirichenko",
+      "jobTitle": "R&D Team Leader",
+      "url": "https://victoriakirichenko.com/",
+      "image": "https://victoriakirichenko.com/og-preview.png",
+      "sameAs": ["https://www.linkedin.com/in/victoria-kirichenko/"]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
-    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>
 </html>

@@ -29,8 +29,10 @@ export const TAGLINES = {
   PHILOSOPHY_KICKER: 'How I operate',
   PHILOSOPHY_QUOTE_LEAD: "I don't lead by adding process - I lead by ",
   PHILOSOPHY_QUOTE_EMPHASIS: 'removing noise.',
-  PHILOSOPHY_QUOTE_REST: " Give people a clear goal, real ownership, and a high bar, and they'll surprise you.",
-  FOOTER_QUOTE: 'Not despite the struggle, but because of it. The hard problems are the ones that taught me everything.',
+  PHILOSOPHY_QUOTE_REST:
+    " Give people a clear goal, real ownership, and a high bar, and they'll surprise you.",
+  FOOTER_QUOTE:
+    'Not despite the struggle, but because of it. The hard problems are the ones that taught me everything.',
 } as const;
 
 // Section Navigation
@@ -80,38 +82,38 @@ export const CONSOLE_MESSAGES = {
   WELCOME_TITLE: "🚀 Welcome to Victoria Kirichenko's Portfolio!",
   HELLO_DEV: '👩‍💻 Hello fellow developer!',
   CURIOUS_MESSAGE: "Looks like you're curious about how this site works. I love that! 🔍",
-  
+
   TECH_STACK_TITLE: '🛠️ Tech Stack:',
   TECH_FRONTEND: '   Frontend: React 18 + TypeScript + Vite',
   TECH_STYLING: '   Styling: Tailwind CSS + Framer Motion',
   TECH_UI: '   UI: Radix UI + shadcn/ui components',
   TECH_DEPLOYMENT: '   Deployment: Static build (no backend needed)',
-  
+
   FUN_FACTS_TITLE: '💡 Fun Development Facts:',
   FUN_PARTICLES: '   • This site has animated particles (check the background!)',
   FUN_GLASS: '   • Glassmorphism effects everywhere',
   FUN_MAILTO: '   • Contact form uses mailto (perfect for static deployment)',
   FUN_OBSERVER: '   • Intersection Observer for scroll animations',
   FUN_DARK: '   • Dark mode with custom CSS variables',
-  
+
   ABOUT_TITLE: '🎯 About Victoria:',
-  ABOUT_EXPERIENCE: "   • 11+ years in tech (Full Stack → Team Lead → R&D Leader)",
+  ABOUT_EXPERIENCE: '   • 11+ years in tech (Full Stack → Team Lead → R&D Leader)',
   ABOUT_PASSION: '   • Passionate about AI-driven innovation',
   ABOUT_CULTURE: '   • Building high-performance teams with strong culture',
-  
+
   EASTER_EGG_TITLE: '🎉 Easter Egg Unlocked!',
   EASTER_EGG_HINT: "Since you're here, try typing: victoria.skills() in the console!",
-  
+
   PERFORMANCE_TITLE: '⚡ Performance Notes:',
   PERFORMANCE_VITE: '   • Optimized with Vite for fast loading',
   PERFORMANCE_LAZY: '   • Lazy loading for better performance',
   PERFORMANCE_MINIFIED: '   • Minified CSS and JS for production',
-  
+
   COLLABORATION_TITLE: '💼 Interested in collaboration?',
   COLLABORATION_HINT: 'Type: victoria.contact() for contact info!',
-  
+
   DIVIDER: '─────────────────────────────────────────────────────────────',
-  
+
   // Window functions
   SKILLS_LANGUAGES: '   Languages: TypeScript, Python, JavaScript, .NET',
   SKILLS_FRONTEND: '   Frontend: React, HTML5, CSS3',
@@ -119,10 +121,10 @@ export const CONSOLE_MESSAGES = {
   SKILLS_CLOUD: '   Cloud & DevOps: AWS, Azure, Docker, Kubernetes, GCP',
   SKILLS_LEADERSHIP: '   Leadership: Team Building, Agile, Strategic Planning',
   SKILLS_RETURN: 'Skills loaded! 💪',
-  
+
   CONTACT_TITLE: "📧 Let's connect!",
   CONTACT_RETURN: 'Ready to innovate together! 🤝',
-  
+
   THEME_TITLE: '🌙 Dark Mode Variables:',
   THEME_BG: '   --background: 2 6% 10% (slate-950)',
   THEME_FG: '   --foreground: 0 0% 98% (white)',
@@ -146,7 +148,8 @@ export const CONSOLE_SDK = {
   GREETING_MAZE_TAG: "→ there's always a way through",
 
   // Returned when the object is coerced to a string (e.g. `${victoria}`).
-  SIGNATURE: 'Victoria Kirichenko - R&D Leader. I build systems that scale, and teams that want to.',
+  SIGNATURE:
+    'Victoria Kirichenko - R&D Leader. I build systems that scale, and teams that want to.',
 
   COMMANDS: [
     { command: 'victoria.readme()', what: 'how I work, what I value, how to get my best' },
@@ -204,21 +207,69 @@ export const CONSOLE_SDK = {
 
   IMPACT: [
     { area: 'AI workflow automation', where: 'Swish.ai', outcome: '−60% manual tasks automated' },
-    { area: 'Team leadership', where: 'Swish.ai · Perion', outcome: '5+ QA engineers led - offshore & onsite' },
-    { area: 'Ad-tech platform', where: 'Perion Network', outcome: 'Millions of ad requests & users / day' },
+    {
+      area: 'Team leadership',
+      where: 'Swish.ai · Perion',
+      outcome: '5+ QA engineers led - offshore & onsite',
+    },
+    {
+      area: 'Ad-tech platform',
+      where: 'Perion Network',
+      outcome: 'Millions of ad requests & users / day',
+    },
     { area: 'Trajectory', where: '11+ years', outcome: 'Full-Stack → Team Lead → R&D Leader' },
   ],
   IMPACT_RETURN: "Numbers I'm happy to walk you through.",
 
   EXPERIENCE: [
-    { role: 'R&D Team Leader', company: 'Zencity', period: 'Mar 2026 → now', focus: 'Just getting started - magic in progress' },
-    { role: 'R&D Team Leader', company: 'Swish.ai', period: 'Apr 2024 → Oct 2025', focus: 'AI-driven IT workflow optimization' },
-    { role: 'R&D Team Leader', company: 'Perion Network', period: 'Apr 2021 → Apr 2024', focus: 'Led 5; microservices + MongoDB' },
-    { role: 'Full-Stack Developer', company: 'Perion Network', period: 'Jun 2018 → Apr 2021', focus: 'React · Next.js · Node' },
-    { role: 'Full-Stack Developer', company: 'Mind Connect', period: 'Mar 2016 → Apr 2018', focus: 'Call-center platform' },
-    { role: 'Full-Stack Developer', company: 'PowerTech', period: 'Feb 2015 → Mar 2016', focus: '.NET · MSSQL' },
-    { role: 'Full-Stack Developer', company: 'Early Career', period: 'Dec 2012 → Jan 2015', focus: 'Foundations across the stack' },
-    { role: 'MSc, Computer Science', company: 'Penza State University', period: '2007 → 2012', focus: 'Foundations' },
+    {
+      role: 'R&D Team Leader',
+      company: 'Zencity',
+      period: 'Mar 2026 → now',
+      focus: 'Just getting started - magic in progress',
+    },
+    {
+      role: 'R&D Team Leader',
+      company: 'Swish.ai',
+      period: 'Apr 2024 → Oct 2025',
+      focus: 'AI-driven IT workflow optimization',
+    },
+    {
+      role: 'R&D Team Leader',
+      company: 'Perion Network',
+      period: 'Apr 2021 → Apr 2024',
+      focus: 'Led 5; microservices + MongoDB',
+    },
+    {
+      role: 'Full-Stack Developer',
+      company: 'Perion Network',
+      period: 'Jun 2018 → Apr 2021',
+      focus: 'React · Next.js · Node',
+    },
+    {
+      role: 'Full-Stack Developer',
+      company: 'Mind Connect',
+      period: 'Mar 2016 → Apr 2018',
+      focus: 'Call-center platform',
+    },
+    {
+      role: 'Full-Stack Developer',
+      company: 'PowerTech',
+      period: 'Feb 2015 → Mar 2016',
+      focus: '.NET · MSSQL',
+    },
+    {
+      role: 'Full-Stack Developer',
+      company: 'Early Career',
+      period: 'Dec 2012 → Jan 2015',
+      focus: 'Foundations across the stack',
+    },
+    {
+      role: 'MSc, Computer Science',
+      company: 'Penza State University',
+      period: '2007 → 2012',
+      focus: 'Foundations',
+    },
   ],
   EXPERIENCE_RETURN: 'Eleven years, one direction: up and toward the hard problems.',
 
@@ -281,11 +332,14 @@ export const LEADERSHIP_PRINCIPLES = [
 
 // About Section Content
 export const ABOUT_CONTENT = {
-  INTRO: "I lead R&D teams, and I treat the system and the people as one problem - because they are. The cleanest architecture won't save a team that doesn't trust each other.",
-  PHILOSOPHY: "I optimize for clarity over cleverness - I'd rather ship the decision that moves the product than the one that looks good in a doc.",
+  INTRO:
+    "I lead R&D teams, and I treat the system and the people as one problem - because they are. The cleanest architecture won't save a team that doesn't trust each other.",
+  PHILOSOPHY:
+    "I optimize for clarity over cleverness - I'd rather ship the decision that moves the product than the one that looks good in a doc.",
   APPROACH_TITLE: 'My approach is simple:',
   SIGNATURE_KICKER: 'What shaped me',
-  BACKGROUND: 'I moved to a new country alone and built my career from scratch - that experience shaped how I lead: direct, resilient, and focused on what actually matters.',
+  BACKGROUND:
+    'I moved to a new country alone and built my career from scratch - that experience shaped how I lead: direct, resilient, and focused on what actually matters.',
   FOCUS: "I'm interested in complex problems where systems, data, and people intersect.",
   FOCUS_LABEL: 'Now focused on',
   IMPACT_TITLE: 'Proof, not adjectives',
@@ -330,43 +384,77 @@ type ExperienceCommit = {
 
 export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
   {
-    hash: 'a1f0c2e', type: 'feat', shape: 'head', head: true,
-    role: 'R&D Team Leader', company: 'Zencity', period: 'Mar 2026 - present',
+    hash: 'a1f0c2e',
+    type: 'feat',
+    shape: 'head',
+    head: true,
+    role: 'R&D Team Leader',
+    company: 'Zencity',
+    period: 'Mar 2026 - present',
     blurb: 'Leading R&D as the team scales its civic-data platform.',
   },
   {
-    hash: '7e3b9d4', type: 'feat', shape: 'commit',
-    role: 'R&D Team Leader', company: 'Swish.ai', period: 'Apr 2024 - Oct 2025',
+    hash: '7e3b9d4',
+    type: 'feat',
+    shape: 'commit',
+    role: 'R&D Team Leader',
+    company: 'Swish.ai',
+    period: 'Apr 2024 - Oct 2025',
     blurb: 'People-first leadership of AI-driven IT workflow automation, delivered with Scrum.',
   },
   {
-    hash: 'c4a07f1', type: 'merge', shape: 'merge',
-    role: 'R&D Team Leader', company: 'Perion Network', period: 'Apr 2021 - Apr 2024',
+    hash: 'c4a07f1',
+    type: 'merge',
+    shape: 'merge',
+    role: 'R&D Team Leader',
+    company: 'Perion Network',
+    period: 'Apr 2021 - Apr 2024',
     blurb: 'Promoted to lead 5 devs + QA across back-office, microservices and MongoDB.',
   },
   {
-    hash: '9b21e85', type: 'feat', shape: 'branch',
-    role: 'Full Stack Developer', company: 'Perion Network', period: 'Jun 2018 - Apr 2021',
+    hash: '9b21e85',
+    type: 'feat',
+    shape: 'branch',
+    role: 'Full Stack Developer',
+    company: 'Perion Network',
+    period: 'Jun 2018 - Apr 2021',
     blurb: 'Built scalable React / Next.js front ends and Node / MongoDB microservices.',
   },
   {
-    hash: '3d5c0aa', type: 'feat', shape: 'close',
-    role: 'Full Stack Developer', company: 'Mind Connect', period: 'Mar 2016 - Apr 2018',
+    hash: '3d5c0aa',
+    type: 'feat',
+    shape: 'close',
+    role: 'Full Stack Developer',
+    company: 'Mind Connect',
+    period: 'Mar 2016 - Apr 2018',
     blurb: 'Designed and shipped a full call-center management platform end to end.',
   },
   {
-    hash: 'f08e612', type: 'feat', shape: 'commit',
-    role: 'Full Stack Developer', company: 'PowerTech', period: 'Feb 2015 - Mar 2016',
+    hash: 'f08e612',
+    type: 'feat',
+    shape: 'commit',
+    role: 'Full Stack Developer',
+    company: 'PowerTech',
+    period: 'Feb 2015 - Mar 2016',
     blurb: 'Built a project-management web app on .NET and Microsoft SQL Server.',
   },
   {
-    hash: '2b4471c', type: 'feat', shape: 'commit',
-    role: 'Full Stack Developer', company: 'Early career', period: 'Dec 2012 - Jan 2015',
+    hash: '2b4471c',
+    type: 'feat',
+    shape: 'commit',
+    role: 'Full Stack Developer',
+    company: 'Early career',
+    period: 'Dec 2012 - Jan 2015',
     blurb: 'Foundation years building across the full stack.',
   },
   {
-    hash: 'd9aa130', type: 'init', shape: 'tail', root: true,
-    role: 'M.Sc. Computer Science', company: 'Penza State University', period: '2007 - 2012',
+    hash: 'd9aa130',
+    type: 'init',
+    shape: 'tail',
+    root: true,
+    role: 'M.Sc. Computer Science',
+    company: 'Penza State University',
+    period: '2007 - 2012',
     blurb: 'Root commit - computer-science foundations.',
   },
 ];
@@ -409,6 +497,44 @@ export const TESTIMONIALS: readonly Testimonial[] = [
   },
 ];
 
+// Projects (the ⌘K palette results). The featured entry gets the active row
+// treatment + the "Acquired by Perion" outcome chip.
+type Project = {
+  group?: string;
+  featured?: boolean;
+  title: string;
+  company: string;
+  description: string;
+  tags: readonly string[];
+};
+
+export const PROJECTS: readonly Project[] = [
+  {
+    group: 'Featured',
+    featured: true,
+    title: 'Content Arbitrage Platform',
+    company: 'CIQ/Perion',
+    description:
+      'Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily — work that led to the startup’s acquisition by Perion.',
+    tags: ['Microservices', 'AdTech', 'Scale'],
+  },
+  {
+    group: 'More',
+    title: 'AI Workflow Optimizer',
+    company: 'Swish.ai',
+    description:
+      'Led development of AI-driven automation platform that optimizes IT workflows, reducing manual tasks by 60% and improving team efficiency across multiple departments.',
+    tags: ['AI/ML', 'Automation', 'Workflow'],
+  },
+  {
+    title: 'Internal Productivity Tools',
+    company: 'Multiple Organizations',
+    description:
+      'Designed and implemented custom productivity tools that streamlined development workflows, improved team collaboration, and enhanced project management across R&D teams.',
+    tags: ['Tools', 'Productivity', 'Collaboration'],
+  },
+];
+
 // Contact Section Content
 export const CONTACT_CONTENT = {
   TITLE: 'Get In Touch',
@@ -434,5 +560,4 @@ export const SCROLL_BEHAVIOR = {
 // Aria Labels
 export const ARIA_LABELS = {
   TOGGLE_MOBILE_MENU: 'Toggle mobile menu',
-  PARTICLE_SYSTEM: 'true',
 } as const;
