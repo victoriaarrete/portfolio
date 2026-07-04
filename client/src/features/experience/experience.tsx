@@ -15,17 +15,17 @@ export function Experience() {
             {/* Terminal chrome: traffic lights + the command that produced this log */}
             <div className={styles.experience__bar} aria-hidden="true">
               <span className={styles.experience__dots}>
-                <span className={styles.experience__trafficDot} />
-                <span className={styles.experience__trafficDot} />
-                <span className={styles.experience__trafficDot} />
+                <span className={styles['experience__traffic-dot']} />
+                <span className={styles['experience__traffic-dot']} />
+                <span className={styles['experience__traffic-dot']} />
               </span>
               <span className={styles.experience__file}>career.log</span>
             </div>
 
             <div className={styles.experience__prompt} aria-hidden="true">
-              <span className={styles.experience__promptSign}>victoria@career</span>
-              <span className={styles.experience__promptPath}> ~ </span>
-              <span className={styles.experience__promptCmd}>
+              <span className={styles['experience__prompt-sign']}>victoria@career</span>
+              <span className={styles['experience__prompt-path']}> ~ </span>
+              <span className={styles['experience__prompt-cmd']}>
                 git log --author=victoria --graph
               </span>
             </div>
@@ -45,22 +45,24 @@ export function Experience() {
                       style={{ ['--row-op' as string]: rowOpacity }}
                     >
                       <div className={styles.experience__gutter} aria-hidden="true">
-                        {railUp && <span className={styles.experience__railUp} />}
-                        {railDown && <span className={styles.experience__railDown} />}
+                        {railUp && <span className={styles['experience__rail-up']} />}
+                        {railDown && <span className={styles['experience__rail-down']} />}
 
                         {shape === 'merge' && (
                           <>
-                            <span className={styles.experience__elbowOpen} />
-                            <span className={styles.experience__branchDownMerge} />
+                            <span className={styles['experience__elbow-open']} />
+                            <span className={styles['experience__branch-down-merge']} />
                           </>
                         )}
                         {shape === 'branch' && (
                           <>
-                            <span className={styles.experience__branchUp} />
-                            <span className={styles.experience__branchDown} />
+                            <span className={styles['experience__branch-up']} />
+                            <span className={styles['experience__branch-down']} />
                           </>
                         )}
-                        {shape === 'close' && <span className={styles.experience__elbowClose} />}
+                        {shape === 'close' && (
+                          <span className={styles['experience__elbow-close']} />
+                        )}
 
                         <span
                           className={`${styles.experience__node} ${
@@ -88,7 +90,7 @@ export function Experience() {
                         </p>
                         <p className={styles.experience__meta}>
                           <span className={styles.experience__hash}>{commit.hash}</span>
-                          <span className={styles.experience__metaSep}> · </span>
+                          <span className={styles['experience__meta-sep']}> · </span>
                           {commit.period}
                         </p>
                         <p className={styles.experience__blurb}>{commit.blurb}</p>

@@ -33,14 +33,14 @@ export function About() {
               ease: EASING.DEFAULT,
             }}
           >
-            <h2 className={styles.about__sectionLabel}>{SECTION_TITLES.ABOUT}</h2>
-            <h3 className={styles.about__manifestoTitle}>
-              <span className={styles.about__manifestoSentence}>
+            <h2 className={styles['about__section-label']}>{SECTION_TITLES.ABOUT}</h2>
+            <h3 className={styles['about__manifesto-title']}>
+              <span className={styles['about__manifesto-sentence']}>
                 Strong code needs strong culture.
               </span>{' '}
-              <span className={styles.about__manifestoNoWrap}>I build both.</span>
+              <span className={styles['about__manifesto-no-wrap']}>I build both.</span>
             </h3>
-            <div className={styles.about__manifestoProse}>
+            <div className={styles['about__manifesto-prose']}>
               <p className={styles.about__lead}>{ABOUT_CONTENT.INTRO}</p>
               <p className={styles.about__body}>{ABOUT_CONTENT.PHILOSOPHY}</p>
             </div>
@@ -59,11 +59,11 @@ export function About() {
             }}
           >
             <span className={styles.about__kicker}>{ABOUT_CONTENT.IMPACT_TITLE}</span>
-            <ul className={styles.about__impactList}>
+            <ul className={styles['about__impact-list']}>
               {ABOUT_IMPACT.map((item, index) => (
                 <motion.li
                   key={item.label}
-                  className={styles.about__impactRow}
+                  className={styles['about__impact-row']}
                   initial={{ opacity: OPACITY.HIDDEN, y: INITIAL_OFFSET.Y_SMALL }}
                   whileInView={{ opacity: OPACITY.VISIBLE, y: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
@@ -73,8 +73,8 @@ export function About() {
                     ease: EASING.DEFAULT,
                   }}
                 >
-                  <span className={styles.about__impactMetric}>{item.metric}</span>
-                  <span className={styles.about__impactLabel}>{item.label}</span>
+                  <span className={styles['about__impact-metric']}>{item.metric}</span>
+                  <span className={styles['about__impact-label']}>{item.label}</span>
                 </motion.li>
               ))}
             </ul>
@@ -92,19 +92,19 @@ export function About() {
               ease: EASING.DEFAULT,
             }}
           >
-            <div className={styles.about__termBar} aria-hidden="true">
-              <span className={styles.about__termFile}>approach.sh</span>
-              <span className={styles.about__termTag}>bash</span>
+            <div className={styles['about__term-bar']} aria-hidden="true">
+              <span className={styles['about__term-file']}>approach.sh</span>
+              <span className={styles['about__term-tag']}>bash</span>
             </div>
-            <div className={styles.about__termBody}>
-              <p className={styles.about__termComment} aria-hidden="true">
+            <div className={styles['about__term-body']}>
+              <p className={styles['about__term-comment']} aria-hidden="true">
                 # my approach is simple
               </p>
               <ol className={styles.about__script}>
                 {ABOUT_APPROACH.map((item, index) => (
                   <motion.li
                     key={index}
-                    className={styles.about__scriptLine}
+                    className={styles['about__script-line']}
                     initial={{ opacity: OPACITY.HIDDEN, x: INITIAL_OFFSET.X_SMALL }}
                     whileInView={{ opacity: OPACITY.VISIBLE, x: 0 }}
                     viewport={{ once: true, margin: '-60px' }}
@@ -114,7 +114,7 @@ export function About() {
                       ease: EASING.DEFAULT,
                     }}
                   >
-                    <span className={styles.about__lineNum} aria-hidden="true">
+                    <span className={styles['about__line-num']} aria-hidden="true">
                       {index + 1}
                     </span>
                     <span className={styles.about__code}>
@@ -150,13 +150,13 @@ export function About() {
             }}
           >
             <GeometricWireframe className={styles.about__figure} />
-            <div className={styles.about__signatureBody}>
+            <div className={styles['about__signature-body']}>
               <span className={styles.about__kicker}>{ABOUT_CONTENT.SIGNATURE_KICKER}</span>
               <blockquote className={styles.about__journey}>{ABOUT_CONTENT.BACKGROUND}</blockquote>
             </div>
-            <div className={styles.about__signatureFooter}>
+            <div className={styles['about__signature-footer']}>
               <p className={styles.about__focus}>
-                <span className={styles.about__focusLabel}>{ABOUT_CONTENT.FOCUS_LABEL}</span>
+                <span className={styles['about__focus-label']}>{ABOUT_CONTENT.FOCUS_LABEL}</span>
                 {ABOUT_CONTENT.FOCUS}
               </p>
             </div>

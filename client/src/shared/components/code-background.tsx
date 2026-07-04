@@ -42,17 +42,17 @@ export function CodeBackground({ variant = 'radial' }: { variant?: 'radial' | 'b
     return () => io.disconnect();
   }, []);
   const cls = [
-    styles.codeBg,
-    variant === 'band' ? styles['codeBg--band'] : '',
-    offscreen ? styles['codeBg--paused'] : '',
+    styles['code-background'],
+    variant === 'band' ? styles['code-background--band'] : '',
+    offscreen ? styles['code-background--paused'] : '',
   ]
     .filter(Boolean)
     .join(' ');
   return (
     <div ref={ref} className={cls} aria-hidden="true">
-      <div className={styles.codeBg__stream}>
-        <pre className={styles.codeBg__chars}>{field}</pre>
-        <pre className={styles.codeBg__chars}>{field}</pre>
+      <div className={styles['code-background__stream']}>
+        <pre className={styles['code-background__chars']}>{field}</pre>
+        <pre className={styles['code-background__chars']}>{field}</pre>
       </div>
     </div>
   );

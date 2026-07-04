@@ -15,9 +15,9 @@
    Type system - monospace for display & labels (body stays Inter)
    ========================================================================== */
 .section__title,
-.hero__roleChip,
+.hero__role-chip,
 .about__kicker,
-.about__manifestoTitle,
+.about__manifesto-title,
 .projects__tag,
 .footer__name {
   font-family: var(--font-family-mono);
@@ -26,10 +26,10 @@
 /* Titles & buttons in uppercase (matches the monospace brutalist look) */
 .section__title,
 .hero__title,
-.about__manifestoTitle,
+.about__manifesto-title,
 .card__title,
 .projects__title,
-.philosophy__principleTitle,
+.philosophy__principle-title,
 .contact__title,
 .footer__name,
 .button {
@@ -38,7 +38,7 @@
 
 /* Spaced caps for the large display titles */
 .section__title,
-.about__manifestoTitle {
+.about__manifesto-title {
   letter-spacing: 0.04em;
 }
 
@@ -124,7 +124,7 @@
 
 /* Mobile: a bottom fade (name rises into it) + a soft top fade so the fixed
    nav stays legible. Desktop swaps to a right-edge fade (see 1024). */
-.hero__portraitScrim {
+.hero__portrait-scrim {
   display: block;
   position: absolute;
   inset: 0;
@@ -140,7 +140,7 @@
   );
 }
 
-.hero__portraitImage {
+.hero__portrait-image {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -174,7 +174,7 @@
    Edge-fade (matching the page CodeBackground's mask) so the code has no hard
    rectangular border - it bleeds toward the edges and reads as the same ambient
    field flowing across the portrait, not a separate boxed-in patch. */
-.hero__scanStreamMask {
+.hero__scan-stream-mask {
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -206,7 +206,7 @@
 /* Wide row (two identical char blocks) that scrolls right-to-left for a seamless data stream.
    Matched to the page-level CodeBackground (60s, same glyph scale) so it reads as the
    SAME ambient field passing over the portrait - not a separate, faster overlay. */
-.hero__scanStream {
+.hero__scan-stream {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -217,7 +217,7 @@
   animation: heroScanStream 60s linear infinite;
 }
 
-.hero__scanChars {
+.hero__scan-chars {
   flex: 0 0 50%;
   height: 100%;
   margin: 0;
@@ -235,7 +235,7 @@
 }
 
 /* Cursor-following glow (revealed on hover) */
-.hero__scanGlow {
+.hero__scan-glow {
   position: absolute;
   inset: 0;
   opacity: 0;
@@ -248,11 +248,11 @@
   transition: opacity 0.35s ease;
 }
 
-.hero__portrait:hover .hero__scanChars {
+.hero__portrait:hover .hero__scan-chars {
   color: hsla(42, 45%, 92%, 0.28);
 }
 
-.hero__portrait:hover .hero__scanGlow {
+.hero__portrait:hover .hero__scan-glow {
   opacity: 1;
 }
 
@@ -280,13 +280,13 @@
   gap: 0;
 }
 
-.hero__titleMain {
+.hero__title-main {
   display: block;
   color: var(--color-foreground);
   font-size: var(--font-size-5xl);
 }
 
-.hero__titleAccent {
+.hero__title-accent {
   display: block;
   /* Outlined (stroke-only) counterpart to the solid first name - a real
      two-tone contrast that reads, unlike the near-white gradient before. */
@@ -311,7 +311,7 @@
 
 /* Editorial kicker - plain uppercase, tracked label (no rule), matching the
    reference's top-left role line. */
-.hero__roleChip {
+.hero__role-chip {
   display: inline-flex;
   align-items: center;
   padding: 0;
@@ -353,11 +353,11 @@
     font-size: var(--font-size-6xl);
   }
 
-  .hero__titleMain {
+  .hero__title-main {
     font-size: var(--font-size-6xl);
   }
 
-  .hero__titleAccent {
+  .hero__title-accent {
     font-size: var(--font-size-6xl);
   }
 
@@ -367,7 +367,7 @@
   }
 
   /* Room now to set the metric and its label inline on a shared baseline. */
-  .about__impactRow {
+  .about__impact-row {
     flex-direction: row;
     align-items: baseline;
     gap: var(--spacing-3);
@@ -385,11 +385,11 @@
     margin-bottom: var(--spacing-6);
   }
 
-  .hero__titleMain {
+  .hero__title-main {
     font-size: var(--font-size-6xl);
   }
 
-  .hero__titleAccent {
+  .hero__title-accent {
     font-size: var(--font-size-6xl);
   }
 
@@ -445,7 +445,7 @@
   }
 
   /* Swap the mobile bottom-fade for the desktop right-edge fade (+ soft top) */
-  .hero__portraitScrim {
+  .hero__portrait-scrim {
     display: block;
     background:
       linear-gradient(90deg, transparent 42%, var(--hero-fade) 100%),
@@ -500,7 +500,7 @@
 }
 
 /* Scroll cue */
-.hero__scrollCue {
+.hero__scroll-cue {
   position: absolute;
   bottom: var(--spacing-8);
   left: 50%;
@@ -508,7 +508,7 @@
   z-index: var(--z-index-base);
 }
 
-.hero__scrollButton {
+.hero__scroll-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -521,24 +521,24 @@
   transition: color var(--transition-fast);
 }
 
-.hero__scrollButton:hover {
+.hero__scroll-button:hover {
   color: var(--color-primary-400);
 }
 
-.hero__scrollButton:focus-visible {
+.hero__scroll-button:focus-visible {
   outline: var(--outline-width) solid var(--color-primary-400);
   outline-offset: var(--outline-offset);
   border-radius: var(--radius-full);
 }
 
-.hero__scrollIcon {
+.hero__scroll-icon {
   width: var(--icon-size-md);
   height: var(--icon-size-md);
 }
 
 /* Hide the scroll cue where the centered stack would collide with it */
 @media (max-width: 768px), (max-height: 820px) {
-  .hero__scrollCue {
+  .hero__scroll-cue {
     display: none;
   }
 }
@@ -560,7 +560,7 @@
 }
 
 /* All section titles share the ABOUT kicker treatment: a small, left-aligned,
-   letter-spaced mono label in warm muted taupe (matches .about__sectionLabel). */
+   letter-spaced mono label in warm muted taupe (matches .about__section-label). */
 .section__title {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
@@ -581,7 +581,7 @@
 }
 
 /* Uniform with the rest of the label - no gradient accent. */
-.section__titleAccent {
+.section__title-accent {
   color: inherit;
 }
 
@@ -616,7 +616,7 @@
   margin-bottom: var(--spacing-12);
 }
 
-.about__manifestoProse {
+.about__manifesto-prose {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-5);
@@ -624,7 +624,7 @@
 
 /* ABOUT - small letter-spaced mono kicker that opens the section (replaces the
    centered gradient title). Doubles as the section's <h2>. */
-.about__sectionLabel {
+.about__section-label {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
@@ -636,7 +636,7 @@
 
 /* Solid bright cream (per mockup C) - the gradient's lower stop reads as a
    dull brown on large display type, which is the mismatch. */
-.about__manifestoTitle {
+.about__manifesto-title {
   font-size: var(--font-size-4xl);
   line-height: var(--line-height-tight);
   font-weight: var(--font-weight-bold);
@@ -646,7 +646,7 @@
 }
 
 /* Keep the short second sentence intact so its leading "I" never strands. */
-.about__manifestoNoWrap {
+.about__manifesto-no-wrap {
   white-space: nowrap;
 }
 
@@ -682,7 +682,7 @@
 }
 
 /* 2-up grid: each metric stacks over its label. Reads as one scannable unit. */
-.about__impactList {
+.about__impact-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -694,7 +694,7 @@
 /* Mobile: stack the metric over its label. Side-by-side at this width cramps
    the metric until it wraps ("11+ yrs" -> two lines), and baseline alignment
    then orphans the second line against a top-stuck label. Stacking avoids it. */
-.about__impactRow {
+.about__impact-row {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-1);
@@ -702,7 +702,7 @@
 
 /* Unified mono treatment for every metric - one face, no accidental slab
    swaps - so the proof block reads as deliberate, not broken. */
-.about__impactMetric {
+.about__impact-metric {
   white-space: nowrap;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-2xl);
@@ -712,7 +712,7 @@
   color: var(--about-bright);
 }
 
-.about__impactLabel {
+.about__impact-label {
   color: var(--about-muted);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
@@ -744,7 +744,7 @@
 }
 
 /* Title bar: filename + interpreter, no traffic-light chrome (restraint) */
-.about__termBar {
+.about__term-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -753,14 +753,14 @@
   border-bottom: var(--border-width-thin) solid var(--color-border);
 }
 
-.about__termFile {
+.about__term-file {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   letter-spacing: 0.04em;
   color: var(--about-muted);
 }
 
-.about__termTag {
+.about__term-tag {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
@@ -768,7 +768,7 @@
   color: var(--about-muted);
 }
 
-.about__termBody {
+.about__term-body {
   flex: 1;
   padding: var(--spacing-6);
   font-family: var(--font-family-mono);
@@ -776,7 +776,7 @@
   line-height: var(--line-height-relaxed);
 }
 
-.about__termComment {
+.about__term-comment {
   margin: 0;
   color: var(--about-dim);
   white-space: nowrap;
@@ -791,13 +791,13 @@
   gap: var(--spacing-4);
 }
 
-.about__scriptLine {
+.about__script-line {
   display: flex;
   align-items: baseline;
   gap: var(--spacing-4);
 }
 
-.about__lineNum {
+.about__line-num {
   flex-shrink: 0;
   width: 1.5rem;
   text-align: right;
@@ -855,7 +855,7 @@
   pointer-events: none;
 }
 
-.about__signatureBody {
+.about__signature-body {
   position: relative;
   z-index: 2;
   display: flex;
@@ -884,7 +884,7 @@
 /* Forward-looking footer: focus statement (left) + signature (right).
    Separated from the quote by open space rather than a rule - the hairline
    ran under the wireframe and read as a cut across the layout. */
-.about__signatureFooter {
+.about__signature-footer {
   position: relative;
   z-index: 2;
   display: flex;
@@ -902,7 +902,7 @@
   line-height: var(--line-height-relaxed);
 }
 
-.about__focusLabel {
+.about__focus-label {
   display: block;
   margin-bottom: var(--spacing-2);
   font-family: var(--font-family-mono);
@@ -916,7 +916,7 @@
 /* Tablet+ */
 @media (min-width: 768px) {
   /* Story and forward-looking statement sit side by side once there's room */
-  .about__signatureFooter {
+  .about__signature-footer {
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
@@ -930,8 +930,8 @@
     max-width: 320px;
   }
 
-  .about__signatureBody,
-  .about__signatureFooter {
+  .about__signature-body,
+  .about__signature-footer {
     max-width: 60%;
   }
 }
@@ -939,7 +939,7 @@
 /* Desktop: scale the lead statement up to a true display title. We drop the
    narrow cap and tighten tracking so the first sentence can fill the column. */
 @media (min-width: 1024px) {
-  .about__manifestoTitle {
+  .about__manifesto-title {
     font-size: var(--font-size-5xl);
     letter-spacing: 0.02em;
   }
@@ -954,7 +954,7 @@
    64rem measure — below this the content column is still padding-constrained and
    narrower than the sentence, so nowrap would clip "...culture" off the edge. */
 @media (min-width: 1100px) {
-  .about__manifestoSentence {
+  .about__manifesto-sentence {
     white-space: nowrap;
   }
 }
@@ -1045,7 +1045,7 @@
   gap: var(--spacing-2);
 }
 
-.experience__trafficDot {
+.experience__traffic-dot {
   width: 0.7rem;
   height: 0.7rem;
   border-radius: var(--radius-full);
@@ -1071,15 +1071,15 @@
   overflow-x: auto;
 }
 
-.experience__promptSign {
+.experience__prompt-sign {
   color: var(--color-primary-600);
 }
 
-.experience__promptPath {
+.experience__prompt-path {
   color: var(--color-neutral-600);
 }
 
-.experience__promptCmd {
+.experience__prompt-cmd {
   color: var(--color-neutral-200);
 }
 
@@ -1108,48 +1108,48 @@
   align-self: stretch;
 }
 
-.experience__railUp,
-.experience__railDown,
-.experience__branchUp,
-.experience__branchDown,
-.experience__branchDownMerge {
+.experience__rail-up,
+.experience__rail-down,
+.experience__branch-up,
+.experience__branch-down,
+.experience__branch-down-merge {
   position: absolute;
   width: 2px;
   background: var(--gline);
 }
 
-.experience__railUp {
+.experience__rail-up {
   left: 13px;
   top: 0;
   height: 18px;
 }
 
-.experience__railDown {
+.experience__rail-down {
   left: 13px;
   top: 18px;
   bottom: 0;
 }
 
-.experience__branchUp {
+.experience__branch-up {
   left: 30px;
   top: 0;
   height: 18px;
 }
 
-.experience__branchDown {
+.experience__branch-down {
   left: 30px;
   top: 18px;
   bottom: 0;
 }
 
-.experience__branchDownMerge {
+.experience__branch-down-merge {
   left: 30px;
   top: 32px;
   bottom: 0;
 }
 
 /* ╮ — main lane turns right and dives into the branch lane (the promotion). */
-.experience__elbowOpen {
+.experience__elbow-open {
   position: absolute;
   left: 14px;
   top: 18px;
@@ -1161,7 +1161,7 @@
 }
 
 /* ╯ — the branch lane curves back left and merges into the main lane. */
-.experience__elbowClose {
+.experience__elbow-close {
   position: absolute;
   left: 14px;
   top: 0;
@@ -1256,7 +1256,7 @@
   color: var(--color-primary-500);
 }
 
-.experience__metaSep {
+.experience__meta-sep {
   color: var(--color-neutral-600);
 }
 
@@ -1343,7 +1343,7 @@
   max-width: 30ch;
 }
 
-.philosophy__quoteEmphasis {
+.philosophy__quote-emphasis {
   font-weight: var(--font-weight-medium);
   color: var(--color-neutral-50);
 }
@@ -1360,7 +1360,7 @@
   text-align: left;
 }
 
-.philosophy__principleNumber {
+.philosophy__principle-number {
   display: block;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
@@ -1369,12 +1369,12 @@
   margin-bottom: var(--spacing-3);
 }
 
-.philosophy__principleNumberBracket {
+.philosophy__principle-number-bracket {
   color: var(--color-label-muted);
   margin: 0 0.35em;
 }
 
-.philosophy__principleTitle {
+.philosophy__principle-title {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
@@ -1384,7 +1384,7 @@
   margin-bottom: var(--spacing-2);
 }
 
-.philosophy__principleDescription {
+.philosophy__principle-description {
   color: var(--color-neutral-400);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-relaxed);
@@ -1439,7 +1439,7 @@
 }
 
 /* Focused search field — the chrome that signals "this is a palette" */
-.projects__paletteSearch {
+.projects__palette-search {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
@@ -1447,7 +1447,7 @@
   border-bottom: var(--border-width-thin) solid var(--color-border-light);
 }
 
-.projects__paletteKbd {
+.projects__palette-kbd {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   letter-spacing: 0.04em;
@@ -1458,14 +1458,14 @@
   padding: var(--spacing-1) var(--spacing-2);
 }
 
-.projects__palettePlaceholder {
+.projects__palette-placeholder {
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   color: var(--color-neutral-400);
 }
 
 /* Blinking caret sells the "input is focused" feel without a real text field */
-.projects__paletteCaret {
+.projects__palette-caret {
   width: 1px;
   height: 1.1em;
   background: var(--color-primary-400);
@@ -1485,16 +1485,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .projects__paletteCaret {
+  .projects__palette-caret {
     animation: none;
   }
 }
 
-.projects__paletteResults {
+.projects__palette-results {
   padding: var(--spacing-2) 0;
 }
 
-.projects__paletteGroup {
+.projects__palette-group {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   letter-spacing: 0.18em;
@@ -1522,33 +1522,33 @@
   border-left-color: var(--color-primary-400);
 }
 
-.projects__resultCaret {
+.projects__result-caret {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
   color: var(--color-label-muted);
   padding-top: 0.15em;
 }
 
-.projects__result--active .projects__resultCaret {
+.projects__result--active .projects__result-caret {
   color: var(--color-primary-400);
 }
 
-.projects__resultBody {
+.projects__result-body {
   min-width: 0;
 }
 
-.projects__resultHead {
+.projects__result-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: var(--spacing-4);
 }
 
-.projects__resultIdent {
+.projects__result-ident {
   min-width: 0;
 }
 
-.projects__resultAction {
+.projects__result-action {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -1558,7 +1558,7 @@
 }
 
 /* Solid cream "action" chip — dark glyph on cream for contrast (primary-fg) */
-.projects__acquiredChip {
+.projects__acquired-chip {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -1572,19 +1572,19 @@
   white-space: nowrap;
 }
 
-.projects__acquiredChip kbd {
+.projects__acquired-chip kbd {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   opacity: 0.65;
 }
 
-.projects__outcomeLabel {
+.projects__outcome-label {
   font-size: var(--font-size-xs);
   color: var(--color-neutral-400);
 }
 
 /* Quiet enter-hint stands in for the action on non-selected rows */
-.projects__enterHint {
+.projects__enter-hint {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
   color: var(--color-label-muted);
@@ -1627,7 +1627,7 @@
 }
 
 /* Keyboard-hint footer, the last familiar palette cue */
-.projects__paletteFooter {
+.projects__palette-footer {
   display: flex;
   gap: var(--spacing-5);
   padding: var(--spacing-4) var(--spacing-6);
@@ -1644,20 +1644,20 @@
     padding: var(--spacing-5);
   }
 
-  .projects__paletteGroup,
-  .projects__paletteSearch,
-  .projects__paletteFooter {
+  .projects__palette-group,
+  .projects__palette-search,
+  .projects__palette-footer {
     padding-left: var(--spacing-5);
     padding-right: var(--spacing-5);
   }
 
   /* Stack identity over the acquired callout so it doesn't crowd the title */
-  .projects__resultHead {
+  .projects__result-head {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .projects__resultAction {
+  .projects__result-action {
     align-items: flex-start;
     text-align: left;
   }
@@ -1754,7 +1754,7 @@
   transform: translateX(10px);
 }
 
-.contact__iconWrapper {
+.contact__icon-wrapper {
   width: 2.125rem;
   height: 2.125rem;
   background: color-mix(in srgb, var(--color-primary-400) 10%, transparent);
@@ -1771,11 +1771,11 @@
   color: var(--color-primary-400);
 }
 
-.contact__methodInfo {
+.contact__method-info {
   flex: 1;
 }
 
-.contact__methodTitle {
+.contact__method-title {
   color: var(--color-foreground);
   font-weight: var(--font-weight-semibold);
 }

@@ -2,7 +2,12 @@
   "extends": "stylelint-config-standard",
   "rules": {
     "at-rule-no-unknown": [true, { "ignoreAtRules": ["tailwind", "apply", "layer"] }],
-    "selector-class-pattern": null,
+    "selector-class-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$",
+      {
+        "message": "Expected class name to be classic BEM: block__element--modifier, kebab-case words"
+      }
+    ],
     "custom-property-pattern": null,
     "keyframes-name-pattern": null,
     "no-descending-specificity": null,

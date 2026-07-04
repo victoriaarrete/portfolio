@@ -36,5 +36,5 @@ export function CursorGlow() {
     };
   }, []);
 
-  return <div ref={ref} className={styles.cursorGlow} aria-hidden="true" />;
+  return <div ref={ref} className={styles['cursor-glow']} aria-hidden="true" />;
 }

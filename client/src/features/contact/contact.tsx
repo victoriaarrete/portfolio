@@ -67,11 +67,11 @@ export function Contact() {
                     whileHover={{ x: TRANSFORM.ROTATE_RANGE }}
                     transition={{ duration: ANIMATION_DURATION.FAST }}
                   >
-                    <div className={styles.contact__iconWrapper}>
+                    <div className={styles['contact__icon-wrapper']}>
                       <Icon className={styles.contact__icon} aria-hidden="true" />
                     </div>
-                    <div className={styles.contact__methodInfo}>
-                      <h3 className={styles.contact__methodTitle}>{title}</h3>
+                    <div className={styles['contact__method-info']}>
+                      <h3 className={styles['contact__method-title']}>{title}</h3>
                       {body}
                     </div>
                   </motion.div>
