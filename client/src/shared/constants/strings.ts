@@ -94,6 +94,19 @@ export const NOT_FOUND = {
   CONSOLE_SUFFIX: ' - solvable, like everything else. try victoria.maze()',
 } as const;
 
+// /cat - the one page with no agenda. A character-art cat wanders, sits, grooms,
+// and naps; click the floor and it comes over. The senior signal is restraint:
+// same monochrome mono language as the rest, respects prefers-reduced-motion,
+// and never begs for attention.
+export const CAT = {
+  DOC_TITLE: 'The cat | Victoria Kirichenko',
+  TITLE_MAIN: 'Off the clock.',
+  LEAD: 'Every system that scales needs somewhere to put the pressure down. This is mine.',
+  HINT: '// click the floor - she comes when she feels like it',
+  BACK_ACTION: 'Back to the serious stuff',
+  CONSOLE_LINE: '// meow. (it works, that was the whole point.)',
+} as const;
+
 // Console Messages
 export const CONSOLE_MESSAGES = {
   WELCOME_TITLE: "🚀 Welcome to Victoria Kirichenko's Portfolio!",
@@ -179,8 +192,10 @@ export const CONSOLE_SDK = {
     { command: 'victoria.skills()', what: 'the tech arsenal' },
     { command: 'victoria.hire()', what: 'why we should talk' },
     { command: 'victoria.contact()', what: 'reach me directly' },
+    { command: 'victoria.cat()', what: 'everything serious needs a way out' },
   ],
   HELP_RETURN: '↑ call any command, e.g. victoria.readme()',
+  CAT_RETURN: 'off you go →',
 
   README_SECTIONS: [
     {
