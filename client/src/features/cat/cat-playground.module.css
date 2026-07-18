@@ -77,16 +77,6 @@
   max-width: 46ch;
 }
 
-.cat__kicker {
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.32em;
-  color: var(--color-label-muted);
-  margin: 0 0 var(--spacing-4);
-}
-
 .cat__title {
   font-family: var(--font-family-mono);
   font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-4xl));
@@ -116,10 +106,10 @@
   cursor: pointer;
 }
 
-/* The cat itself: the sitting reference is 30 rows of glyph art; walking is a
-   lower 20-row prowl. Kept small so she reads as a real pet on the floor - and
-   so the ~1/3 height drop from sit to walk is a gentle settle, not a lurch.
-   The platform monospace keeps the texture grid tight (same as the maze). */
+/* The cat itself: dense glyph-noise texture over silhouette masks, matching
+   the reference renders - 92 columns wide with the plume tail, 40 rows
+   walking, 44 sitting. Tiny glyphs so the noise fuses into fur at arm's
+   length. The platform monospace keeps the texture grid tight. */
 .cat__sprite {
   position: absolute;
   left: 0;
@@ -127,7 +117,7 @@
   bottom: 25px;
   margin: 0;
   font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
-  font-size: clamp(0.28rem, 0.95vw, 0.52rem);
+  font-size: clamp(0.2rem, 0.68vw, 0.38rem);
   line-height: 1.05;
   letter-spacing: 0;
   white-space: pre;
@@ -135,15 +125,17 @@
   text-shadow: 0 0 14px color-mix(in srgb, var(--color-primary-400) 18%, transparent);
   user-select: none;
   will-change: transform;
-  transition: opacity 0.8s ease;
+  /* font-size eases the seated <-> standing scale change so pose swaps
+     read as posture changes, not jump cuts. */
+  transition:
+    opacity 0.8s ease,
+    font-size 0.45s ease;
 }
 
-/* Seated: the reference art is 30 rows to the walk's 21, so at equal font
-   sizes she'd tower over her own prowl and every get-up would read as a
-   collapse. A smaller seated glyph brings her sitting height to just a touch
-   above her walking height - the transition becomes a posture change. */
+/* Seated: the sitting mask is 44 rows to the walk's 40; a slightly smaller
+   seated glyph keeps her apparent height steady across the pose swap. */
 .cat__sprite--seated {
-  font-size: clamp(0.21rem, 0.72vw, 0.4rem);
+  font-size: clamp(0.18rem, 0.62vw, 0.35rem);
 }
 
 /* Asleep: the whole texture dims, like fur in shadow. */
@@ -151,26 +143,24 @@
   opacity: 0.7;
 }
 
-/* Facing wrapper: the loop flips this (scaleX) when she walks right, so the
-   zzz above never renders mirrored. */
+/* Art wrapper: each facing has its own frame set now, so nothing flips -
+   this just anchors the zzz over the art. */
 .cat__art {
   display: block;
-  transform-origin: center;
 }
 
-/* Floating "z z z" for the sleeping pose, drifting up from the head. Lives
-   inside the facing wrapper so it stays over the head whichever way she faces;
-   the scaleX(var) counter-flips the glyphs so the z's never mirror. The drift
-   uses the standalone `translate` property so it can't fight the transform. */
+/* Floating "z z z" for the sleeping pose, drifting up from the cat. The
+   drift uses the standalone `translate` property so it can't fight any
+   transform. She sleeps in profile; the zzz rises from mid-body so it works
+   whichever way she faces. */
 .cat__zzz {
   position: absolute;
   top: -1.4em;
-  left: 8%;
+  left: 40%;
   font-size: 1.6em;
   letter-spacing: 0.1em;
   color: var(--color-primary-400);
   opacity: 0.85;
-  transform: scaleX(var(--cat-facing, 1));
   animation: catDrift 2.4s ease-in-out infinite;
 }
 

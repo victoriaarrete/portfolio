@@ -1,162 +1,245 @@
 /**
- * The cat. When she sits, she IS the reference art - transcribed verbatim,
- * character by character, not approximated. Generation is reserved for what
- * the reference doesn't have: the walking frames, whose glyph noise is rolled
- * from the same alphabet so the two styles read as one animal.
+ * The cat's frames, rebuilt to match the glyph-texture reference renders:
+ * a fluffy long-haired cat whose whole body is dense character noise
+ * (9s, 8s, S's...) with lighter punctuation along the edges and loose fur
+ * wisps just outside the silhouette.
+ *
+ * Frames are silhouette MASKS ('#' = cat), generated offline from ellipse /
+ * polygon / tapered-stroke geometry and baked here. Each render fills the
+ * mask with fresh glyph noise, so the fur shimmers frame to frame exactly
+ * like the reference sheets. Both poses face left natively; the right-facing
+ * sets are mirrored masks (the references include both directions).
+ *
+ *   A. Sitting  - one pose per direction; idle life comes from periodic
+ *                 noise re-rolls (the fur breathes) rather than keyframes.
+ *   B. Walking  - an 8-frame leg cycle per direction. The body and plume
+ *                 tail are the baked mask; the legs are placed per frame by
+ *                 a lateral-walk gait (footfalls a quarter-cycle apart,
+ *                 planted paws sweeping back at exactly ground speed).
  */
 
-/**
- * The reference, verbatim: a Maine Coon sitting in profile facing left, tail
- * lying along the ground to the right with the tip curling up at the end.
- */
-export const CAT_SIT_ART: readonly string[] = [
-  '3/              %',
-  ' G%          Rs',
-  ' @^%RK(^@@R3',
-  ' @#// ^^~%~/t(',
-  ' tC // sStt^~(',
-  '@@@@@@@@@R7 (s7',
-  '@t~%~R@Ct^(@(3Q',
-  '7~7R@^(e(/C%@C/^/#@',
-  '  @@C#SSs#@7//((%@',
-  ' KR@@@@S@C//%(@RsSG',
-  'QQQ@#eQt%%SRK@OO%G#KS',
-  'OSsO#RG%O#tR~@7tt%SsORS%',
-  ' OtKRSK3CS(Ot/(((CKt/%OsK(/t',
-  'tG@(eRK(/7~/t%7st~  /( (tCC^%',
-  ' 3O%O--^(~/t77OS~  (^^   ~(((/^t',
-  ' tt%t(%COt(C%t(  ^ //^   ^//~(sC/',
-  ' t%(tsQtt(Ss^^ ~ /~O(^      ^~%SQ',
-  '  es%%COK7^ /t7tOQ%3/     ^(((%SQK',
-  '  (SKS%3%~(#7COG(OOs / ^  /t%O3SQS',
-  '    SRKOS%3(%7sSOK(/~// ^(%OeGC3Q@Q',
-  '      (#RGCO%~t%eS  ((/(sCKt///t3Q@',
-  '       S CO~~S#sOe%ts%(t#%/^^/(t3e@',
-  '        KK^/teOK@@SOOt%t(///~/~tG%@@',
-  '         #O//7%S@G@@@%CS(///(t((SQs@@@      ^/t7eCt',
-  '         K/^~3R@@#%tKKC7/~//t%OQ%C@@@Rs3%/ t//~%%((C%(%st/',
-  '        S% /tS@@(tC3%(%t(7%eSQC%eQQR%O3t((tCC(t%Ot//(%%t// /(%/(',
-  '        s(^(s#@     /s@SCOOs@#C3(CR@ssKCC%O@Ct(t%OsO3SSOeSQRG%(t%t',
-  '       O//3CR@@    S( ~K@@@@@@R#@@@@ @@@R@@@@#@@@R@@@@@@@@@Q@G^ (CS%',
-  '      (~%StCs/       SKS                                %  ^/t%Gt',
-  '                                                          O tt#s%%',
+/* ==========================================================================
+   Baked silhouette masks (generated from geometry, facing left)
+   ========================================================================== */
+
+export const SIT_MASK: readonly string[] = [
+  '           ##           ###',
+  '            ###        ####',
+  '            ####       ####',
+  '             #####    ######',
+  '             ###############',
+  '              ###########',
+  '            ###############',
+  '            ###############',
+  '         #####   ###########',
+  '      # ####################',
+  '    #   ####################',
+  '     #  ####################',
+  '         ####################',
+  '       # #####################',
+  '          ###################       #',
+  '          ################## ###############',
+  '          #####################################',
+  '          #######################################',
+  '         ##########################################',
+  '         ############################################',
+  '         #############################################',
+  '        ###############################################',
+  '        ###############################################',
+  '        ################################################',
+  '       ##################################################',
+  '       ##################################################',
+  '       ##################################################',
+  '       ##################################################',
+  '       ###################################################',
+  '       ####################################################',
+  '       ####################################################',
+  '       ####################################################',
+  '       #####################################################                 ######',
+  '       ####################################################                 ########',
+  '      #####################################################               ##########',
+  '       ####################################################             ###########',
+  '       ###################################################            #############',
+  '        ####################################################### ##################',
+  '         #########################################################################',
+  '           ######################################################################',
+  '           ######################################################################',
+  '          #################  ###################################################',
+  '         ####################       #       #       ##########################',
+  '           #######  #######                             ##################',
 ];
 
-/**
- * The idle flick: same art, tail tip lifted off the ground for a beat. Only
- * the last two rows differ from the reference - everything else stays exact.
- */
-export const CAT_SIT_ART_FLICK: readonly string[] = [
-  ...CAT_SIT_ART.slice(0, 28),
-  '      (~%StCs/       SKS                                %  ^/t%GtO#s%',
-  '',
-];
-
-/** The reference's alphabet, split by visual weight - used by the walk frames. */
-const GLYPH_EDGE = '(/^~-t%s(',
-  GLYPH_MID = 'C3est7sKtO%',
-  GLYPH_DENSE = '@#RKQSGO';
-
-/** Chance any walk-frame cell renders as a gap - the "fur" holes. */
-const DROPOUT = 0.08;
-
-/**
- * Mid-stride walking profile, facing left, modelled on the prowling reference:
- * a walking cat is LOW - about two-thirds of her sitting height - and LONG,
- * with a level back, head carried at back height, tall tufted ears, whisker
- * wisps off the muzzle, a deep shaggy belly, and the signature Maine Coon tail:
- * a fat plume raised behind her, nearly ear-high. Head width matches the
- * sitting art's head, so the get-up reads as the same animal changing posture,
- * not changing size. Two stride frames (legs extended / gathering) share this
- * body, so only the legs move. The lone cells ahead of the muzzle render as
- * light isolated glyphs - the whiskers.
- */
+/** Walk body + tail; rows 30-39 are the leg zone, filled per frame below. */
 const WALK_BODY: readonly string[] = [
-  '    ##   ##                                         #####',
-  '   ###   ###                                      ########',
-  '   ##########                                    #########',
-  '  ############                                  #########',
-  '  ############                                 ########',
-  '# #############                               ########',
-  ' ###############                              #######',
-  '# ###############                            #######',
-  '   ################                         #######',
-  '    ####################################### ######',
-  '    ##############################################',
-  '     #############################################',
-  '     ############################################',
-  '      ##########################################',
-  '      ########################################',
+  '                     #',
+  '     #              ##',
+  '     ###            ##',
+  '     ####          ####                                                            ###',
+  '      #####       #####                                                      #############',
+  '      ######      #####                                                 ###################',
+  '      ########   #######                                              ######################',
+  '       #################                                             #######################',
+  '       #############                                                ########################',
+  '       ###############                                             #########################',
+  '       ###############                                            ##########################',
+  '    ####   ############    #                #                    ###########################',
+  '  ###################################################### # #########################',
+  '#  ##############################################################################',
+  ' # ###########################################################################',
+  '    ########################################################################',
+  '   # ####################################################################',
+  '     ####################################################################',
+  '      ####################################################################',
+  '        ##################################################################',
+  '          ################################################################',
+  '          #################################################################',
+  '          ################################################################',
+  '         #################################################################',
+  '          ################################################################',
+  '          ###############################################################',
+  '          ###############################################################',
+  '           #############################################################',
+  '             #########################################################',
+  '              ###########  # ########################################',
 ];
 
-export const CAT_MASK_WALK_A: readonly string[] = [
-  ...WALK_BODY,
-  '      ######   #######        #######   ######',
-  '     ######     ######        ######     #####',
-  '     #####       #####        #####       #####',
-  '    #####        ####         ####         ####',
-  '    ####         ####         ####          ####',
-  '   #####         ####         ####          #####',
-];
+/** Widest column any frame can reach. The component uses this to convert
+    the sprite's rendered width into a per-column pixel size. */
+export const WALK_MASK_WIDTH = 92;
+const WALK_ROWS = 40;
+const LEG_TOP = 30;
 
-export const CAT_MASK_WALK_B: readonly string[] = [
-  ...WALK_BODY,
-  '        ##### #######          ####### ######',
-  '        ####   ######          ######   #####',
-  '        ####    #####          #####    ####',
-  '        ####    #####          #####    ####',
-  '        ####    ####           ####     ####',
-  '       #####    ####           ####    #####',
-];
+/* ==========================================================================
+   Walk legs - a generated lateral-walk gait, 8 frames
+   ========================================================================== */
+
+/** How far a paw swings from its hip at full stride, in columns. */
+const STRIDE_SWEEP = 4;
+
+/** Fraction of the cycle each paw spends planted. Real cats walk at ~0.6:
+    always at least two paws down, never a bunched or floating moment. */
+const STANCE_SHARE = 0.6;
+
+/** Ground the body covers in one full leg cycle, in mask columns. Keying
+    the animation to this (see the component) is what stops paws from
+    sliding: the ground and the planted paws move at exactly the same rate. */
+export const WALK_CYCLE_COLS = (2 * STRIDE_SWEEP) / STANCE_SHARE;
+
+/** Hip anchors (columns, left-facing) and footfall offsets in lateral-walk
+    order. Near legs render wider than far legs for depth. */
+const LEGS = [
+  { anchor: 22, offset: 0.25, width: 3 }, // near front
+  { anchor: 30, offset: 0.75, width: 2 }, // far front
+  { anchor: 55, offset: 0.0, width: 3 }, // near rear
+  { anchor: 63, offset: 0.5, width: 2 }, // far rear
+] as const;
+
+function buildWalkMask(phase: number): readonly string[] {
+  const legs: string[][] = Array.from({ length: WALK_ROWS - LEG_TOP }, () =>
+    Array<string>(WALK_MASK_WIDTH).fill(' '),
+  );
+  for (const leg of LEGS) {
+    const t = (phase + leg.offset) % 1;
+    let paw: number;
+    let lift = 0;
+    if (t < STANCE_SHARE) {
+      // Planted: forward reach to full push-back, at constant speed.
+      paw = leg.anchor - STRIDE_SWEEP + 2 * STRIDE_SWEEP * (t / STANCE_SHARE);
+    } else {
+      // Swinging: back to front in the remaining slice, paw off the ground.
+      const s = (t - STANCE_SHARE) / (1 - STANCE_SHARE);
+      paw = leg.anchor + STRIDE_SWEEP - 2 * STRIDE_SWEEP * s;
+      lift = Math.sin(s * Math.PI) * 3;
+    }
+    const rows = legs.length;
+    const reach = Math.max(3, rows - Math.round(lift));
+    for (let r = 0; r < reach; r++) {
+      const x = Math.round(leg.anchor + (paw - leg.anchor) * ((r + 1) / rows));
+      for (let w = 0; w < leg.width; w++) {
+        const c = x + w;
+        if (c >= 0 && c < WALK_MASK_WIDTH) legs[r][c] = '#';
+      }
+      // The paw: one cell past the leading (left-facing) edge on the last row.
+      if (r === reach - 1 && x - 1 >= 0) legs[r][x - 1] = '#';
+    }
+  }
+  return [...WALK_BODY, ...legs.map((cells) => cells.join('').trimEnd())];
+}
+
+const WALK_MASKS_LEFT: readonly (readonly string[])[] = Array.from({ length: 8 }, (_, i) =>
+  buildWalkMask(i / 8),
+);
+
+/** Masks are pure '#' cells, so mirroring is an exact horizontal flip. */
+const mirrorMask = (mask: readonly string[]): readonly string[] =>
+  mask.map((row) => row.padEnd(WALK_MASK_WIDTH, ' ').split('').reverse().join('').trimEnd());
+
+export const WALK_MASKS: Readonly<Record<'left' | 'right', readonly (readonly string[])[]>> = {
+  left: WALK_MASKS_LEFT,
+  right: WALK_MASKS_LEFT.map(mirrorMask),
+};
+
+const SIT_WIDTH = Math.max(...SIT_MASK.map((row) => row.length));
+
+export const SIT_MASKS: Readonly<Record<'left' | 'right', readonly string[]>> = {
+  left: SIT_MASK,
+  right: SIT_MASK.map((row) => row.padEnd(SIT_WIDTH, ' ').split('').reverse().join('').trimEnd()),
+};
+
+/* ==========================================================================
+   Glyph fill - the reference renders' texture
+   ========================================================================== */
+
+/** The reference alphabet: heavy digits in the coat, light punctuation at
+    the edges, single wisps of fur just outside the silhouette. */
+const GLYPH_DENSE = '9988SS$5';
+const GLYPH_MID = '95o3s58o';
+const GLYPH_EDGE = ":;'.,`^";
+const GLYPH_WISP = ",'`.";
+
+/** Chance an interior cell renders as a gap - the felty holes in the coat. */
+const DROPOUT = 0.1;
+
+/** Chance a cell just outside the silhouette sprouts a fur wisp. */
+const WISP = 0.07;
 
 /**
- * Standing still: same body, legs straight under it, tail up. Shown for a
- * beat between sitting and walking (and again on arrival) so she rises,
- * walks, and settles - instead of teleporting between poses.
- */
-export const CAT_MASK_STAND: readonly string[] = [
-  ...WALK_BODY,
-  '       ######  #######        #######  ######',
-  '       #####    ######        ######    #####',
-  '       #####     #####        #####     #####',
-  '       ####      #####        #####      ####',
-  '       ####      ####         ####       ####',
-  '      #####      ####         ####      #####',
-];
-
-/**
- * Fill a walk mask with glyph noise. Edge cells (any blank neighbour) get the
- * light set; the interior mixes dense and mid weights, with occasional dropout
- * gaps - matching the reference's texture so sit and walk read as one cat.
+ * Fill a mask with glyph noise. Edge cells (any blank neighbour) get light
+ * punctuation, the interior mixes heavy and mid digits with occasional
+ * dropout, and empty cells hugging the silhouette occasionally sprout a
+ * wisp - so every re-roll shimmers like the reference's fur.
  */
 export function renderCat(mask: readonly string[], random: () => number): readonly string[] {
   const pick = (set: string) => set[Math.floor(random() * set.length)];
+  const at = (r: number, c: number) => mask[r]?.[c] === '#';
 
   return mask.map((row, r) => {
     let out = '';
-    for (let c = 0; c < row.length; c++) {
+    const width = Math.max(row.length, mask[r - 1]?.length ?? 0, mask[r + 1]?.length ?? 0);
+    for (let c = 0; c < width; c++) {
       if (row[c] !== '#') {
-        out += ' ';
+        const nearFur = at(r - 1, c) || at(r + 1, c) || at(r, c - 1) || at(r, c + 1);
+        out += nearFur && random() < WISP ? pick(GLYPH_WISP) : ' ';
         continue;
       }
       if (random() < DROPOUT) {
         out += ' ';
         continue;
       }
-      const edge =
-        (mask[r - 1]?.[c] ?? ' ') !== '#' ||
-        (mask[r + 1]?.[c] ?? ' ') !== '#' ||
-        (row[c - 1] ?? ' ') !== '#' ||
-        (row[c + 1] ?? ' ') !== '#';
+      const edge = !at(r - 1, c) || !at(r + 1, c) || !at(r, c - 1) || !at(r, c + 1);
       out += pick(edge ? GLYPH_EDGE : random() < 0.55 ? GLYPH_DENSE : GLYPH_MID);
     }
-    return out;
+    return out.trimEnd();
   });
 }
 
+/* ==========================================================================
+   Behaviour + motion tuning
+   ========================================================================== */
+
 /** Which behaviours the idle cat picks between, and how it weights them. */
 export interface IdleBehaviour {
-  readonly mode: 'sit' | 'flick' | 'sleep';
+  readonly mode: 'sit' | 'sleep';
   /** Relative likelihood of being chosen. */
   readonly weight: number;
   /** [min, max] seconds to hold the behaviour before wandering off again. */
@@ -164,28 +247,19 @@ export interface IdleBehaviour {
 }
 
 export const IDLE_BEHAVIOURS: readonly IdleBehaviour[] = [
-  { mode: 'sit', weight: 4, hold: [3, 6] },
-  { mode: 'flick', weight: 3, hold: [2, 4] },
+  { mode: 'sit', weight: 6, hold: [4, 9] },
   { mode: 'sleep', weight: 2, hold: [6, 11] },
 ];
 
 export const CAT_MOTION = {
-  /** Travel speed as a fraction of the floor's usable width, per second.
-      A cat this size prowls; she doesn't scamper. */
+  /** Travel speed as a fraction of the floor's width, per second.
+      A Maine Coon prowls: slow, heavy, elegant, calm. The leg cycle is keyed
+      to the distance this covers (WALK_CYCLE_COLS), not to a clock. */
   WALK_SPEED: 0.09,
-  /** Seconds per stride frame - legs extended <-> legs gathering. */
-  STEP_INTERVAL: 0.32,
-  /** Seconds between texture re-rolls while walking - the noise "crawls". */
-  SHIMMER_WALK: 0.16,
-  /** Seconds between tail-up / tail-down swaps during a flick. */
-  FLICK_INTERVAL: 0.55,
-  /** Height of the walking bob, in pixels. */
-  BOB_HEIGHT: 3,
-  /** Bob cycles per second while walking. */
-  BOB_RATE: 2.2,
+  /** Seconds between noise re-rolls while sitting - the fur breathing. */
+  SIT_SHIMMER: 0.9,
+  /** Height of the walking bob, in pixels. Subtle: the head stays level. */
+  BOB_HEIGHT: 2,
   /** Beat before the cat sets off toward a fresh spot. */
   ALERT_HOLD: 0.7,
-  /** How long the standing frame holds while she rises from (or settles into)
-      the sit - the beat that makes the transition read as getting up. */
-  RISE_HOLD: 0.38,
 } as const;

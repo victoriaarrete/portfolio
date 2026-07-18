@@ -100,7 +100,6 @@ export const NOT_FOUND = {
 // and never begs for attention.
 export const CAT = {
   DOC_TITLE: 'The cat | Victoria Kirichenko',
-  KICKER: 'CAT.EXE',
   TITLE_MAIN: 'Off the clock.',
   LEAD: 'Every system that scales needs somewhere to put the pressure down. This is mine.',
   HINT: '// click the floor - she comes when she feels like it',

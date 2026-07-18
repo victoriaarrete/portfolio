@@ -3,11 +3,10 @@ import { motion } from 'motion/react';
 import { PERSONAL_INFO, CAT } from '@/shared/constants/strings';
 import { ANIMATION_DURATION, INITIAL_OFFSET, OPACITY } from '@/shared/constants/layout';
 import {
-  CAT_SIT_ART,
-  CAT_SIT_ART_FLICK,
-  CAT_MASK_WALK_A,
-  CAT_MASK_WALK_B,
-  CAT_MASK_STAND,
+  SIT_MASKS,
+  WALK_MASKS,
+  WALK_MASK_WIDTH,
+  WALK_CYCLE_COLS,
   renderCat,
   IDLE_BEHAVIOURS,
   CAT_MOTION,
@@ -15,11 +14,12 @@ import {
 } from './cat-frames';
 import styles from './cat-playground.module.css';
 
-type Mode = 'walk' | 'sit' | 'flick' | 'sleep' | 'alert' | 'rise' | 'settle';
+type Mode = 'walk' | 'sit' | 'sleep' | 'alert';
+type Facing = 'left' | 'right';
 
 interface CatState {
   mode: Mode;
-  /** Horizontal position as a fraction [0,1] of the floor's usable width. */
+  /** Horizontal position as a fraction [0,1] of the floor's width. */
   x: number;
   /** Where the cat is walking to (fraction). */
   targetX: number;
@@ -44,22 +44,21 @@ function pickIdle(): IdleBehaviour {
 }
 
 export default function CatPlayground() {
-  // The current art frame + a "sleeping" flag are the only things that trigger
+  // The current art + a "sleeping" flag are the only things that trigger
   // re-renders; position/facing are written straight to the DOM in the loop.
-  // She enters (and, under reduced motion, stays) as the reference: sitting.
-  const [art, setArt] = useState<readonly string[]>(CAT_SIT_ART);
+  // She enters (and, under reduced motion, stays) sitting, facing left.
+  const [art, setArt] = useState<readonly string[]>(() => renderCat(SIT_MASKS.left, Math.random));
   const [sleeping, setSleeping] = useState(false);
-  // The seated reference renders a notch smaller than the walk frames, so the
-  // get-up reads as a posture change rather than a size drop.
-  const seated = art === CAT_SIT_ART || art === CAT_SIT_ART_FLICK;
+  // Sitting masks are 44 rows to the walk's 40; the seated pose renders a
+  // notch smaller (see the CSS) so her apparent height barely changes.
+  const seated = art.length === SIT_MASKS.left.length;
 
   const floorRef = useRef<HTMLDivElement>(null);
   const catRef = useRef<HTMLPreElement>(null);
-  const artRef = useRef<HTMLSpanElement>(null);
   const stateRef = useRef<CatState>({ mode: 'sit', x: 0.4, targetX: 0.4, until: 0 });
   const reducedRef = useRef(false);
   // Rightmost reachable x (fraction of floor width), measured against the
-  // WIDEST frame - the sit art - so no pose swap ever changes her range.
+  // widest frame seen so far, so no pose swap ever changes her range.
   const maxFracRef = useRef(0.4);
 
   // Send the cat to a spot the visitor clicked. She notices (alert), then heads over.
@@ -99,26 +98,25 @@ export default function CatPlayground() {
     if (reducedRef.current) return;
 
     let raf = 0;
-    let facing = 1; // 1 = the art's native left-facing; -1 = mirrored
+    let facing: Facing = 'left'; // she keeps facing her last direction of travel
+    let walkPx = 0; // ground covered while walking, in pixels (cumulative)
     let currentSleeping = false;
-    let artKey = 'sit'; // which frame is currently committed to React
+    let artKey = 'init'; // which frame is currently committed to React
     let widestPx = 0; // widest sprite seen so far, across all poses
     const start = performance.now();
 
-    // Commit a frame only when it actually changes. Sitting frames are the
-    // exact reference art (fixed keys); walk frames are keyed by time bucket
-    // so the noise re-rolls as she moves. The frame is built lazily - a key
-    // that hasn't changed costs nothing.
-    const show = (key: string, make: () => readonly string[]) => {
+    // Commit a frame only when its key changes. Every commit re-rolls the
+    // glyph noise, so motion (and the idle shimmer) ripples through the fur.
+    const show = (key: string, mask: readonly string[]) => {
       if (key === artKey) return;
       artKey = key;
-      setArt(make());
+      setArt(renderCat(mask, Math.random));
     };
 
     // x is a fraction of the FLOOR width - not of (floor - sprite) - because
-    // the sprite's width changes between poses (the sit art is wider than the
-    // walk frames). Anchoring to a constant keeps her planted through every
-    // frame swap; only the right-edge clamp ever references the sprite width.
+    // the sprite's width changes between poses. Anchoring to a constant keeps
+    // her planted through every frame swap; only the right-edge clamp ever
+    // references the sprite width.
     const floorWidth = () => floorRef.current?.clientWidth ?? 0;
     const maxLeft = () => {
       const floor = floorRef.current;
@@ -136,10 +134,8 @@ export default function CatPlayground() {
         cat.mode = idle.mode;
         cat.until = now + rand(idle.hold[0], idle.hold[1]);
       } else {
-        // Stand up first; the walk starts when the rise beat ends.
         cat.targetX = next;
-        cat.mode = 'rise';
-        cat.until = now + CAT_MOTION.RISE_HOLD;
+        cat.mode = 'walk';
       }
     };
 
@@ -156,27 +152,15 @@ export default function CatPlayground() {
       }
 
       // --- advance the state machine ---
-      // Getting up and settling down both pass through the standing beat, so
-      // sit -> walk is: notice, rise, walk, stand, sit - never a jump cut.
       if (cat.mode === 'alert') {
         if (cat.until === 0) cat.until = now + CAT_MOTION.ALERT_HOLD;
-        if (now >= cat.until) {
-          cat.mode = 'rise';
-          cat.until = now + CAT_MOTION.RISE_HOLD;
-        }
-      } else if (cat.mode === 'rise') {
         if (now >= cat.until) cat.mode = 'walk';
       } else if (cat.mode === 'walk') {
         const dir = Math.sign(cat.targetX - cat.x) || 1;
-        facing = dir > 0 ? -1 : 1; // the art faces left; mirror when heading right
+        facing = dir > 0 ? 'right' : 'left';
         cat.x += dir * CAT_MOTION.WALK_SPEED * 0.016;
         if ((dir > 0 && cat.x >= cat.targetX) || (dir < 0 && cat.x <= cat.targetX)) {
           cat.x = cat.targetX;
-          cat.mode = 'settle';
-          cat.until = now + CAT_MOTION.RISE_HOLD;
-        }
-      } else if (cat.mode === 'settle') {
-        if (now >= cat.until) {
           const idle = pickIdle();
           cat.mode = idle.mode;
           cat.until = now + rand(idle.hold[0], idle.hold[1]);
@@ -185,75 +169,49 @@ export default function CatPlayground() {
         beginWander(cat, now);
       }
 
-      // --- texture, bob, and sleep flag for the current mode ---
+      // --- frame, bob, and sleep flag for the current mode ---
       let bob = 0;
       let isSleeping = false;
 
       switch (cat.mode) {
         case 'walk': {
-          // A real gait: two stride silhouettes (legs extended <-> gathering)
-          // swap on the step beat, and the noise re-rolls between swaps so the
-          // texture crawls like fur catching light.
-          const stride = Math.floor(now / CAT_MOTION.STEP_INTERVAL) % 2;
-          const bucket = Math.floor(now / CAT_MOTION.SHIMMER_WALK);
-          show(`walk-${bucket}`, () =>
-            renderCat(stride === 0 ? CAT_MASK_WALK_A : CAT_MASK_WALK_B, Math.random),
-          );
-          bob = -Math.abs(Math.sin(now * Math.PI * CAT_MOTION.BOB_RATE)) * CAT_MOTION.BOB_HEIGHT;
-          break;
-        }
-        case 'rise':
-          // Up on all fours, already turned toward where she's headed.
-          facing = Math.sign(cat.targetX - cat.x) > 0 ? -1 : 1;
-          show('stand', () => renderCat(CAT_MASK_STAND, Math.random));
-          break;
-        case 'settle':
-          // Standing beat again on arrival; she turns back to the reference
-          // orientation here, where flipping the noise is imperceptible.
-          facing = 1;
-          show('stand', () => renderCat(CAT_MASK_STAND, Math.random));
-          break;
-        case 'flick': {
-          // Tail tip up, tail tip down - the reference art, wiggling only its
-          // last two rows on a slow beat.
-          const phase = Math.floor(now / CAT_MOTION.FLICK_INTERVAL) % 2;
-          facing = 1;
-          show(phase === 0 ? 'flick' : 'sit', () =>
-            phase === 0 ? CAT_SIT_ART_FLICK : CAT_SIT_ART,
-          );
+          // The 8-frame leg cycle for her heading, keyed to ground covered -
+          // one stride's worth of pixels per cycle - so planted paws grip
+          // the floor instead of sliding under her. Each frame swap re-rolls
+          // the noise, so the fur shimmers as she moves.
+          walkPx += CAT_MOTION.WALK_SPEED * 0.016 * width;
+          const colPx = (catRef.current?.offsetWidth ?? 0) / WALK_MASK_WIDTH;
+          const phase = colPx > 0 ? (walkPx / (WALK_CYCLE_COLS * colPx)) % 1 : 0;
+          const frames = WALK_MASKS[facing];
+          const bucket = Math.floor(phase * frames.length) % frames.length;
+          show(`walk-${facing}-${bucket}`, frames[bucket]);
+          bob = -Math.abs(Math.sin(phase * Math.PI * 2)) * CAT_MOTION.BOB_HEIGHT;
           break;
         }
         case 'sleep':
-          // Perfectly still; the drifting zzz does the animating.
-          facing = 1;
-          show('sit', () => CAT_SIT_ART);
+          // Perfectly still - one roll, no shimmer; the drifting zzz animates.
+          show(`sleep-${facing}`, SIT_MASKS[facing]);
           isSleeping = true;
           break;
-        case 'alert':
-          // The tail-tip lift is the twitch of noticing.
-          facing = 1;
-          show('flick', () => CAT_SIT_ART_FLICK);
+        case 'alert': {
+          // Noticing: the fur ripples fast for a beat before she sets off.
+          const bucket = Math.floor(now / 0.18);
+          show(`alert-${facing}-${bucket}`, SIT_MASKS[facing]);
           break;
+        }
         case 'sit':
-        default:
-          // Exactly the reference: same glyphs, same orientation. However she
-          // arrived, she turns to settle the way the art was drawn.
-          facing = 1;
-          show('sit', () => CAT_SIT_ART);
+        default: {
+          // Sitting idle: a slow shimmer - the coat re-rolls and breathes.
+          const bucket = Math.floor(now / CAT_MOTION.SIT_SHIMMER);
+          show(`sit-${facing}-${bucket}`, SIT_MASKS[facing]);
           break;
+        }
       }
 
-      // --- paint position + facing (cheap: no React involved) ---
-      // Facing flips the inner art wrapper, not the sprite itself, so the
-      // floating "zzz" never renders mirrored.
+      // --- paint position + bob (cheap: no React involved) ---
       if (catRef.current && width > 0) {
         const px = Math.min(cat.x * width, maxLeft());
         catRef.current.style.transform = `translate3d(${px}px, ${bob}px, 0)`;
-      }
-      if (artRef.current) {
-        artRef.current.style.transform = `scaleX(${facing})`;
-        // The zzz counter-flips against this so its glyphs never mirror.
-        artRef.current.style.setProperty('--cat-facing', String(facing));
       }
 
       if (isSleeping !== currentSleeping) {
@@ -280,7 +238,6 @@ export default function CatPlayground() {
         transition={{ duration: ANIMATION_DURATION.NORMAL }}
       >
         <header className={styles['cat__intro']}>
-          <p className={styles['cat__kicker']}>{CAT.KICKER}</p>
           <h1 className={styles['cat__title']}>{CAT.TITLE_MAIN}</h1>
           <p className={styles['cat__lead']}>{CAT.LEAD}</p>
         </header>
@@ -303,7 +260,7 @@ export default function CatPlayground() {
               .join(' ')}
             aria-hidden="true"
           >
-            <span ref={artRef} className={styles['cat__art']}>
+            <span className={styles['cat__art']}>
               {sleeping && <span className={styles['cat__zzz']}>z&#8202;z&#8202;z</span>}
               {art.join('\n')}
             </span>
