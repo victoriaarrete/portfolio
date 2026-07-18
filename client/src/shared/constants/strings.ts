@@ -176,6 +176,8 @@ export const CONSOLE_SDK = {
   GREETING_HELP_TAG: '→ explore',
   GREETING_MAZE_CMD: 'victoria.maze()',
   GREETING_MAZE_TAG: "→ there's always a way through",
+  GREETING_CAT_CMD: 'victoria.cat',
+  GREETING_CAT_TAG: "→ she's off the clock",
 
   // Returned when the object is coerced to a string (e.g. `${victoria}`).
   SIGNATURE:
@@ -195,7 +197,59 @@ export const CONSOLE_SDK = {
     { command: 'victoria.cat()', what: 'everything serious needs a way out' },
   ],
   HELP_RETURN: '↑ call any command, e.g. victoria.readme()',
+  CAT_HINT: '// call victoria.cat() to go find her →',
   CAT_RETURN: 'off you go →',
+
+  // A pre-rendered still of the sitting sprite (features/cat SIT_MASK filled
+  // with the same glyph noise). Printed when someone reaches for victoria.cat
+  // in the console. Baked, not imported, so this foundational module stays
+  // free of any feature dependency.
+  CAT_ART: [
+    '           .,           .`.',
+    "            ^..        '99'",
+    '            ;5S.       `oS;',
+    "             :88^,  , ' 938.",
+    '             .$9oS^`..o5 :;.',
+    '              ;53$$59$5 ;',
+    '            :`99S3sS8385o`^',
+    "            :9 ;, 5o9o885s'",
+    "      .  ^ :8' ` ^$S$589989",
+    '      ;`;58SS9:;;3  S8S5388',
+    '    .   ^ 5S$58 59 98995989;',
+    "     '  `S8S85835  5838oo8 ;",
+    '          $5959S$95S9soo859 :',
+    '         ^88$os8 o 8$$ 988s58.',
+    "           83s8398S333S58o9o'       .    .",
+    "          `55osS9599 5S888$^ . ^;.`;o,:`:,'",
+    '          `$ o95o$8ooS 9o9ss.88s 8s 59 S55$9  `',
+    '           38  89598598s   5S9osSo3o5o s  o8$ $,`',
+    '         `o5998S95S  8$98S 58soo855S$898$o5SS95 3 :',
+    "         's 9$ 99959 98$8o898935 88 9$o93 58559 o$o'",
+    '         `  SoooSSS55o$$8os9955$8599$99S88S95o3o58585',
+    '        : 9o59$5  5s89o9S9 oo5S88o399S85S8o989o89o5S88`',
+    '        `885S9S58S o 958s 8s S59$98855s98s8 S9S88o 8s9.',
+    '          o8$39SS5oo955ooo sS9S5  858S9939$ 8$8$So5388o^',
+    '       ^$89S5588888953 8S88S889$395SS$S53S8 8599s39593o$^',
+    '       ,59oss98S33os$S5Ss5S585S3 55 8 885 9$oso5 5o595s8;',
+    '       ;5$89598898539 $9o853os8So 59 99S  $3 o8so5S95 95^',
+    '        98S989 89538598oSo85o98S58555S88SSo9S3$ 8S8S985 ;',
+    '       `sS$SSS8$$o8598S$93o$8ooo855oS598o55$So33SS9859$93;',
+    "       '$5S9  998583 99s$S$55os S $898osS8 8so5 59595558o9'",
+    '       ;oss98555$  8s8S9$589 5999599 8 88 5os55o83s338so8 .',
+    "       ^8 99S555   5o55s8853 98o959o 98855$9o885S9 588989 '",
+    '       ,S5$998S99$9 888  SS$SoSS$ 3395o5$88353o588  585  58`                  `;^^^',
+    "       ' s55 o5So9 98$58oo 55855935o885SS$585$8o 88S o9o 8^                 :oS39S",
+    "     ,;8 S5$88885s8 5o$53S53 9395S995 o 88 oS8933s958 o S9'             . ;^S9S$Soo'",
+    '       .85999oS8so39o983S$8 889o3$ S5893s95 35$o538SoS998S`             `:$o5$8s85,',
+    '        95 5$ sS555o85$s989 $5S8853 988 83os83S953899S89 ,            .;55595539oS:',
+    "        `o$ 95o59$585So89 58S588o$89S9$93588o889599593  S9;.'`. .:;^.,5$S8S838895;",
+    "         ',S5855$58S85S o958$8s $95 9SoS9 So5935835o5S53S3385s9.s989 99S8 5S5S$So;",
+    '         ,.^s35985S5o S9o99395s$ 89s95oo5S39$o85595S9$8 oo$9s3555o885993SS9s5o8s.',
+    "          .:858 s 95858s9 5'.$5o38S3S$585598 99o5o58Sos9o99555$S9958o 55SS989998.",
+    "          .5$S8885S58985S5:  '``;,, 9^.,,`.'s'`:.:',o 9$8$85 s3S9o5835S99898os ;",
+    '         ^.9885S9  .5S98o5 ,   .    ,       ^       ;,.^oo8 8 98o$98 9o98 ^::`',
+    "           ',;,;^:   .,:` `                             ,;;;,^,';' .:^'.,",
+  ],
 
   README_SECTIONS: [
     {
