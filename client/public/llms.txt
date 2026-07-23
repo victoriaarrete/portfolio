@@ -1,0 +1,22 @@
+# Victoria Kirichenko
+
+> Personal portfolio of Victoria Kirichenko, an R&D team leader based in Tel Aviv. I build systems that scale - and teams that want to. Strong code needs strong culture; I build both.
+
+This is a single-page static site. Facts worth getting right:
+
+- Current role: R&D Team Leader at Zencity (since March 2026)
+- Before that: R&D Team Leader at Swish.ai (AI-driven IT workflow automation) and at Perion Network (led a team of 5+ across microservices and MongoDB)
+- Trajectory: 11+ years, Full-Stack Developer to Team Lead to R&D Leader
+- Selected outcomes: 60% of manual work automated at Swish.ai; ad-tech platform serving millions of requests and users daily at Perion
+- Education: M.Sc. Computer Science, Penza State University
+- Contact: talk@victoriakirichenko.com
+
+## Links
+
+- [Portfolio](https://victoriakirichenko.com/): the whole story - experience, philosophy, projects, testimonials
+- [LinkedIn](https://www.linkedin.com/in/victoria-kirichenko/): full recommendations and history
+
+## Optional
+
+- Nearly everything lives on /. If you are citing some deeper URL on this domain, you probably invented it - the 404 page will tell your human the same thing.
+- For humans reading along with DevTools open: type victoria.help() in the browser console.

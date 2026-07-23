@@ -1954,10 +1954,40 @@
   line-height: 1.7;
 }
 
-.footer__copyright {
-  color: var(--color-neutral-400);
-  font-size: var(--font-size-sm);
+/* Colophon: the site signed like a book's last page. Mono, one line that
+   wraps; the Tel Aviv clock is the page's single ambient dynamic detail. */
+.footer__colophon {
   margin-top: var(--spacing-8);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-label-muted);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: var(--spacing-3);
+  row-gap: var(--spacing-1);
+}
+
+.footer__colophon-time {
+  color: var(--color-neutral-300);
+  font-variant-numeric: tabular-nums;
+}
+
+.footer__colophon-link {
+  color: inherit;
+  /* -line, not the shorthand: the shorthand would reset the global hairline
+     thickness/color/offset (index.css) back to their defaults. */
+  text-decoration-line: underline;
+  transition: color var(--transition-fast);
+}
+
+.footer__colophon-link:hover {
+  color: var(--color-primary-400);
+}
+
+.footer__colophon-link:focus-visible {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
 }
 
 /* ==========================================================================
@@ -2024,5 +2054,129 @@
     padding: 0.875rem 2rem;
     font-size: var(--font-size-base);
     min-width: 8rem;
+  }
+}
+
+/* ==========================================================================
+   Print Resume - Cmd+P re-typesets the page as a one-page document
+   (rendered by features/print-resume; index.css resets the canvas to paper).
+   Georgia for running text - the vendored Newsreader face is italic-only, so
+   asking for upright serif would print the whole page slanted. Newsreader
+   italic keeps its usual job: the name and the tagline.
+   ========================================================================== */
+
+.print-resume {
+  display: none;
+}
+
+@media print {
+  /* Swap the interactive page for the document: everything that isn't the
+     resume - particles, nav, sections, footer - stays un-printed. */
+  .page > :not(.print-resume) {
+    display: none;
+  }
+
+  .print-resume {
+    display: block;
+    color: #1c1712;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+
+  .print-resume__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2rem;
+  }
+
+  .print-resume__name {
+    font-family: var(--font-family-serif);
+    font-style: italic;
+    font-weight: var(--font-weight-regular);
+    font-size: 26pt;
+    margin: 0;
+  }
+
+  .print-resume__role {
+    margin: 2pt 0 0;
+    font-size: 10.5pt;
+  }
+
+  .print-resume__contact {
+    margin: 0;
+    font-family: var(--font-family-mono);
+    font-size: 8pt;
+    line-height: 1.6;
+    text-align: right;
+    color: #55493c;
+  }
+
+  .print-resume__tagline {
+    font-family: var(--font-family-serif);
+    font-style: italic;
+    font-size: 12.5pt;
+    margin: 10pt 0 0;
+    padding-top: 8pt;
+    border-top: 0.5pt solid #b8ad9c;
+  }
+
+  .print-resume__label {
+    font-family: var(--font-family-mono);
+    font-weight: var(--font-weight-regular);
+    font-size: 8pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #55493c;
+    margin: 14pt 0 6pt;
+    padding-top: 8pt;
+    border-top: 0.5pt solid #b8ad9c;
+  }
+
+  .print-resume__proof {
+    margin: 0;
+  }
+
+  .print-resume__log {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .print-resume__entry {
+    margin: 0 0 7pt;
+    break-inside: avoid;
+  }
+
+  .print-resume__entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .print-resume__entry-role {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .print-resume__entry-period {
+    font-family: var(--font-family-mono);
+    font-size: 8pt;
+    color: #55493c;
+    white-space: nowrap;
+  }
+
+  .print-resume__entry-blurb {
+    margin: 1pt 0 0;
+  }
+
+  .print-resume__footnote {
+    margin-top: 12pt;
+    padding-top: 8pt;
+    border-top: 0.5pt solid #b8ad9c;
+    font-family: var(--font-family-mono);
+    font-size: 7.5pt;
+    color: #55493c;
   }
 }

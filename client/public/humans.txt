@@ -1,0 +1,22 @@
+/* TEAM */
+Human:     Victoria Kirichenko
+Role:      R&D Team Leader - I build systems that scale,
+           and teams that want to
+Location:  Tel Aviv, Israel
+Contact:   talk@victoriakirichenko.com
+LinkedIn:  linkedin.com/in/victoria-kirichenko
+
+/* SITE */
+Stack:     React 18, TypeScript, Vite - static build, no backend
+Type:      Newsreader for the prose, Space Mono for the chrome
+Motion:    framer-motion, and every animation respects
+           prefers-reduced-motion
+Hosting:   GitHub Pages
+
+/* THANKS */
+To everyone who opens DevTools on a portfolio site.
+This file is for you - and so is the console: try victoria.help()
+
+The cat is real. She's off the clock: victoria.cat()
+
+/* Last update: 2026/07/23 */

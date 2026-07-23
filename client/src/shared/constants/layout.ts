@@ -34,6 +34,15 @@ export const TIMING_MS = {
   PARTICLE_LIFESPAN: 30000,
   PARTICLE_CREATE_INTERVAL: 600,
   PARTICLE_STAGGER: 200,
+  COLOPHON_CLOCK_TICK: 30000,
+} as const;
+
+// Scramble-on-hover for mono labels (shared/lib/use-scramble): one resolve
+// pass left to right, plus a few all-random ticks before the first character
+// settles. ~(label length + lead-in) * tick = a beat under half a second.
+export const SCRAMBLE = {
+  TICK_MS: 28,
+  LEAD_IN_TICKS: 4,
 } as const;
 
 // Easing Curves

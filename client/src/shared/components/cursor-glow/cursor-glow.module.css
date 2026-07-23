@@ -13,3 +13,11 @@
   mix-blend-mode: screen;
   transition: opacity 0.5s ease;
 }
+
+/* Mounted outside the home page's .page wrapper (App level), so the print
+   resume's blanket hide can't reach it - opt out of print here. */
+@media print {
+  .cursor-glow {
+    display: none;
+  }
+}

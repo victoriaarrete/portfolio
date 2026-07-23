@@ -11,6 +11,7 @@ import { Projects } from '@/features/projects/projects';
 import { Testimonials } from '@/features/testimonials/testimonials';
 import { Contact } from '@/features/contact/contact';
 import { Footer } from '@/features/footer/footer';
+import { PrintResume } from '@/features/print-resume/print-resume';
 import styles from './home.module.css';
 
 export default function Home() {
@@ -68,6 +69,7 @@ export default function Home() {
       </main>
 
       <Footer />
+      <PrintResume />
     </div>
   );
 }
