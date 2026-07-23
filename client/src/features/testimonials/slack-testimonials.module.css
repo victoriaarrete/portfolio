@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Slack-style testimonials — minimal
+   Slack-style testimonials - minimal
    The Slack direct-message metaphor stripped to its bones: a "Direct messages"
    sidebar of colleagues and the selected message. No window title bar, tabs,
    search, conversation header, or composer. Colours use the site's warm
@@ -90,7 +90,7 @@
   text-overflow: ellipsis;
 }
 
-/* Last-message preview under the name — only shown on the mobile DM list. */
+/* Last-message preview under the name - only shown on the mobile DM list. */
 .slack-testimonials__dm-preview {
   display: none;
   font-size: 12px;
@@ -337,7 +337,7 @@
     display: flex;
   }
 
-  /* No persistent "selected" row on the mobile list — Slack's DM list doesn't
+  /* No persistent "selected" row on the mobile list - Slack's DM list doesn't
      pre-highlight a conversation. An opened row just reads as a normal (read)
      DM: no highlight block. Unread rows stay emphasized (brighter preview). */
   .slack-testimonials__dm--active {

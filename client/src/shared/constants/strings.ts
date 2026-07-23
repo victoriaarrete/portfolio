@@ -9,7 +9,7 @@ export const PERSONAL_INFO = {
   LAST_NAME: 'Kirichenko',
   EMAIL: 'talk@victoriakirichenko.com',
   LINKEDIN_URL: 'https://www.linkedin.com/in/victoria-kirichenko/',
-  LINKEDIN_DISPLAY: 'linkedin.com/in/victoria-kirichenko',
+  LINKEDIN_DISPLAY: '/in/victoria-kirichenko',
   LOCATION: 'Tel Aviv District, Israel',
   INITIALS: 'VK',
 } as const;
@@ -176,6 +176,8 @@ export const CONSOLE_SDK = {
   GREETING_HELP_TAG: '→ explore',
   GREETING_MAZE_CMD: 'victoria.maze()',
   GREETING_MAZE_TAG: "→ there's always a way through",
+  GREETING_CAT_CMD: 'victoria.cat()',
+  GREETING_CAT_TAG: "→ she's off the clock",
 
   // Returned when the object is coerced to a string (e.g. `${victoria}`).
   SIGNATURE:
@@ -195,7 +197,63 @@ export const CONSOLE_SDK = {
     { command: 'victoria.cat()', what: 'everything serious needs a way out' },
   ],
   HELP_RETURN: '↑ call any command, e.g. victoria.readme()',
+  CAT_HINT: '// call victoria.cat() to go find her →',
   CAT_RETURN: 'off you go →',
+
+  // A pre-rendered still of the sitting sprite (features/cat SIT_MASK filled
+  // with the same glyph noise). Printed when someone reaches for victoria.cat
+  // in the console. Baked, not imported, so this foundational module stays
+  // free of any feature dependency.
+  // The mask is stretched 1.2x horizontally before filling: DevTools ignores
+  // line-height on %c styles and draws console lines at a ~2.1 cell aspect
+  // (vs the page sprite's 1.75), so the extra width cancels the vertical
+  // stretch. Regenerate with the same fill + a seeded RNG if the mask changes.
+  CAT_ART: [
+    "            ,,'              `;'",
+    "              ^^;'          .o8",
+    "              '  8^        :oo ^",
+    "               :oss:'     .s9 5 ,^",
+    "               ,,55$5,^;`;S899^ '`",
+    '                 `3S88585858S.',
+    "              ':`8 85S8s$Ss5S8^.",
+    '              ^99 ;;99 59So9o59,',
+    '           ;;;93,   `S5885589558`.',
+    "       : ,,99$59 `:,55S85ss8855So'",
+    "     '    S 5so839$9o8 8898 8o$oo`",
+    '      :  .^S9S855585$59585S3S99S5.',
+    '         ` `959S59s8 o 33 55$o8S98`',
+    "        :  'S95$o9 955S8 8 S 5oo98S'",
+    '            . s5399$ S98o9$8$oo 8,;                .',
+    "            `38S95$3SS59 So 5955.  :^;^..'^9.^`.^;^`.",
+    "           ';995S SS$so8S99$85oS ^,o8S889ss9 o55 sS58^:^",
+    '            ;5o 9S9959o59 95Ss8$s oo853$55oss5958 95S8o8^^,',
+    "           , 59$99o8 88$58855S5SS 995589889898So9SSSSS9$5oS';,",
+    '           ;935$599SSo558o839So85S85 8 9So 995o5 sS o$588 853.:;`',
+    '           `85S5883s5S$5$$89 98S8o39S8$Soo88S559s95S$9$ 9o sS9 5,`',
+    "         ' 8o9S9oo8S9o89999 8558 S9985o55 $$835oS9  9S93 S5$$S598'",
+    '            o58so 98  S 85o938$8598 S59 5S 8So59 SS5 s9SoS8S 85o9:',
+    '         `os sSoS5558SoS98585888SS 95oS859$58o$8$9889 sso8Ss3589So',
+    "        ,$89o89oo8S So598S 5o959o598o99 o898S 9S99$  988o59S   8S8S'",
+    '         o8 999S99s58S9989o 5s838SSS39sS988S9 33$89o58S 89$o5S8$89 :',
+    '        : 3553 59s$59 S8sS55o9s9SSS 89s85$ S85sS8o53o8883 9  S93s98.',
+    "        .899S9$osS9$95885959 8$o$S58o 9 $o5 o$oS8S83 o98555$8o58995. '",
+    '        ^9s88S$3o885888885539858o9 ooS39oS899o8S9 89$s$58S8$   $53s ,.',
+    '         S9    98SSo$8$5S5 5555 998o 39s 5S$o55895o $S 95o83o9 93o885S:',
+    "        ' S8SoS98 9885$955o 5 9S$5o5o9S8895555S9 9o9$5  S55oS3  SS8 8S,",
+    '        ,95$3$ s$99 985855SS988 98o 99S8o9 985osSs598559555soS9SS5999S,',
+    "        ,S5$8$58$s5S5oSo 8S s89So8SS5o855o 5S59S SS 9So88S5S9 SS9s39839                     ,'::.`,.",
+    '         s8  S98$o5 5oS59S$995o3 o 5 sSo8558 S988o988 8 S5S5s8 9$s9 39:                    :$o388 8 :',
+    "       `85S5s9S888Ss 953S9sSoSS3385ooSSo9559998S55o$S$9 9985SS9 S$9S$9'                  '.85o8$3$S .",
+    '        `59o98S58$8 oso9589Ss9o9S   S8 o859$58S99S8$8 s588S55$5s$oS 5`;.              :;` 89s588953`',
+    '        ,5 3S3 S9 ss98$888o8s9$9358S  39osoo8o9$9o983So5$9oSs58 Sos3;   .      .    ..S$898989$85 `.',
+    "         `:58 S9 o8983S8859938oSSSS9 38 8599589  o 99s 58 3o9 5Sooo9$'.`^^'   ',,;.'9$89sso88$9S5;",
+    '           ,.95 395589 59 o9 95$89  S998s95S 559s9S9S9os9S S8559S599os95s35: So3S89$ 9 8s589S8$95',
+    '              o$895$8  3 8S8oSs958898855$89S9S8S$89oS5985S9oo93S9 s9583 S5S959953o9 88SS 9o85s3o,',
+    "             `585 5so s$S9889o5S::'$88$ 5s 989S 5S8Ss55ss58$9S8S8883oos588S8593S$oS so8S$9358 S8,",
+    "            ;95S5o99o3 o988$995    ;^`:;^.,9:``':^:^'S',':.;`^oo8S SosS8o899o55o$855S983 83SoS.'",
+    "           ''5 98S8s9 `,s95589o5^;`     '  :`        ^      ' ;::' 8s95S39$s85S8 88 99 9S .`':",
+    "             ;,^;, ;^   : ;';:`;                                .  ^:;`,.. ,;`.::.'`'`^^`   .",
+  ],
 
   README_SECTIONS: [
     {
@@ -381,10 +439,10 @@ export const ABOUT_CONTENT = {
 // Outcomes over adjectives: each row leads with the result, then a short label.
 // Company-agnostic on purpose - the proof stands on its own.
 export const ABOUT_IMPACT = [
-  { metric: '−60%', label: 'automated' },
-  { metric: '11+ yrs', label: 'eng & lead' },
-  { metric: '5+ QA', label: 'engineers led' },
-  { metric: 'Millions', label: 'req & users / day' },
+  { metric: '−60%', label: 'manual work automated' },
+  { metric: '11+ yrs', label: 'engineering & leadership' },
+  { metric: '5+', label: 'QA engineers led' },
+  { metric: 'Millions', label: 'requests & users daily' },
 ] as const;
 
 // About Section - Approach List
@@ -400,7 +458,7 @@ export const ABOUT_APPROACH = [
 
 // Experience Section - rendered as a `git log --graph` of the career.
 // `shape` drives the commit-graph gutter (see home.tsx): the Perion promotion
-// is a real merge — the full-stack track branches off and merges into the
+// is a real merge - the full-stack track branches off and merges into the
 // leadership line. `type` is the conventional-commit verb shown before the role.
 type ExperienceCommit = {
   hash: string;
@@ -422,7 +480,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     head: true,
     role: 'R&D Team Leader',
     company: 'Zencity',
-    period: 'Mar 2026 - present',
+    period: 'Mar 2026 – present',
     blurb: 'Leading R&D as the team scales its civic-data platform.',
   },
   {
@@ -431,7 +489,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'commit',
     role: 'R&D Team Leader',
     company: 'Swish.ai',
-    period: 'Apr 2024 - Oct 2025',
+    period: 'Apr 2024 – Oct 2025',
     blurb: 'People-first leadership of AI-driven IT workflow automation, delivered with Scrum.',
   },
   {
@@ -440,7 +498,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'merge',
     role: 'R&D Team Leader',
     company: 'Perion Network',
-    period: 'Apr 2021 - Apr 2024',
+    period: 'Apr 2021 – Apr 2024',
     blurb: 'Promoted to lead 5 devs + QA across back-office, microservices and MongoDB.',
   },
   {
@@ -449,7 +507,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'branch',
     role: 'Full Stack Developer',
     company: 'Perion Network',
-    period: 'Jun 2018 - Apr 2021',
+    period: 'Jun 2018 – Apr 2021',
     blurb: 'Built scalable React / Next.js front ends and Node / MongoDB microservices.',
   },
   {
@@ -458,7 +516,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'close',
     role: 'Full Stack Developer',
     company: 'Mind Connect',
-    period: 'Mar 2016 - Apr 2018',
+    period: 'Mar 2016 – Apr 2018',
     blurb: 'Designed and shipped a full call-center management platform end to end.',
   },
   {
@@ -467,7 +525,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'commit',
     role: 'Full Stack Developer',
     company: 'PowerTech',
-    period: 'Feb 2015 - Mar 2016',
+    period: 'Feb 2015 – Mar 2016',
     blurb: 'Built a project-management web app on .NET and Microsoft SQL Server.',
   },
   {
@@ -476,7 +534,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'commit',
     role: 'Full Stack Developer',
     company: 'Early career',
-    period: 'Dec 2012 - Jan 2015',
+    period: 'Dec 2012 – Jan 2015',
     blurb: 'Foundation years building across the full stack.',
   },
   {
@@ -486,7 +544,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     root: true,
     role: 'M.Sc. Computer Science',
     company: 'Penza State University',
-    period: '2007 - 2012',
+    period: '2007 – 2012',
     blurb: 'Root commit - computer-science foundations.',
   },
 ];
@@ -554,7 +612,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Content Arbitrage Platform',
     company: 'CIQ/Perion',
     description:
-      'Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily — work that led to the startup’s acquisition by Perion.',
+      'Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily - work that led to the startup’s acquisition by Perion.',
     tags: ['Microservices', 'AdTech', 'Scale'],
   },
   {

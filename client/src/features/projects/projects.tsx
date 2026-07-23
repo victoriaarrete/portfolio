@@ -36,6 +36,7 @@ export function Projects() {
   const activeTitle = results.some((project) => project.title === selectedTitle)
     ? selectedTitle
     : results[0]?.title;
+  const activeProject = results.find((project) => project.title === activeTitle);
 
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
@@ -142,38 +143,67 @@ export function Projects() {
             </div>
           </div>
 
-          <div className={styles['projects__palette-results']}>
-            {isFiltering && (
-              <p className={styles['projects__palette-group']} aria-live="polite">
-                {results.length === 1 ? '1 result' : `${results.length} results`}
-              </p>
-            )}
-
-            {isFiltering && results.length === 0 && (
-              <div className={styles['projects__palette-empty']}>
-                <p>
-                  {PROJECTS_PALETTE.EMPTY} &ldquo;{query.trim()}&rdquo;
+          {/* Desktop splits into result list + preview pane (a real ⌘K layout);
+              mobile keeps the single stacked list with full rows */}
+          <div className={styles['projects__palette-body']}>
+            <div className={styles['projects__palette-results']}>
+              {isFiltering && (
+                <p className={styles['projects__palette-group']} aria-live="polite">
+                  {results.length === 1 ? '1 result' : `${results.length} results`}
                 </p>
-                <p className={styles['projects__palette-empty-hint']}>
-                  {PROJECTS_PALETTE.EMPTY_HINT}
-                </p>
-              </div>
-            )}
+              )}
 
-            {results.map((project, index) =>
-              // Skip the scroll entrance while filtering so results swap instantly
-              isFiltering ? (
-                <div key={project.title}>{renderResult(project)}</div>
-              ) : (
-                <ScrollReveal key={project.title} delay={index * ANIMATION_DELAY.MEDIUM}>
-                  {project.group && (
-                    <p className={styles['projects__palette-group']} aria-hidden="true">
-                      {project.group}
-                    </p>
-                  )}
-                  {renderResult(project)}
-                </ScrollReveal>
-              ),
+              {isFiltering && results.length === 0 && (
+                <div className={styles['projects__palette-empty']}>
+                  <p>
+                    {PROJECTS_PALETTE.EMPTY} &ldquo;{query.trim()}&rdquo;
+                  </p>
+                  <p className={styles['projects__palette-empty-hint']}>
+                    {PROJECTS_PALETTE.EMPTY_HINT}
+                  </p>
+                </div>
+              )}
+
+              {results.map((project, index) =>
+                // Skip the scroll entrance while filtering so results swap instantly
+                isFiltering ? (
+                  <div key={project.title}>{renderResult(project)}</div>
+                ) : (
+                  <ScrollReveal key={project.title} delay={index * ANIMATION_DELAY.MEDIUM}>
+                    {project.group && (
+                      <p className={styles['projects__palette-group']} aria-hidden="true">
+                        {project.group}
+                      </p>
+                    )}
+                    {renderResult(project)}
+                  </ScrollReveal>
+                ),
+              )}
+            </div>
+
+            {activeProject && (
+              <aside className={styles['projects__palette-preview']}>
+                <p className={styles['projects__preview-company']}>{activeProject.company}</p>
+                <p className={styles['projects__preview-title']}>{activeProject.title}</p>
+                {activeProject.featured && (
+                  <p className={styles['projects__preview-outcome']}>
+                    <span className={styles['projects__acquired-chip']}>Acquired by Perion</span>
+                    <span className={styles['projects__outcome-label']}>
+                      outcome of the rebuild
+                    </span>
+                  </p>
+                )}
+                <p className={styles['projects__preview-description']}>
+                  {activeProject.description}
+                </p>
+                <div className={styles.projects__tags}>
+                  {activeProject.tags.map((tag) => (
+                    <span key={tag} className={styles.projects__tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </aside>
             )}
           </div>
 

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import App from '@/app/App';
 
 // Critical-path smoke tests: the page renders, every section exists, the
-// interactive pieces respond. These guard future refactors, not pixels —
+// interactive pieces respond. These guard future refactors, not pixels -
 // visual regressions are covered by scripts/visual-diff.mjs.
 
 describe('portfolio smoke', () => {

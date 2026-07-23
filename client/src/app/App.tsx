@@ -35,7 +35,7 @@ function App() {
 
   return (
     // reducedMotion="user" makes every motion.* transform/layout animation
-    // respect prefers-reduced-motion — the CSS kill-switch can't reach
+    // respect prefers-reduced-motion - the CSS kill-switch can't reach
     // framer's inline-style animations.
     <MotionConfig reducedMotion="user">
       <CursorGlow />

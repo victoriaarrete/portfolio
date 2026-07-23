@@ -549,6 +549,14 @@
   position: relative;
 }
 
+/* Phones get one step less air between sections - the 80px rhythm that reads
+   as editorial on desktop reads as dead space on a 375px column */
+@media (max-width: 640px) {
+  .section {
+    padding: var(--spacing-16) 0;
+  }
+}
+
 .section__container {
   max-width: var(--container-max-width);
   margin: 0 auto;
@@ -923,7 +931,7 @@
 }
 
 /* Pin the first sentence to a single line only once the column reaches its full
-   64rem measure — below this the content column is still padding-constrained and
+   64rem measure - below this the content column is still padding-constrained and
    narrower than the sentence, so nowrap would clip "...culture" off the edge. */
 @media (min-width: 1100px) {
   .about__manifesto-sentence {
@@ -1120,7 +1128,7 @@
   bottom: 0;
 }
 
-/* ╮ — main lane turns right and dives into the branch lane (the promotion). */
+/* ╮ - main lane turns right and dives into the branch lane (the promotion). */
 .experience__elbow-open {
   position: absolute;
   left: 14px;
@@ -1132,7 +1140,7 @@
   border-top-right-radius: 8px;
 }
 
-/* ╯ — the branch lane curves back left and merges into the main lane. */
+/* ╯ - the branch lane curves back left and merges into the main lane. */
 .experience__elbow-close {
   position: absolute;
   left: 14px;
@@ -1262,7 +1270,7 @@
 
 .philosophy__content {
   /* Match the section title column (content-max-width-md) so the content never
-     overhangs the title — they share one left and right edge. */
+     overhangs the title - they share one left and right edge. */
   max-width: var(--content-max-width-md);
   margin: 0 auto;
 }
@@ -1410,7 +1418,7 @@
   overflow: hidden;
 }
 
-/* Focused search field — the chrome that signals "this is a palette" */
+/* Focused search field - the chrome that signals "this is a palette" */
 .projects__palette-search {
   display: flex;
   align-items: center;
@@ -1567,7 +1575,7 @@
   flex-shrink: 0;
 }
 
-/* Solid cream "action" chip — dark glyph on cream for contrast (primary-fg) */
+/* Solid cream "action" chip - dark glyph on cream for contrast (primary-fg) */
 .projects__acquired-chip {
   display: inline-flex;
   align-items: center;
@@ -1634,6 +1642,77 @@
   font-size: var(--font-size-xs);
 }
 
+/* Two-pane split (desktop): compact result list left, preview pane right.
+   Mobile keeps a single column where each row carries its full body. */
+.projects__palette-body {
+  display: block;
+}
+
+.projects__palette-preview {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .projects__palette-body {
+    display: grid;
+    grid-template-columns: minmax(230px, 2fr) 3fr;
+  }
+
+  .projects__palette-results {
+    border-right: var(--border-width-thin) solid var(--color-border-light);
+  }
+
+  /* Rows collapse to title + company - the detail lives in the preview */
+  .projects__palette-results .projects__result {
+    padding-top: var(--spacing-4);
+    padding-bottom: var(--spacing-4);
+  }
+
+  .projects__palette-results .projects__description,
+  .projects__palette-results .projects__tags,
+  .projects__palette-results .projects__result-action {
+    display: none;
+  }
+
+  .projects__palette-results .projects__title {
+    font-size: var(--font-size-base);
+  }
+
+  .projects__palette-preview {
+    display: block;
+    padding: var(--spacing-8) var(--spacing-8) var(--spacing-8) var(--spacing-8);
+  }
+}
+
+.projects__preview-company {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-label-muted);
+}
+
+.projects__preview-title {
+  margin-top: var(--spacing-2);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground);
+}
+
+.projects__preview-outcome {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-4);
+}
+
+.projects__preview-description {
+  margin: var(--spacing-5) 0;
+  color: var(--color-neutral-300);
+  line-height: var(--line-height-relaxed);
+  max-width: 58ch;
+}
+
 /* Keyboard-hint footer, the last familiar palette cue */
 .projects__palette-footer {
   display: flex;
@@ -1643,6 +1722,14 @@
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
   color: var(--color-label-muted);
+}
+
+/* Keyboard affordances mean nothing on touch - hide ⌘K and the nav hints */
+@media (hover: none) and (pointer: coarse) {
+  .projects__palette-kbd,
+  .projects__palette-footer {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1792,6 +1879,10 @@
   color: var(--color-primary-400);
   text-decoration: none;
   transition: color 0.2s ease-in-out;
+  /* Addresses are single tokens - never split them mid-word */
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
 }
 
 .contact__link:hover {

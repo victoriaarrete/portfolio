@@ -111,7 +111,7 @@ export function Hero() {
       <div className={styles.hero__container}>
         {/* Opacity-only entrance: a `y` translate here would give this wrapper a
             transform, making it the containing block for the absolutely-pinned
-            desktop portrait — so the portrait would sit at the content column's
+            desktop portrait - so the portrait would sit at the content column's
             edge mid-animation and snap to the viewport edge when the transform
             clears. The inner blocks below each carry their own y slide-up, so the
             entrance still reads the same without the layout jump. */}
