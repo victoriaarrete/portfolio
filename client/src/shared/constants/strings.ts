@@ -632,13 +632,16 @@ export const PROJECTS: readonly Project[] = [
   },
 ];
 
-// Contact Section Content
+// Contact Section Content - an unlabeled stack of two self-describing mono
+// links (see contact.tsx): the email copies on click with a quiet mono
+// confirmation, LinkedIn opens. No keys, no location row - "in Tel Aviv"
+// already lives in the footer colophon, where ambient facts belong.
 export const CONTACT_CONTENT = {
   TITLE: 'Get In Touch',
   INTRO: "I like hard problems and the people who solve them well. Let's talk.",
-  EMAIL_LABEL: 'Email',
-  LINKEDIN_LABEL: 'LinkedIn',
-  LOCATION_LABEL: 'Location',
+  COPY_HINT: 'copy',
+  COPIED_HINT: 'copied',
+  LINKEDIN_HINT: 'linkedin ↗',
 } as const;
 
 // Copyright
@@ -646,6 +649,30 @@ const CURRENT_YEAR = new Date().getFullYear();
 export const COPYRIGHT = {
   YEAR: String(CURRENT_YEAR),
   TEXT: `© ${CURRENT_YEAR} ${PERSONAL_INFO.NAME}. All rights reserved.`,
+  SHORT: `© ${CURRENT_YEAR} ${PERSONAL_INFO.NAME}`,
+} as const;
+
+// Footer colophon - the site signed like the last page of a book. The clock is
+// the page's one ambient dynamic detail; everything else stays still.
+export const COLOPHON = {
+  TIME_ZONE: 'Asia/Jerusalem',
+  TIME_SUFFIX: 'in Tel Aviv',
+  TYPE_CREDIT: 'set in Newsreader & Space Mono',
+  HUMANS_LABEL: 'humans.txt',
+  HUMANS_HREF: '/humans.txt',
+  DIVIDER: '·',
+} as const;
+
+// Print resume - Cmd+P re-typesets the page as a one-page document (see
+// features/print-resume). Labels only; the content comes from EXPERIENCE_LOG,
+// ABOUT_IMPACT, and PERSONAL_INFO so print can never drift from the page.
+export const PRINT_RESUME = {
+  SITE_DISPLAY: 'victoriakirichenko.com',
+  LOCATION_SHORT: 'Tel Aviv, Israel',
+  EXPERIENCE_LABEL: 'experience',
+  PROOF_LABEL: 'proof, not adjectives',
+  FOOTNOTE:
+    'Printed from victoriakirichenko.com - the interactive version has the rest of the story.',
 } as const;
 
 // Scroll Behavior

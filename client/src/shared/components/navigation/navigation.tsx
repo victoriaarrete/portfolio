@@ -17,6 +17,7 @@ import {
   SCROLL_BEHAVIOR,
   ARIA_LABELS,
 } from '@/shared/constants/strings';
+import { ScrambleText } from '@/shared/components/scramble-text/scramble-text';
 import styles from './navigation.module.css';
 
 export function Navigation() {
@@ -103,7 +104,7 @@ export function Navigation() {
               animate={{ opacity: OPACITY.VISIBLE, y: 0 }}
               transition={{ delay: index * ANIMATION_DELAY.SHORT }}
             >
-              {item.label}
+              <ScrambleText text={item.label} />
             </motion.button>
           ))}
         </div>

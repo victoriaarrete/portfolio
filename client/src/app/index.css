@@ -63,6 +63,27 @@
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
   }
+
+  /* Selection in the site's own palette: cream ground, near-black text -
+     the inverse of the page, instead of the browser's default blue. */
+  ::selection {
+    background: var(--color-primary-400);
+    color: var(--color-primary-foreground);
+  }
+
+  /* Typographically correct underlines for any link that has one: hairline,
+     dropped clear of descenders, drawn in a muted tint of the link's own
+     color that sharpens on hover. Links without underlines are unaffected. */
+  a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+    transition: text-decoration-color var(--transition-fast);
+  }
+
+  a:hover {
+    text-decoration-color: currentColor;
+  }
 }
 
 @layer utilities {
@@ -93,6 +114,28 @@
   100% {
     transform: translateY(-100vh) rotate(360deg);
     opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   Print - Cmd+P produces a one-page resume, not six pages of ink.
+   The document itself lives in features/print-resume; home.module.css hides
+   the interactive page and shows it. This block resets the canvas to paper.
+   ========================================================================== */
+
+@page {
+  margin: 14mm 16mm;
+}
+
+@media print {
+  html {
+    background-color: #fff;
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: #fff;
+    color: #1c1712;
   }
 }
 
