@@ -661,6 +661,13 @@ export const COLOPHON = {
   HUMANS_LABEL: 'humans.txt',
   HUMANS_HREF: '/humans.txt',
   DIVIDER: '·',
+  // "deployed <sha>" - honest because Pages deploys on every push to main
+  // (.github/workflows/deploy.yml), so main's head IS the live site. Fetched
+  // client-side from the public GitHub API; the line simply doesn't render
+  // if the request fails or the visitor is rate-limited.
+  DEPLOY_LABEL: 'deployed',
+  DEPLOY_API: 'https://api.github.com/repos/victoriaarrete/portfolio/commits/main',
+  DEPLOY_COMMIT_URL: 'https://github.com/victoriaarrete/portfolio/commit/',
 } as const;
 
 // Print resume - Cmd+P re-typesets the page as a one-page document (see

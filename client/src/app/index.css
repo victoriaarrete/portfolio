@@ -39,7 +39,12 @@
   }
 
   body {
-    @apply antialiased text-foreground overflow-x-hidden;
+    @apply antialiased text-foreground;
+    /* clip, not hidden: hidden would make body a scroll container and capture
+       every view() timeline on the page (see the experience graph). hidden
+       stays as the fallback for engines without clip. */
+    overflow-x: hidden;
+    overflow-x: clip;
     /* Transparent so the fixed code-stream background (z-index -1) shows through */
     background-color: transparent;
     font-family: var(--font-family-mono);
