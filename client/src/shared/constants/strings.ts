@@ -9,7 +9,7 @@ export const PERSONAL_INFO = {
   LAST_NAME: 'Kirichenko',
   EMAIL: 'talk@victoriakirichenko.com',
   LINKEDIN_URL: 'https://www.linkedin.com/in/victoria-kirichenko/',
-  LINKEDIN_DISPLAY: 'linkedin.com/in/victoria-kirichenko',
+  LINKEDIN_DISPLAY: '/in/victoria-kirichenko',
   LOCATION: 'Tel Aviv District, Israel',
   INITIALS: 'VK',
 } as const;
@@ -435,10 +435,10 @@ export const ABOUT_CONTENT = {
 // Outcomes over adjectives: each row leads with the result, then a short label.
 // Company-agnostic on purpose - the proof stands on its own.
 export const ABOUT_IMPACT = [
-  { metric: '−60%', label: 'automated' },
-  { metric: '11+ yrs', label: 'eng & lead' },
-  { metric: '5+ QA', label: 'engineers led' },
-  { metric: 'Millions', label: 'req & users / day' },
+  { metric: '−60%', label: 'manual work automated' },
+  { metric: '11+ yrs', label: 'engineering & leadership' },
+  { metric: '5+', label: 'QA engineers led' },
+  { metric: 'Millions', label: 'requests & users daily' },
 ] as const;
 
 // About Section - Approach List
@@ -454,7 +454,7 @@ export const ABOUT_APPROACH = [
 
 // Experience Section - rendered as a `git log --graph` of the career.
 // `shape` drives the commit-graph gutter (see home.tsx): the Perion promotion
-// is a real merge — the full-stack track branches off and merges into the
+// is a real merge - the full-stack track branches off and merges into the
 // leadership line. `type` is the conventional-commit verb shown before the role.
 type ExperienceCommit = {
   hash: string;
@@ -476,7 +476,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     head: true,
     role: 'R&D Team Leader',
     company: 'Zencity',
-    period: 'Mar 2026 - present',
+    period: 'Mar 2026 – present',
     blurb: 'Leading R&D as the team scales its civic-data platform.',
   },
   {
@@ -485,7 +485,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'commit',
     role: 'R&D Team Leader',
     company: 'Swish.ai',
-    period: 'Apr 2024 - Oct 2025',
+    period: 'Apr 2024 – Oct 2025',
     blurb: 'People-first leadership of AI-driven IT workflow automation, delivered with Scrum.',
   },
   {
@@ -494,7 +494,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'merge',
     role: 'R&D Team Leader',
     company: 'Perion Network',
-    period: 'Apr 2021 - Apr 2024',
+    period: 'Apr 2021 – Apr 2024',
     blurb: 'Promoted to lead 5 devs + QA across back-office, microservices and MongoDB.',
   },
   {
@@ -503,7 +503,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'branch',
     role: 'Full Stack Developer',
     company: 'Perion Network',
-    period: 'Jun 2018 - Apr 2021',
+    period: 'Jun 2018 – Apr 2021',
     blurb: 'Built scalable React / Next.js front ends and Node / MongoDB microservices.',
   },
   {
@@ -512,7 +512,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'close',
     role: 'Full Stack Developer',
     company: 'Mind Connect',
-    period: 'Mar 2016 - Apr 2018',
+    period: 'Mar 2016 – Apr 2018',
     blurb: 'Designed and shipped a full call-center management platform end to end.',
   },
   {
@@ -521,7 +521,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'commit',
     role: 'Full Stack Developer',
     company: 'PowerTech',
-    period: 'Feb 2015 - Mar 2016',
+    period: 'Feb 2015 – Mar 2016',
     blurb: 'Built a project-management web app on .NET and Microsoft SQL Server.',
   },
   {
@@ -530,7 +530,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     shape: 'commit',
     role: 'Full Stack Developer',
     company: 'Early career',
-    period: 'Dec 2012 - Jan 2015',
+    period: 'Dec 2012 – Jan 2015',
     blurb: 'Foundation years building across the full stack.',
   },
   {
@@ -540,7 +540,7 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
     root: true,
     role: 'M.Sc. Computer Science',
     company: 'Penza State University',
-    period: '2007 - 2012',
+    period: '2007 – 2012',
     blurb: 'Root commit - computer-science foundations.',
   },
 ];
@@ -608,7 +608,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Content Arbitrage Platform',
     company: 'CIQ/Perion',
     description:
-      'Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily — work that led to the startup’s acquisition by Perion.',
+      'Part of the team that rebuilt a legacy monolith into a scalable microservices architecture handling millions of requests daily - work that led to the startup’s acquisition by Perion.',
     tags: ['Microservices', 'AdTech', 'Scale'],
   },
   {

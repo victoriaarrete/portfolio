@@ -18,7 +18,7 @@ const META = [
 // other three read as unread until the visitor clicks them.
 const DEFAULT_INDEX = TESTIMONIALS.length - 1;
 
-// Size is driven by a CSS class (so it can respond to the breakpoint — the DM
+// Size is driven by a CSS class (so it can respond to the breakpoint - the DM
 // avatars grow on mobile); only the tint is inline, since it's per-person data.
 function Avatar({ index, className }: { index: number; className: string }) {
   const t = TESTIMONIALS[index];
@@ -48,9 +48,9 @@ export function SlackTestimonials() {
   const [readIndices, setReadIndices] = useState<Set<number>>(() => new Set([DEFAULT_INDEX]));
   // Unread pings that have "landed". The list starts quiet; once the panel is
   // in view, each colleague's `1` badge pops in (and their name bolds) one
-  // after another — mimicking messages arriving in a live Slack.
+  // after another - mimicking messages arriving in a live Slack.
   const [arrivedPings, setArrivedPings] = useState<Set<number>>(() => new Set());
-  // Mobile only: Slack's phone UX is a drill-down — the DM list, then tap a row
+  // Mobile only: Slack's phone UX is a drill-down - the DM list, then tap a row
   // to open the conversation full-screen, back arrow to return. Ignored by the
   // desktop layout (which shows list + conversation side by side).
   const [mobileView, setMobileView] = useState<'list' | 'conversation'>('list');
@@ -160,7 +160,7 @@ export function SlackTestimonials() {
       className={`${styles['slack-testimonials']} ${mobileView === 'conversation' ? styles['slack-testimonials--show-conversation'] : ''}`}
     >
       <div className={styles['slack-testimonials__body']}>
-        {/* Sidebar / mobile "DMs" screen — the direct-message list */}
+        {/* Sidebar / mobile "DMs" screen - the direct-message list */}
         <div className={styles['slack-testimonials__sidebar']}>
           <div className={styles['slack-testimonials__section-label']}>Direct messages</div>
           <div
@@ -173,7 +173,7 @@ export function SlackTestimonials() {
             {TESTIMONIALS.map((t, index) => {
               const isActive = index === activeIndex;
               // A row reads as "unread" only once its ping has landed (and it
-              // hasn't been opened) — before that it sits quiet.
+              // hasn't been opened) - before that it sits quiet.
               const isUnread = !readIndices.has(index) && arrivedPings.has(index);
               return (
                 <button
@@ -199,7 +199,7 @@ export function SlackTestimonials() {
                   <Avatar index={index} className={styles['slack-testimonials__avatar--sm']} />
                   <span className={styles['slack-testimonials__dm-text']}>
                     <span className={styles['slack-testimonials__dm-name']}>{t.name}</span>
-                    {/* Last-message preview — shown only on the mobile list */}
+                    {/* Last-message preview - shown only on the mobile list */}
                     <span className={styles['slack-testimonials__dm-preview']}>{t.quote}</span>
                   </span>
                   {isUnread && (
@@ -213,7 +213,7 @@ export function SlackTestimonials() {
           </div>
         </div>
 
-        {/* Conversation pane — desktop: always visible; mobile: the drilled-in screen */}
+        {/* Conversation pane - desktop: always visible; mobile: the drilled-in screen */}
         <div
           className={styles['slack-testimonials__main']}
           role="tabpanel"

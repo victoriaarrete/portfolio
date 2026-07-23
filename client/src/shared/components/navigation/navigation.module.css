@@ -139,6 +139,26 @@
   height: var(--icon-size-md);
 }
 
+/* Element: navigation__backdrop
+   Scrim under the open mobile menu. Absolutely positioned off the fixed nav
+   (top: 100% = just below the expanded panel) so it needs no z-index games. */
+.navigation__backdrop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: hsla(30, 10%, 4%, 0.65);
+  backdrop-filter: blur(var(--blur-sm, 2px));
+  -webkit-backdrop-filter: blur(var(--blur-sm, 2px));
+}
+
+@media (min-width: 768px) {
+  .navigation__backdrop {
+    display: none;
+  }
+}
+
 /* Element: navigation__mobile-menu */
 .navigation__mobile-menu {
   display: block;

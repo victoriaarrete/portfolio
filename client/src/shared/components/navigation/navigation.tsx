@@ -124,6 +124,18 @@ export function Navigation() {
         </button>
       </div>
 
+      {/* Scrim behind the open mobile menu - click closes */}
+      {isMobileMenuOpen && (
+        <motion.div
+          className={styles['navigation__backdrop']}
+          initial={{ opacity: OPACITY.HIDDEN }}
+          animate={{ opacity: OPACITY.VISIBLE }}
+          transition={{ duration: ANIMATION_DURATION.NORMAL }}
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Mobile Navigation */}
       <motion.div
         initial={{ opacity: OPACITY.HIDDEN, maxHeight: 0 }}

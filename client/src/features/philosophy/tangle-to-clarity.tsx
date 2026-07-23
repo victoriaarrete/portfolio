@@ -5,7 +5,7 @@ import styles from './tangle-to-clarity.module.css';
 /**
  * Decorative line-art that visualises the philosophy "remove the noise": a
  * dense, chaotic ball of overlapping ovals resolves through a single smooth
- * line into one clean circle — tangle to clarity.
+ * line into one clean circle - tangle to clarity.
  *
  * Two layouts share one generator: the `vertical` variant (chaos on top, circle
  * below) rides the desktop side-column; the `horizontal` variant (chaos left,
