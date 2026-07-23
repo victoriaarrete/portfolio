@@ -615,6 +615,14 @@
   margin: 0 0 var(--spacing-6);
 }
 
+/* Keep in step with the shared .section__title cap trim
+   (section-title.module.css) - the two label styles are twins. */
+@supports (text-box: trim-both cap alphabetic) {
+  .about__section-label {
+    text-box: trim-both cap alphabetic;
+  }
+}
+
 /* Solid bright cream (per mockup C) - the gradient's lower stop reads as a
    dull brown on large display type, which is the mismatch. */
 .about__manifesto-title {
@@ -2171,6 +2179,13 @@
     font-weight: var(--font-weight-regular);
     font-size: 26pt;
     margin: 0;
+  }
+
+  /* Cap-flush at the top of the printed page (see section-title.module.css) */
+  @supports (text-box: trim-both cap alphabetic) {
+    .print-resume__name {
+      text-box: trim-both cap alphabetic;
+    }
   }
 
   .print-resume__role {

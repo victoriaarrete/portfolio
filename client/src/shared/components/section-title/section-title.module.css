@@ -25,3 +25,13 @@
 .section__title-accent {
   color: inherit;
 }
+
+/* Cap-height optically flush: trim the half-leading above cap height and
+   below the baseline so each section's top edge starts where the ink does,
+   not where the line box does (Chrome 133+ / Safari 18.2+; every other
+   engine keeps exactly today's box). */
+@supports (text-box: trim-both cap alphabetic) {
+  .section__title {
+    text-box: trim-both cap alphabetic;
+  }
+}

@@ -76,6 +76,22 @@
     color: var(--color-primary-foreground);
   }
 
+  /* Paragraph composition: Safari's full-paragraph algorithm (rag, rivers,
+     hyphenation, orphans), Chrome's last-lines pass; ignored elsewhere.
+     Headings get balanced line lengths. Both are wrapping-quality only -
+     no layout, no motion. */
+  p,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
   /* Typographically correct underlines for any link that has one: hairline,
      dropped clear of descenders, drawn in a muted tint of the link's own
      color that sharpens on hover. Links without underlines are unaffected. */
