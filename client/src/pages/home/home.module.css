@@ -1831,66 +1831,106 @@
   margin: 0;
 }
 
+/* The ledger: key-value rows in mono, parted by hairlines. The keys do the
+   naming the icon tiles used to; each interactive row reveals one hint in
+   the right margin ("copy" / an arrow) on hover or focus. */
 .contact__methods {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-6);
 }
 
-.contact__method {
+.contact__row {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--spacing-4);
-  transition: transform 0.25s var(--ease-spring);
-  will-change: transform;
+  padding: var(--spacing-4) 0;
+  border: 0;
+  border-bottom: var(--border-width-thin) solid var(--color-border-light);
+  font-family: var(--font-family-mono);
+  text-align: left;
+  width: 100%;
 }
 
-.contact__method:hover {
-  transform: translateX(10px);
+/* Buttons and links share the row chrome; only the cursor gives them away
+   until the hint appears. */
+.contact__row--action {
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  text-decoration-line: none;
 }
 
-.contact__icon-wrapper {
-  width: 2.125rem;
-  height: 2.125rem;
-  background: color-mix(in srgb, var(--color-primary-400) 10%, transparent);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.contact__row--action:focus-visible {
+  outline: var(--outline-width) solid var(--color-primary-400);
+  outline-offset: var(--outline-offset);
 }
 
-.contact__icon {
-  width: 1.0625rem;
-  height: 1.0625rem;
+.contact__row-key {
+  flex: 0 0 6.5rem;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
+  color: var(--color-label-muted);
+}
+
+.contact__row-value {
+  font-size: var(--font-size-base);
   color: var(--color-primary-400);
-}
-
-.contact__method-info {
-  flex: 1;
-}
-
-.contact__method-title {
-  color: var(--color-foreground);
-  font-weight: var(--font-weight-semibold);
-}
-
-.contact__link {
-  color: var(--color-primary-400);
-  text-decoration: none;
-  transition: color 0.2s ease-in-out;
   /* Addresses are single tokens - never split them mid-word */
   overflow-wrap: normal;
   word-break: keep-all;
   hyphens: none;
 }
 
-.contact__link:hover {
-  color: var(--color-accent-400);
+/* Interactive values carry the site's hairline underline (index.css sets the
+   refinements on <a> only, and these spans live inside buttons too). */
+.contact__row--action .contact__row-value {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: color-mix(in srgb, var(--color-primary-400) 35%, transparent);
+  transition: text-decoration-color var(--transition-fast);
 }
 
-.contact__text {
+.contact__row--action:hover .contact__row-value,
+.contact__row--action:focus-visible .contact__row-value {
+  text-decoration-color: var(--color-primary-400);
+}
+
+.contact__row-value--static {
   color: var(--color-neutral-300);
+}
+
+.contact__row-hint {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.14em;
+  color: var(--color-label-muted);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.contact__row--action:hover .contact__row-hint,
+.contact__row--action:focus-visible .contact__row-hint,
+.contact__row-hint--on {
+  opacity: 1;
+}
+
+/* Narrow phones: the key gets its own line above the value, and the hint
+   stays visible - there's no hover on touch to reveal it. */
+@media (max-width: 479px) {
+  .contact__row {
+    flex-wrap: wrap;
+    row-gap: var(--spacing-1);
+  }
+
+  .contact__row-key {
+    flex-basis: 100%;
+  }
+
+  .contact__row-hint {
+    opacity: 1;
+  }
 }
 
 /* Tablet+: invite copy and methods sit side by side, parted by a hairline

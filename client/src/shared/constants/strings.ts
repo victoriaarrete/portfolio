@@ -632,13 +632,18 @@ export const PROJECTS: readonly Project[] = [
   },
 ];
 
-// Contact Section Content
+// Contact Section Content - rendered as a key-value ledger (see contact.tsx):
+// mono keys do the naming that icon tiles used to, and the email row copies
+// the address on click with a quiet mono confirmation.
 export const CONTACT_CONTENT = {
   TITLE: 'Get In Touch',
   INTRO: "I like hard problems and the people who solve them well. Let's talk.",
   EMAIL_LABEL: 'Email',
   LINKEDIN_LABEL: 'LinkedIn',
   LOCATION_LABEL: 'Location',
+  COPY_HINT: 'copy',
+  COPIED_HINT: 'copied',
+  LINK_HINT: '→',
 } as const;
 
 // Copyright

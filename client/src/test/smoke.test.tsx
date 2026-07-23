@@ -64,9 +64,16 @@ describe('portfolio smoke', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'true');
   });
 
-  it('has the contact links', () => {
+  it('has the contact methods and copies the email on click', async () => {
+    const user = userEvent.setup();
     render(<App />);
-    expect(document.querySelector('a[href^="mailto:"]')).toBeInTheDocument();
+
+    // The email row is copy-first (no mailto unless the clipboard is missing)
+    const emailRow = screen.getByRole('button', { name: /talk@victoriakirichenko\.com/i });
+    await user.click(emailRow);
+    expect(await window.navigator.clipboard.readText()).toBe('talk@victoriakirichenko.com');
+    expect(emailRow).toHaveTextContent(/copied/i);
+
     const linkedin = document.querySelector('a[href*="linkedin.com"]');
     expect(linkedin).toHaveAttribute('rel', expect.stringContaining('noopener'));
   });

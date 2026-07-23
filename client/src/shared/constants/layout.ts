@@ -35,6 +35,7 @@ export const TIMING_MS = {
   PARTICLE_CREATE_INTERVAL: 600,
   PARTICLE_STAGGER: 200,
   COLOPHON_CLOCK_TICK: 30000,
+  COPY_FEEDBACK: 1600,
 } as const;
 
 // Scramble-on-hover for mono labels (shared/lib/use-scramble): one resolve
