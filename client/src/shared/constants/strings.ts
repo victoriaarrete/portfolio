@@ -632,18 +632,16 @@ export const PROJECTS: readonly Project[] = [
   },
 ];
 
-// Contact Section Content - rendered as a key-value ledger (see contact.tsx):
-// mono keys do the naming that icon tiles used to, and the email row copies
-// the address on click with a quiet mono confirmation.
+// Contact Section Content - an unlabeled stack of two self-describing mono
+// links (see contact.tsx): the email copies on click with a quiet mono
+// confirmation, LinkedIn opens. No keys, no location row - "in Tel Aviv"
+// already lives in the footer colophon, where ambient facts belong.
 export const CONTACT_CONTENT = {
   TITLE: 'Get In Touch',
   INTRO: "I like hard problems and the people who solve them well. Let's talk.",
-  EMAIL_LABEL: 'Email',
-  LINKEDIN_LABEL: 'LinkedIn',
-  LOCATION_LABEL: 'Location',
   COPY_HINT: 'copy',
   COPIED_HINT: 'copied',
-  LINK_HINT: '→',
+  LINKEDIN_HINT: 'linkedin ↗',
 } as const;
 
 // Copyright

@@ -11,11 +11,12 @@ import {
 import { SectionTitle } from '@/shared/components/section-title/section-title';
 import styles from '@/pages/home/home.module.css';
 
-// The methods render as a key-value ledger: mono keys name each row (the job
-// the icon tiles used to do), hairlines part them, and each interactive row
-// reveals one hint in the right margin - "copy" on the email, an arrow on the
-// link. Copy-first for the email (a mailto: opens whatever half-configured
-// default the OS has); mailto stays as the fallback when there's no clipboard.
+// The methods are an unlabeled stack: two self-describing mono links (an
+// email address looks like an email address - no key needed), no rules to
+// lose against the glyph field. Each reveals one hint in the margin on
+// hover/focus. Copy-first for the email (a mailto: opens whatever
+// half-configured default the OS has); mailto stays as the fallback when the
+// clipboard is missing or denied.
 export function Contact() {
   const [copied, setCopied] = useState(false);
   const resetTimer = useRef(0);
@@ -23,8 +24,6 @@ export function Contact() {
   useEffect(() => () => window.clearTimeout(resetTimer.current), []);
 
   const copyEmail = () => {
-    // No clipboard API, or the browser denies the write: fall through to
-    // mailto - a compose window beats a click that silently does nothing.
     const mailtoFallback = () => {
       window.location.href = `mailto:${PERSONAL_INFO.EMAIL}`;
     };
@@ -40,8 +39,8 @@ export function Contact() {
   };
 
   const emailHintClass = copied
-    ? `${styles['contact__row-hint']} ${styles['contact__row-hint--on']}`
-    : styles['contact__row-hint'];
+    ? `${styles['contact__item-hint']} ${styles['contact__item-hint--on']}`
+    : styles['contact__item-hint'];
 
   return (
     <section
@@ -65,45 +64,26 @@ export function Contact() {
               </div>
 
               <div className={styles.contact__methods}>
-                <button
-                  type="button"
-                  className={`${styles.contact__row} ${styles['contact__row--action']}`}
-                  onClick={copyEmail}
-                >
-                  <span className={styles['contact__row-key']}>{CONTACT_CONTENT.EMAIL_LABEL}</span>
-                  <span className={styles['contact__row-value']}>{PERSONAL_INFO.EMAIL}</span>
+                <button type="button" className={styles.contact__item} onClick={copyEmail}>
+                  <span className={styles['contact__item-value']}>{PERSONAL_INFO.EMAIL}</span>
                   <span className={emailHintClass} aria-live="polite">
                     {copied ? CONTACT_CONTENT.COPIED_HINT : CONTACT_CONTENT.COPY_HINT}
                   </span>
                 </button>
 
                 <a
-                  className={`${styles.contact__row} ${styles['contact__row--action']}`}
+                  className={styles.contact__item}
                   href={PERSONAL_INFO.LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className={styles['contact__row-key']}>
-                    {CONTACT_CONTENT.LINKEDIN_LABEL}
-                  </span>
-                  <span className={styles['contact__row-value']}>
+                  <span className={styles['contact__item-value']}>
                     {PERSONAL_INFO.LINKEDIN_DISPLAY}
                   </span>
-                  <span className={styles['contact__row-hint']} aria-hidden="true">
-                    {CONTACT_CONTENT.LINK_HINT}
+                  <span className={styles['contact__item-hint']} aria-hidden="true">
+                    {CONTACT_CONTENT.LINKEDIN_HINT}
                   </span>
                 </a>
-
-                <div className={styles.contact__row}>
-                  <span className={styles['contact__row-key']}>
-                    {CONTACT_CONTENT.LOCATION_LABEL}
-                  </span>
-                  <span
-                    className={`${styles['contact__row-value']} ${styles['contact__row-value--static']}`}
-                  >
-                    {PERSONAL_INFO.LOCATION}
-                  </span>
-                </div>
               </div>
             </div>
           </ScrollReveal>

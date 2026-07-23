@@ -1831,104 +1831,76 @@
   margin: 0;
 }
 
-/* The ledger: key-value rows in mono, parted by hairlines. The keys do the
-   naming the icon tiles used to; each interactive row reveals one hint in
-   the right margin ("copy" / an arrow) on hover or focus. */
+/* The unlabeled stack: two self-describing mono links at reading size - no
+   keys (an email address looks like an email address), no rules to lose
+   against the glyph field. One hint per item surfaces in the margin on
+   hover/focus. */
 .contact__methods {
   display: flex;
   flex-direction: column;
+  gap: var(--spacing-6);
 }
 
-.contact__row {
-  display: flex;
-  align-items: baseline;
-  gap: var(--spacing-4);
-  padding: var(--spacing-4) 0;
-  border: 0;
-  border-bottom: var(--border-width-thin) solid var(--color-border-light);
-  font-family: var(--font-family-mono);
-  text-align: left;
-  width: 100%;
-}
-
-/* Buttons and links share the row chrome; only the cursor gives them away
-   until the hint appears. */
-.contact__row--action {
+.contact__item {
+  /* Hit area hugs the content - the whole column shouldn't be clickable */
+  align-self: flex-start;
   background: none;
-  color: inherit;
+  border: 0;
+  padding: 0;
   cursor: pointer;
+  text-align: left;
+  font-family: var(--font-family-mono);
+  color: inherit;
   text-decoration-line: none;
 }
 
-.contact__row--action:focus-visible {
+.contact__item:focus-visible {
   outline: var(--outline-width) solid var(--color-primary-400);
   outline-offset: var(--outline-offset);
 }
 
-.contact__row-key {
-  flex: 0 0 6.5rem;
-  font-size: var(--font-size-xs);
-  letter-spacing: 0.16em;
-  text-transform: lowercase;
-  color: var(--color-label-muted);
-}
-
-.contact__row-value {
-  font-size: var(--font-size-base);
+.contact__item-value {
+  font-size: var(--font-size-lg);
   color: var(--color-primary-400);
   /* Addresses are single tokens - never split them mid-word */
   overflow-wrap: normal;
   word-break: keep-all;
   hyphens: none;
-}
-
-/* Interactive values carry the site's hairline underline (index.css sets the
-   refinements on <a> only, and these spans live inside buttons too). */
-.contact__row--action .contact__row-value {
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.25em;
-  text-decoration-color: color-mix(in srgb, var(--color-primary-400) 35%, transparent);
+  text-underline-offset: 0.35em;
+  text-decoration-color: color-mix(in srgb, var(--color-primary-400) 30%, transparent);
   transition: text-decoration-color var(--transition-fast);
 }
 
-.contact__row--action:hover .contact__row-value,
-.contact__row--action:focus-visible .contact__row-value {
+.contact__item:hover .contact__item-value,
+.contact__item:focus-visible .contact__item-value {
   text-decoration-color: var(--color-primary-400);
 }
 
-.contact__row-value--static {
-  color: var(--color-neutral-300);
-}
-
-.contact__row-hint {
-  margin-left: auto;
+.contact__item-hint {
   font-size: var(--font-size-xs);
   letter-spacing: 0.14em;
   color: var(--color-label-muted);
+  margin-left: var(--spacing-3);
   opacity: 0;
   transition: opacity var(--transition-fast);
+  white-space: nowrap;
 }
 
-.contact__row--action:hover .contact__row-hint,
-.contact__row--action:focus-visible .contact__row-hint,
-.contact__row-hint--on {
+.contact__item:hover .contact__item-hint,
+.contact__item:focus-visible .contact__item-hint,
+.contact__item-hint--on {
   opacity: 1;
 }
 
-/* Narrow phones: the key gets its own line above the value, and the hint
-   stays visible - there's no hover on touch to reveal it. */
+/* Touch has no hover to reveal the hints - keep them visible */
 @media (max-width: 479px) {
-  .contact__row {
-    flex-wrap: wrap;
-    row-gap: var(--spacing-1);
+  .contact__item-value {
+    font-size: var(--font-size-base);
   }
 
-  .contact__row-key {
-    flex-basis: 100%;
-  }
-
-  .contact__row-hint {
+  .contact__item-hint {
     opacity: 1;
   }
 }
@@ -1946,10 +1918,11 @@
     flex: 1;
   }
 
+  /* No divider: the stack has no rules of its own, and the one hairline the
+     column used to carry read as clutter next to bare links. */
   .contact__methods {
     flex: 1;
     padding-left: var(--spacing-12);
-    border-left: var(--border-width-thin) solid var(--color-border);
   }
 
   .contact__intro {
