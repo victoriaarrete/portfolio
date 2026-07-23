@@ -39,7 +39,12 @@
   }
 
   body {
-    @apply antialiased text-foreground overflow-x-hidden;
+    @apply antialiased text-foreground;
+    /* clip, not hidden: hidden would make body a scroll container and capture
+       every view() timeline on the page (see the experience graph). hidden
+       stays as the fallback for engines without clip. */
+    overflow-x: hidden;
+    overflow-x: clip;
     /* Transparent so the fixed code-stream background (z-index -1) shows through */
     background-color: transparent;
     font-family: var(--font-family-mono);
@@ -69,6 +74,22 @@
   ::selection {
     background: var(--color-primary-400);
     color: var(--color-primary-foreground);
+  }
+
+  /* Paragraph composition: Safari's full-paragraph algorithm (rag, rivers,
+     hyphenation, orphans), Chrome's last-lines pass; ignored elsewhere.
+     Headings get balanced line lengths. Both are wrapping-quality only -
+     no layout, no motion. */
+  p,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
   }
 
   /* Typographically correct underlines for any link that has one: hairline,
