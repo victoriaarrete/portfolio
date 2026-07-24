@@ -26,10 +26,6 @@ const STYLE = {
   comment: `color:${CONSOLE_PALETTE.DIM};font-style:italic;font-size:${CONSOLE_FONT_SIZE.SMALL};`,
   name: `color:${CONSOLE_PALETTE.TITLE};font-weight:bold;`,
   tableHead: `color:${CONSOLE_PALETTE.DIM};font-size:${CONSOLE_FONT_SIZE.SMALL};`,
-  // The console cat: tiny monospace so the 44-row sprite renders as a neat
-  // thumbnail, not a wall of glyphs. Explicit mono family keeps her aligned
-  // at this size.
-  fur: `color:${CONSOLE_PALETTE.BODY};font-family:ui-monospace,monospace;font-size:6px;line-height:1;`,
 } as const;
 
 function line(text: string, style: string): void {
@@ -110,12 +106,6 @@ function drawMaze(): void {
 
 function bullets(items: readonly string[]): void {
   items.forEach((item) => line(`  • ${item}`, STYLE.body));
-}
-
-/** Print the sitting cat as one styled block - the same sprite the /cat page
-    shows, frozen as a still and drawn small. */
-function drawCat(): void {
-  console.log(`%c${CONSOLE_SDK.CAT_ART.join('\n')}`, STYLE.fur);
 }
 
 function greet(): void {
@@ -220,13 +210,11 @@ function buildApi() {
       close(CONSOLE_SDK.CONTACT_RETURN);
     },
     // The way out - and a wink. Reaching for `victoria.cat` (no parens) prints
-    // the sitting sprite in the console with an invitation; calling it,
-    // `victoria.cat()`, slips over to /cat via client-side nav (push the URL,
-    // let wouter's popstate listener pick it up - no reload, no lost console).
-    // A getter that returns a callable makes both gestures pay off; it prints
-    // on access, exactly like `experience` above.
+    // an invitation line; calling it, `victoria.cat()`, slips over to /cat via
+    // client-side nav (push the URL, let wouter's popstate listener pick it up -
+    // no reload, no lost console). A getter that returns a callable makes both
+    // gestures pay off; it prints on access, exactly like `experience` above.
     get cat() {
-      drawCat();
       line(`\n${CONSOLE_SDK.CAT_HINT}`, STYLE.comment);
       return function cat() {
         if (typeof window !== 'undefined') {
