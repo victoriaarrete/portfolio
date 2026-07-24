@@ -107,60 +107,14 @@ export const CAT = {
   CONSOLE_LINE: '// meow. (it works, that was the whole point.)',
 } as const;
 
-// Console Messages
+// Console Messages - the victoria.skills() output rendered by lib/console-signature.ts.
 export const CONSOLE_MESSAGES = {
-  WELCOME_TITLE: "🚀 Welcome to Victoria Kirichenko's Portfolio!",
-  HELLO_DEV: '👩‍💻 Hello fellow developer!',
-  CURIOUS_MESSAGE: "Looks like you're curious about how this site works. I love that! 🔍",
-
-  TECH_STACK_TITLE: '🛠️ Tech Stack:',
-  TECH_FRONTEND: '   Frontend: React 18 + TypeScript + Vite',
-  TECH_STYLING: '   Styling: Tailwind CSS + Framer Motion',
-  TECH_UI: '   UI: Radix UI + shadcn/ui components',
-  TECH_DEPLOYMENT: '   Deployment: Static build (no backend needed)',
-
-  FUN_FACTS_TITLE: '💡 Fun Development Facts:',
-  FUN_PARTICLES: '   • This site has animated particles (check the background!)',
-  FUN_GLASS: '   • Glassmorphism effects everywhere',
-  FUN_MAILTO: '   • Contact form uses mailto (perfect for static deployment)',
-  FUN_OBSERVER: '   • Intersection Observer for scroll animations',
-  FUN_DARK: '   • Dark mode with custom CSS variables',
-
-  ABOUT_TITLE: '🎯 About Victoria:',
-  ABOUT_EXPERIENCE: '   • 11+ years in tech (Full Stack → Team Lead → R&D Leader)',
-  ABOUT_PASSION: '   • Passionate about AI-driven innovation',
-  ABOUT_CULTURE: '   • Building high-performance teams with strong culture',
-
-  EASTER_EGG_TITLE: '🎉 Easter Egg Unlocked!',
-  EASTER_EGG_HINT: "Since you're here, try typing: victoria.skills() in the console!",
-
-  PERFORMANCE_TITLE: '⚡ Performance Notes:',
-  PERFORMANCE_VITE: '   • Optimized with Vite for fast loading',
-  PERFORMANCE_LAZY: '   • Lazy loading for better performance',
-  PERFORMANCE_MINIFIED: '   • Minified CSS and JS for production',
-
-  COLLABORATION_TITLE: '💼 Interested in collaboration?',
-  COLLABORATION_HINT: 'Type: victoria.contact() for contact info!',
-
-  DIVIDER: '─────────────────────────────────────────────────────────────',
-
-  // Window functions
   SKILLS_LANGUAGES: '   Languages: TypeScript, Python, JavaScript, .NET',
   SKILLS_FRONTEND: '   Frontend: React, HTML5, CSS3',
   SKILLS_BACKEND: '   Backend: Node.js, Express, .NET, PHP',
   SKILLS_CLOUD: '   Cloud & DevOps: AWS, Azure, Docker, Kubernetes, GCP',
   SKILLS_LEADERSHIP: '   Leadership: Team Building, Agile, Strategic Planning',
   SKILLS_RETURN: 'Skills loaded! 💪',
-
-  CONTACT_TITLE: "📧 Let's connect!",
-  CONTACT_RETURN: 'Ready to innovate together! 🤝',
-
-  THEME_TITLE: '🌙 Dark Mode Variables:',
-  THEME_BG: '   --background: 2 6% 10% (slate-950)',
-  THEME_FG: '   --foreground: 0 0% 98% (white)',
-  THEME_PRIMARY: '   --primary: 217 91% 60% (blue-500)',
-  THEME_ACCENT: '   --accent: 188 86% 53% (cyan-400)',
-  THEME_RETURN: 'Theme secrets revealed! 🎨',
 } as const;
 
 // Console SDK - the interactive `window.victoria` developer experience.
