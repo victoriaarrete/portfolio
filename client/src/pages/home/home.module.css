@@ -1848,6 +1848,30 @@
   text-align: left;
 }
 
+/* Footnote under the panel: the quotes are trimmed excerpts, this is the one
+   click to the source. Same quiet register as the contact hints. */
+.testimonials__footnote {
+  margin-top: var(--spacing-4);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.14em;
+  color: var(--color-label-muted);
+}
+
+.testimonials__footnote-link {
+  color: inherit;
+  text-underline-offset: 0.35em;
+  text-decoration-color: color-mix(in srgb, var(--color-primary-400) 30%, transparent);
+  transition:
+    color var(--transition-fast),
+    text-decoration-color var(--transition-fast);
+}
+
+.testimonials__footnote-link:hover,
+.testimonials__footnote-link:focus-visible {
+  color: var(--color-primary-400);
+  text-decoration-color: var(--color-primary-400);
+}
+
 /* ==========================================================================
    Contact Section
    ========================================================================== */

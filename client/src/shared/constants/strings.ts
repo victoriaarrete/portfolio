@@ -486,6 +486,14 @@ export const TESTIMONIALS: readonly Testimonial[] = [
   },
 ];
 
+// Footnote under the Slack panel: the quotes above are excerpts, and this is
+// the one click to the source - LinkedIn's recommendations detail page.
+export const TESTIMONIALS_CONTENT = {
+  FOOTNOTE_PREFIX: 'trimmed to their sharpest line - full recommendations on ',
+  FOOTNOTE_LINK: 'linkedin ↗',
+  RECOMMENDATIONS_URL: `${PERSONAL_INFO.LINKEDIN_URL}details/recommendations/`,
+} as const;
+
 // Projects (the ⌘K palette results). The featured entry gets the active row
 // treatment + the "Acquired by Perion" outcome chip.
 type Project = {
