@@ -245,7 +245,7 @@ export const CONSOLE_SDK = {
     {
       area: 'Team leadership',
       where: 'Swish.ai · Perion',
-      outcome: '5+ QA & engineers led - offshore & onsite',
+      outcome: '5+ engineers & QA led - offshore & onsite',
     },
     {
       area: 'Ad-tech platform',
@@ -386,7 +386,7 @@ export const ABOUT_CONTENT = {
 export const ABOUT_IMPACT = [
   { metric: '−60%', label: 'manual work automated' },
   { metric: '11+ yrs', label: 'engineering & leadership' },
-  { metric: '5+', label: 'QA & engineers led' },
+  { metric: '5+', label: 'engineers & QA led' },
   { metric: 'Millions', label: 'requests & users daily' },
 ] as const;
 
