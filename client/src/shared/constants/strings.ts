@@ -356,9 +356,9 @@ export const ABOUT_APPROACH = [
 ] as const;
 
 // Experience Section - rendered as a `git log --graph` of the career.
-// `shape` drives the commit-graph gutter (see home.tsx): the Perion promotion
-// is a real merge - the full-stack track branches off and merges into the
-// leadership line. `type` is the conventional-commit verb shown before the role.
+// `shape` drives the commit-graph gutter (see features/experience): the Perion
+// promotion is a real merge - the full-stack track branches off and merges into
+// the leadership line. `type` is the conventional-commit verb shown before the role.
 type ExperienceCommit = {
   hash: string;
   type: 'feat' | 'merge' | 'init';
@@ -449,8 +449,8 @@ export const EXPERIENCE_LOG: readonly ExperienceCommit[] = [
 ];
 
 // Testimonials Section
-// Rendered as an initials-selector (see home.tsx): the initials discs act as a
-// picker and a single quote shows at a time. Quotes are trimmed to their
+// Rendered as an initials-selector (see features/testimonials): the initials discs
+// act as a picker and a single quote shows at a time. Quotes are trimmed to their
 // sharpest line; the full recommendations live on LinkedIn.
 type Testimonial = {
   quote: string;
